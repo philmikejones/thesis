@@ -18,8 +18,8 @@ These are:
 1. Download OS's [strategi](https://www.ordnancesurvey.co.uk/business-and-government/products/strategi.html) vector map. You will need to sign up and you will receive an email with a download link. Place the downloaded archive in `inst/extdata/`
 1. Download OS's [Open Greenspace](https://www.ordnancesurvey.co.uk/business-and-government/products/os-open-greenspace.html) full GB file and place in `inst/extdata/`
 1. You *may* need to download the full CQC data set as sometimes archive versions are removed. If this is the case:
-  - Open the web page at `http://www.cqc.org.uk/about-us/transparency/using-cqc-data#directory`
-  - Copy the link to the file `CQC care directory - zip`. It will look something like `http://www.cqc.org.uk/sites/default/files/01_Month_Year_CQC_directory.zip`
-  - Open `data-raw/01-construct-shapefiles.R`
-  - Replace the link to the CQC directory on lines 943-944 with your new link
-  - Save and run as normal.
+    - Open the web page at `http://www.cqc.org.uk/about-us/transparency/using-cqc-data#directory`
+    - Copy the link to the file `CQC care directory - zip`. It will look something like `http://www.cqc.org.uk/sites/default/files/01_Month_Year_CQC_directory.zip`
+    - Open `data-raw/01-construct-shapefiles.R`
+    - Replace the link to the CQC directory on lines 943-944 with your new link
+    - Save and run as normal.
