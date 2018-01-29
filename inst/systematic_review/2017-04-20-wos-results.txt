@@ -1,0 +1,227 @@
+ID	AU	TI	SO	PY	VL	IS	Included?	Reason
+117	Trolle, N; Lund, T; Winding, TN; Labriola, M	Perceived stress among 20-21 year-olds and their future labour market participation - an eight-year follow-up study	BMC PUBLIC HEALTH	2017	17		0	"Danish study
+Full-text obtained"
+118	Hutchison, C; Khan, MS; Yoong, J; Lin, X; Coker, RJ	Financial barriers and coping strategies: a qualitative study of accessing multidrug-resistant tuberculosis and tuberculosis care in Yunnan, China	BMC PUBLIC HEALTH	2017	17		0	Chinese study
+119	Aldrich, DP; Kyota, E	Creating Community Resilience Through Elder-Led Physical and Social Infrastructure	DISASTER MEDICINE AND PUBLIC HEALTH PREPAREDNESS	2017	11	1	0	Japanese study
+120	Ebersohn, L	A resilience, health and well-being lens for education and poverty	SOUTH AFRICAN JOURNAL OF EDUCATION	2017	37	1	0	South African study
+121	Nelson, K; Taylor, L; Silverman, J; Kiefer, M; Hebert, P; Lessler, D; Krieger, J	Randomized Controlled Trial of a Community Health Worker Self-Management Support Intervention Among Low-Income Adults With Diabetes, Seattle, Washington, 2010-2014	PREVENTING CHRONIC DISEASE	2017	14		0	US-based study
+122	Leonard, T; Hughes, AE; Pruit, SL	Understanding How Low-Socioeconomic Status Households Cope with Health Shocks: An Analysis of Multisector Linked Data	ANNALS OF THE AMERICAN ACADEMY OF POLITICAL AND SOCIAL SCIENCE	2017	669	1	0	"US-based study
+Full-text obtained"
+123	Waa, AM; Pearson, AL; Ryks, JL	Premature mortality resilience and wellbeing within urban Maori communities	HEALTH & PLACE	2017	43		0	New Zealand study
+124	Chen, Y; Zhang, Z; Shi, PJ; Song, X; Wang, P; Wei, X; Tao, FL	Public perception and responses to environmental pollution and health risks: evaluation and implication from a national survey in China	JOURNAL OF RISK RESEARCH	2017	20	3	0	Chinese study
+125	Agenor, PR	A COMPUTABLE OVERLAPPING GENERATIONS MODEL FOR GENDER AND GROWTH POLICY ANALYSIS	MACROECONOMIC DYNAMICS	2017	21	1	0	"Simulation: based on hypothetical data
+Full-text obtained"
+126	Olson, EL	The rationalization and persistence of organic food beliefs in the face of contrary evidence	JOURNAL OF CLEANER PRODUCTION	2017	140		0	US-based study
+127	Pillay, J	Factors leading to orphans and vulnerable children living in community-based homes	JOURNAL OF PSYCHOLOGY IN AFRICA	2016	26	6	0	South African study
+128	Akbulut-Yuksel, M; Kugler, AD	Intergenerational persistence of health: Do immigrants get healthier as they remain in the US for more generations?	ECONOMICS & HUMAN BIOLOGY	2016	23		0	US-based study
+129	Perez, L; Morales, KH; Klusaritz, H; Han, XY; Huang, JR; Rogers, M; Bennett, IM; Rand, CS; Ndicu, G; Apter, AJ	A health care navigation tool assesses asthma self-management and health literacy	JOURNAL OF ALLERGY AND CLINICAL IMMUNOLOGY	2016	138	6	0	US-based study
+130	Brody, GH; Yu, TY; Miller, GE; Chen, E	Resilience in Adolescence, Health, and Psychosocial Outcomes	PEDIATRICS	2016	138	6	0	US-based study
+131	Ozawa, S; Paina, L; Qiu, M	Exploring pathways for building trust in vaccination and strengthening health system resilience	BMC HEALTH SERVICES RESEARCH	2016	16		0	"US-based researchers
+Systematic review: not based on particular geography"
+132	Koblinsky, M; Moyer, CA; Calvert, C; Campbell, J; Campbell, OMR; Feigl, AB; Graham, WJ; Hatt, L; Hodgins, S; Matthews, Z; McDougall, L; Moran, AC; Nandakumar, AK; Langer, A	Quality maternity care for every woman, everywhere: a call to action	LANCET	2016	388	10057	0	Not empirical paper
+133	Le, MTH; Holton, S; Nguyen, HT; Wolfe, R; Fisher, J	Victimisation, poly-victimisation and health-related quality of life among high school students in Vietnam: a cross-sectional survey	HEALTH AND QUALITY OF LIFE OUTCOMES	2016	14		0	Vietnamese study
+134	Chan, I; Corvin, JA	Chronic Disease and Depression Among Hispanic Americans: Reconceptualizing the Masculine Self	AMERICAN JOURNAL OF MENS HEALTH	2016	10	6	0	US-based study
+135	De Donder, L; Lang, G; Ferreira-Alves, J; Penhale, B; Tamutiene, I; Luoma, ML	Risk factors of severity of abuse against older women in the home setting: A multinational European study	JOURNAL OF WOMEN & AGING	2016	28	6	0	"Not UK based
+Duplicate of 103"
+136	Geboers, B; de Winter, AF; Spoorenberg, SLW; Wynia, K; Reijneveld, SA	The association between health literacy and self-management abilities in adults aged 75 and older, and its moderators	QUALITY OF LIFE RESEARCH	2016	25	11	0	"Dutch study
+Full-text obtained"
+137	Kim, CO	Discrimination-related health inequality and role of social capital among marriage migrant women in South Korea	INTERNATIONAL JOURNAL FOR EQUITY IN HEALTH	2016	15		0	South Korean study
+138	Ngo, VK; Sherbourne, C; Chung, BW; Tang, LQ; Wright, AL; Whittington, Y; Wells, K; Miranda, J	Community Engagement Compared With Technical Assistance to Disseminate Depression Care Among Low-Income, Minority Women: A Randomized Controlled Effectiveness Study	AMERICAN JOURNAL OF PUBLIC HEALTH	2016	106	10	0	US-based study
+139	Whealin, JM; Jenchura, EC; Wong, AC; Zulman, DM	How Veterans With Post-Traumatic Stress Disorder and Comorbid Health Conditions Utilize eHealth to Manage Their Health Care Needs: A Mixed-Methods Analysis	JOURNAL OF MEDICAL INTERNET RESEARCH	2016	18	10	0	"US-based study
+Duplicate of 115"
+140	Fuehrlein, BS; Mota, N; Arias, AJ; Trevisan, LA; Kachadourian, LK; Krystal, JH; Southwick, SM; Pietrzak, RH	The burden of alcohol use disorders in US military veterans: results from the National Health and Resilience in Veterans Study	ADDICTION	2016	111	10	0	US-based study
+141	Minges, KE; Whittemore, R; Chao, AM; Jefferson, V; Murphy, KM; Grey, M	Clinical, Psychosocial, and Demographic Factors Are Associated With Overweight and Obesity in Early Adolescent Girls With Type 1 Diabetes	DIABETES EDUCATOR	2016	42	5	0	"US-based study
+Duplicate of 112"
+142	Gastaldi-Menager, C; Geoffard, PY; de Lagasnerie, G	Medical Spending in France: Concentration, Persistence and Evolution before Death	FISCAL STUDIES	2016	37	3-4	0	French study
+143	Elovainio, M; Rosenstrom, T; Hakulinen, C; Pulkki-Raback, L; Mullola, S; Jokela, M; Josefsson, K; Raitakari, OT; Keltikangas-Jarvinen, L	Educational attainment and health transitions over the life course: testing the potential mechanisms	JOURNAL OF PUBLIC HEALTH	2016	38	3	0	Finnish study
+144	Profis, M; Simon-Tuval, T	The influence of healthcare workers' occupation on Health Promoting Lifestyle Profile	INDUSTRIAL HEALTH	2016	54	5	0	"Israeli study
+Full-text obtained"
+145	Everett, BG; McCabe, KF; Hughes, TL	Unintended Pregnancy, Depression, and Hazardous Drinking in a Community-Based Sample of Sexual Minority Women	JOURNAL OF WOMENS HEALTH	2016	25	9	0	US-based study
+146	Fjermestad, KW; Naess, EE; Bahr, D; Gravholt, CH	A 6-year Follow-up survey of health status in middle-aged women with Turner syndrome	CLINICAL ENDOCRINOLOGY	2016	85	3	0	"Nordic
+Full-text obtained"
+147	Guilcher, SJT; Hamilton-Wright, S; Skinner, W; Woodhall-Melnik, J; Ferentzy, P; Wendaferew, A; Hwang, SW; Matheson, FI	Talk with me: perspectives on services for men with problem gambling and housing instability	BMC HEALTH SERVICES RESEARCH	2016	16		0	Canadian study
+148	Yang, XS; Yao, LT; Wu, H; Wang, Y; Liu, L; Wang, JN; Wang, L	Quality of Life and Its Related Factors in Chinese Unemployed People: A Population-Based Cross-Sectional Study	INTERNATIONAL JOURNAL OF ENVIRONMENTAL RESEARCH AND PUBLIC HEALTH	2016	13	8	0	Chinese study
+149	Salihu, HM; Adegoke, KK; Das, R; Wilson, RE; Mazza, J; Okoh, JO; Naik, E; Berry, E	Community-based fortified dietary intervention improved health outcomes among low-income African-American women	NUTRITION RESEARCH	2016	36	8	0	US-based study
+150	Reisner, SL; Poteat, T; Keatley, J; Cabral, M; Mothopeng, T; Dunham, E; Holland, CE; Max, R; Baral, SD	Global health burden and needs of transgender populations: a review	LANCET	2016	388	10042	0	"International systematic review.
+Predominantly US-based.
+Specific population (transgender)"
+151	Fu, Y; Yu, G; McNichol, E; Marczewski, K; Closs, SJ	The effects of patient-professional partnerships on the self-management and health outcomes for patients with chronic back pain: A quasi-experimental study	INTERNATIONAL JOURNAL OF NURSING STUDIES	2016	59		1	
+152	Kagan, J	An Overly Permissive Extension	PERSPECTIVES ON PSYCHOLOGICAL SCIENCE	2016	11	4	0	Not empirical paper
+153	Dhanaraj, S	Economic vulnerability to health shocks and coping strategies: evidence from Andhra Pradesh, India	HEALTH POLICY AND PLANNING	2016	31	6	0	Indian study
+154	Mitra, S; Palmer, M; Mont, D; Groce, N	Can Households Cope with Health Shocks in Vietnam?	HEALTH ECONOMICS	2016	25	7	0	Vietnamese study
+155	Amalberti, R; Nicklin, W; Braithwaite, J	Preparing national health systems to cope with the impending tsunami of ageing and its associated complexities: Towards more sustainable health care	INTERNATIONAL JOURNAL FOR QUALITY IN HEALTH CARE	2016	28	3	0	Opinion/conference report
+156	Ko, Y; Chee, W; Im, EO	Factors Associated With Perceived Health Status of Multiracial/Ethnic Midlife Women in the United States	JOGNN-JOURNAL OF OBSTETRIC GYNECOLOGIC AND NEONATAL NURSING	2016	45	3	0	US-based study
+157	Leigh, JP; De Vogli, R	Low Wages as Occupational Health Hazards	JOURNAL OF OCCUPATIONAL AND ENVIRONMENTAL MEDICINE	2016	58	5	0	US-based study
+158	Tutty, LM; Babins-Wagner, R; Rothery, MA	You're Not Alone: Mental Health Outcomes in Therapy Groups for Abused Women	JOURNAL OF FAMILY VIOLENCE	2016	31	4	0	"Canadian study
+Duplicate of 111"
+159	Carbonneau, R; Boivin, M; Brendgen, M; Nagin, D; Tremblay, RE	Comorbid Development of Disruptive Behaviors from age 1A1/2 to 5 Years in a Population Birth-Cohort and Association with School Adjustment in First Grade	JOURNAL OF ABNORMAL CHILD PSYCHOLOGY	2016	44	4	0	"Not UK-based study
+Duplicate of 109"
+160	Rata, E; Zubaran, C	Ethnic Classification in the New Zealand Health Care System	JOURNAL OF MEDICINE AND PHILOSOPHY	2016	41	2	0	New Zealand study
+161	Hobkirk, AL; Watt, MH; Myers, B; Skinner, D; Meade, CS	A qualitative study of methamphetamine initiation in Cape Town, South Africa	INTERNATIONAL JOURNAL OF DRUG POLICY	2016	30		0	South African study
+162	Ruggiano, N; Whiteman, K; Shtompel, N	If I Don't Like the Way I Feel With a Certain Drug, I'll Tell Them.: Older Adults' Experiences With Self-Determination and Health Self-Advocacy	JOURNAL OF APPLIED GERONTOLOGY	2016	35	4	0	US-based study
+163	Dodson, S; Klassen, KM; McDonald, K; Millard, T; Osborne, RH; Battersby, MW; Fairley, CK; Simpson, JA; Lorgelly, P; Tonkin, A; Roney, J; Slavin, S; Sterjovski, J; Brereton, M; Lewin, SR; Crooks, L; Watson, J; Kidd, MR; Williams, I; Elliott, JH	HealthMap: a cluster randomised trial of interactive health plans and self-management support to prevent coronary heart disease in people with HIV	BMC INFECTIOUS DISEASES	2016	16		0	Australian study
+164	Kraeh, A; Froese, FJ; Kim, SG	Does socio-cultural and psychological adjustment influence physical health? The case of North Korean refugees in South Korea	INTERNATIONAL JOURNAL OF INTERCULTURAL RELATIONS	2016	51		0	"North/South Korean study
+Duplicate of 107"
+165	Crawford, HA; Barton, B; Wilson, MJ; Berman, Y; McKelvey-Martin, VJ; Morrison, PJ; North, KN	Uptake of health monitoring and disease self-management in Australian adults with neurofibromatosis type 1: strategies to improve care	CLINICAL GENETICS	2016	89	3	0	Australian study
+166	Rechenberg, K; Whittemore, R; Grey, M; Jaser, S	Contribution of income to self-management and health outcomes in pediatric type 1 diabetes	PEDIATRIC DIABETES	2016	17	2	0	US-based study
+167	Schwalm, JD; McKee, M; Huffman, MD; Yusuf, S	Resource Effective Strategies to Prevent and Treat Cardiovascular Disease	CIRCULATION	2016	133	8	0	Review of strategies: not empirical
+168	Parekh, S; Kendall, E; Ehrlich, C	Variability in Use of Health Services and Its Association with Self-Management Skills: A Population-Based Exploratory Analysis	POPULATION HEALTH MANAGEMENT	2016	19	1	0	Australian study
+169	Wurie, HR; Samai, M; Witter, S	Retention of health workers in rural Sierra Leone: findings from life histories	HUMAN RESOURCES FOR HEALTH	2016	14		0	Sierra Leone study
+170	Bigdeli, M; Jacobs, B; Men, CR; Nilsen, K; Van Damme, W; Dujardin, B	Access to Treatment for Diabetes and Hypertension in Rural Cambodia: Performance of Existing Social Health Protection Schemes	PLOS ONE	2016	11	1	0	Cambodian study
+171	Atal, S; Cheng, C	Socioeconomic health disparities revisited: coping flexibility enhances health-related quality of life for individuals low in socioeconomic status	HEALTH AND QUALITY OF LIFE OUTCOMES	2016	14		0	Indian study
+172	Tjornstrand, C; Argentzell, E; Eklund, M	Perceived social status among people with psychiatric disabilities attending work-oriented and meeting place-oriented day centers	WORK-A JOURNAL OF PREVENTION ASSESSMENT & REHABILITATION	2016	55	1	0	Swedish study
+173	Erskine, J; Kvavilashvili, L; Myers, L; Leggett, S; Davies, S; Hiskey, S; Hogg, J; Yeo, S; Georgiou, G	A longitudinal investigation of repressive coping and ageing	AGING & MENTAL HEALTH	2016	20	10	1	
+174	Labat, F; Sharma, A	Qualitative study exploring surgical team members' perception of patient safety in conflict-ridden Eastern Democratic Republic of Congo	BMJ OPEN	2016	6	4	0	Not UK based study
+175	Coren, E; Hossain, R; Pardo, JP; Bakker, B	Interventions for promoting reintegration and reducing harmful behaviour and lifestyles in street-connected children and young people	COCHRANE DATABASE OF SYSTEMATIC REVIEWS	2016		1	0	"Systematic review
+Only US and South Korean papers
+Full-text obtained"
+176	Eibich, P; Krekel, C; Demuth, I; Wagner, GG	Associations between Neighborhood Characteristics, Well-Being and Health Vary over the Life Course	GERONTOLOGY	2016	62	3	0	German study
+177	Jeong, A; Shin, DW; Kim, SY; Yang, HK; Shin, JY; Park, K; An, JY; Park, JH	The effects on caregivers of cancer patients' needs and family hardiness	PSYCHO-ONCOLOGY	2016	25	1	0	"South Korean study
+Duplicate of 102"
+178	Sidloyi, SS; Bomela, NJ	Survival strategies of elderly women in Ngangelizwe Township, Mthatha, South Africa: Livelihoods, social networks and income	ARCHIVES OF GERONTOLOGY AND GERIATRICS	2016	62		0	South African study
+179	SmithBattle, L; Freed, P	Teen Mothers' Mental Health	MCN-THE AMERICAN JOURNAL OF MATERNAL-CHILD NURSING	2016	41	1		Inter-library loan
+180	Javalkar, K; Johnson, M; Kshirsagar, AV; Ocegueda, S; Detwiler, RK; Ferris, M	Ecological Factors Predict Transition Readiness/Self-Management in Youth With Chronic Conditions	JOURNAL OF ADOLESCENT HEALTH	2016	58	1	0	US-based study
+181	Roberts, DA; Ng, M; Ikilezi, G; Gasasira, A; Dwyer-Lindgren, L; Fullman, N; Nalugwa, T; Kamya, M; Gakidou, E	Benchmarking health system performance across regions in Uganda: a systematic analysis of levels and trends in key maternal and child health interventions, 1990-2011	BMC MEDICINE	2015	13		0	Ugandan study
+182	Eisenman, D; McCaffrey, S; Donatello, I; Marshal, G	An Ecosystems and Vulnerable Populations Perspective on Solastalgia and Psychological Distress After a Wildfire	ECOHEALTH	2015	12	4	0	US-based study
+183	Kim, Y	The dynamics of health and its determinants among the elderly in developing countries	ECONOMICS & HUMAN BIOLOGY	2015	19		0	Not UK-based study Duplicate of 109
+184	Karasz, A; Raghavan, S; Patel, V; Zaman, M; Akhter, L; Kabita, M	ASHA: Using Participatory Methods to Develop an Asset-building Mental Health Intervention for Bangladeshi Immigrant Women	PROGRESS IN COMMUNITY HEALTH PARTNERSHIPS-RESEARCH EDUCATION AND ACTION	2015	9	4	0	Bangladeshi study
+185	Zibrik, L; Khan, S; Bangar, N; Stacy, E; Lauscher, HN; Ho, K	Patient and community centered eHealth: Exploring eHealth barriers and facilitators for chronic disease self-management within British Columbia's immigrant Chinese and Punjabi seniors	HEALTH POLICY AND TECHNOLOGY	2015	4	4	0	Chinese and Punjabi study
+186	Washington, T; Rose, T; Colombo, G; Hong, JS; Coard, SI	Family-Level Factors and African American Children's Behavioral Health Outcomes: A Systematic Review	CHILD & YOUTH CARE FORUM	2015	44	6	0	US-based study
+187	Lyons, A; Hosking, W; Rozbroj, T	Rural-Urban Differences in Mental Health, Resilience, Stigma, and Social Support Among Young Australian Gay Men	JOURNAL OF RURAL HEALTH	2015	31	1	0	Australian study
+188	Shiri, S; Gartsman, I; Meiner, Z; Schwartz, I	Long-standing poliomyelitis and psychological health	DISABILITY AND REHABILITATION	2015	37	24	0	Israeli study
+189	van der Wel, KA; Bambra, C; Dragano, N; Eikemo, TA; Lunau, T	Risk and resilience: health inequalities, working conditions and sickness benefit arrangements: an analysis of the 2010 European Working Conditions survey	SOCIOLOGY OF HEALTH & ILLNESS	2015	37	8	0	Duplicate of 96
+190	Chisolm, DJ; Sarkar, M; Kelleher, KJ; Sanders, LM	Predictors of Health Literacy and Numeracy Concordance Among Adolescents With Special Health Care Needs and Their Parents	JOURNAL OF HEALTH COMMUNICATION	2015	20		0	US-based study
+191	Bariola, E; Lyons, A; Leonard, W; Pitts, M; Badcock, P; Couch, M	Demographic and Psychosocial Factors Associated With Psychological Distress and Resilience Among Transgender Individuals	AMERICAN JOURNAL OF PUBLIC HEALTH	2015	105	10	0	Australian study
+192	Baig, AA; Benitez, A; Locklin, CA; Gao, Y; Lee, SM; Quinn, MT; Solomon, MC; Sanchez-Johnsen, L; Burnet, DL; Chin, MH	Picture Good Health: A Church-Based Self-Management Intervention Among Latino Adults with Diabetes	JOURNAL OF GENERAL INTERNAL MEDICINE	2015	30	10	0	US-based study
+193	Georgiades, SD	Greek Immigrants in Australia: Implications for Culturally Sensitive Practice	JOURNAL OF IMMIGRANT AND MINORITY HEALTH	2015	17	5	0	Australian study
+194	Eyles, J; Harris, B; Fried, J; Govender, V; Munyewende, P	Endurance, resistance and resilience in the South African health care system: case studies to demonstrate mechanisms of coping within a constrained system	BMC HEALTH SERVICES RESEARCH	2015	15		0	South African study
+195	Mastrocola, EL; Taylor, AK; Chew-Graham, C	Access to healthcare for long-term conditions in women involved in street-based prostitution: a qualitative study	BMC FAMILY PRACTICE	2015	16		1	
+196	Rios-Salas, V; Larson, A	Perceived discrimination, socioeconomic status, and mental health among Latino adolescents in US immigrant families	CHILDREN AND YOUTH SERVICES REVIEW	2015	56		0	US-based study
+197	Cao, Y; Liu, ZK	Poverty and Health: Children of Rural-to-Urban Migrant Workers in Beijing, China	SOCIAL INDICATORS RESEARCH	2015	123	2	0	Chinese study
+198	Koetsenruijter, J; van Lieshout, J; Lionis, C; Portillo, MC; Vassilev, I; Todorova, E; Foss, C; Gil, MS; Knutsen, IR; Angelaki, A; Mujika, A; Roukova, P; Kennedy, A; Rogers, A; Wensing, M	Social Support and Health in Diabetes Patients: An Observational Study in Six European Countries in an Era of Austerity	PLOS ONE	2015	10	8	1	
+199	Schoen, C	Reducing income-related inequalities in care and health: insights from Israel	ISRAEL JOURNAL OF HEALTH POLICY RESEARCH	2015	4		0	Israeli study
+200	Petkova, EP; Ebi, KL; Culp, D; Redlener, I	Climate Change and Health on the US Gulf Coast: Public Health Adaptation is Needed to Address Future Risks	INTERNATIONAL JOURNAL OF ENVIRONMENTAL RESEARCH AND PUBLIC HEALTH	2015	12	8	0	US-based study
+201	Harding, S; Read, UM; Molaodi, OR; Cassidy, A; Maynard, MJ; Lenguerrand, E; Astell-Burt, T; Teyhan, A; Whitrow, M; Enayat, ZE	The Determinants of young Adult Social well-being and Health (DASH) study: diversity, psychosocial determinants and health	SOCIAL PSYCHIATRY AND PSYCHIATRIC EPIDEMIOLOGY	2015	50	8	1	
+202	Lippert, AM; Lee, BA	Stress, Coping, and Mental Health Differences among Homeless People	SOCIOLOGICAL INQUIRY	2015	85	3	0	"US-based study
+Full-text obtained"
+203	Coulombe, S; Radziszewski, S; Trepanier, SG; Provencher, H; Roberge, P; Hudon, C; Meunier, S; Provencher, MD; Houle, J	Mental health self-management questionnaire: Development and psychometric properties	JOURNAL OF AFFECTIVE DISORDERS	2015	181		0	"Canadian study
+Duplicate of 93"
+204	Bambra, C; Cairns, JM; Kasim, A; Smith, J; Robertson, S; Copeland, A; Johnson, K	This divided land: An examination of regional inequalities in exposure to brownfield land and the association with morbidity and mortality in England	HEALTH & PLACE	2015	34		1	
+205	Casale, M; Wild, L	A 'GOOD SPACE' CANNOT LAST FOREVER: PERCEIVED MECHANISMS EXPLAINING THE ROLE OF SOCIAL SUPPORT AS A HEALTH-PROMOTING RESOURCE FOR CAREGIVERS IN HIV-ENDEMIC SOUTH AFRICA	JOURNAL OF COMMUNITY PSYCHOLOGY	2015	43	5	0	South African study
+206	Sull, A; Harland, N; Moore, A	Resilience of health-care workers in the UK; a cross-sectional survey	JOURNAL OF OCCUPATIONAL MEDICINE AND TOXICOLOGY	2015	10		1	
+207	Daw, J	Explaining the Persistence of Health Disparities: Social Stratification and the Efficiency-Equity Trade-off in the Kidney Transplantation System	AMERICAN JOURNAL OF SOCIOLOGY	2015	120	6	0	"US-based study
+Duplicate of 92"
+208	Glonti, K; Gordeev, VS; Goryakin, Y; Reeves, A; Stuckler, D; McKee, M; Roberts, B	A Systematic Review on Health Resilience to Economic Crises	PLoS One	2015	10	4	1	
+209	Bacikova-Sleskova, M; Benka, J; Orosova, O	Parental employment status and adolescents' health: The role of financial situation, parent-adolescent relationship and adolescents' resilience	PSYCHOLOGY & HEALTH	2015	30	4	0	Slovakian study
+210	Palmer, SC; Hanson, CS; Craig, JC; Strippoli, GFM; Ruospo, M; Campbell, K; Johnson, DW; Tong, A	Dietary and Fluid Restrictions in CKD: A Thematic Synthesis of Patient Views From Qualitative Studies	AMERICAN JOURNAL OF KIDNEY DISEASES	2015	65	4	0	Population: only patients with chronic kidney disease (CKD)
+211	Lokhmatkina, NV; Agnew-Davies, R; Costelloe, C; Kuznetsova, OY; Nikolskaya, IM; Feder, GS	Intimate partner violence and ways of coping with stress: cross-sectional survey of female patients in Russian general practice	FAMILY PRACTICE	2015	32	2	0	Russian study
+212	Han, K; Lee, Y; Gu, J; Oh, H; Han, J; Kim, K	Psychosocial factors for influencing healthy aging in adults in Korea	HEALTH AND QUALITY OF LIFE OUTCOMES	2015	13		0	Korean paper
+213	Hegberg, NJ; Tone, EB	Physical activity and stress resilience: Considering those at-risk for developing mental health problems	MENTAL HEALTH AND PHYSICAL ACTIVITY	2015	8		0	US-based study
+214	Nothling, J; Ganasen, K; Seedat, S	Predictors of Depression Among a Sample of South African Mortuary Workers	JOURNAL OF NERVOUS AND MENTAL DISEASE	2015	203	3	0	South African study
+215	Mackenbach, JP; Kulhanova, I; Bopp, M; Deboosere, P; Eikemo, TA; Hoffmann, R; Kulik, MC; Leinsalu, M; Martikainen, P; Menvielle, G; Regidor, E; Wojtyniak, B; Ostergren, O; Lundberg, O	Variations in the relation between education and cause-specific mortality in 19 European populations: A test of the fundamental causes theory of social inequalities in health	SOCIAL SCIENCE & MEDICINE	2015	127		0	Duplicate of 90
+216	Campbell, G; Nielsen, S; Bruno, R; Liptzeris, N; Cohen, M; Hall, W; Larance, B; Mattick, RP; Degenhardt, L	The Pain and Opioids IN Treatment study: characteristics of a cohort using opioids to manage chronic non-cancer pain	PAIN	2015	156	2	0	Australian study
+217	Johnson, A; Kirk, R; Rosenblum, KL; Muzik, M	Enhancing Breastfeeding Rates Among African American Women: A Systematic Review of Current Psychosocial Interventions	BREASTFEEDING MEDICINE	2015	10	1	0	US-based study
+218	Namageyo-Funa, A; Muilenburg, J; Wilson, M	The Role of Religion and Spirituality in Coping with Type 2 Diabetes: A Qualitative Study among Black Men	JOURNAL OF RELIGION & HEALTH	2015	54	1	0	US-based study
+219	Rose, VK; Harris, MF	Experiences of self-management support from GPs among Australian ethnically diverse diabetes patients: A qualitative study	PSYCHOLOGY HEALTH & MEDICINE	2015	20	1	0	Australian study
+220	Gonzalez, MJA; Meline, MC; Campano, CC; Castro, BV	Application of Logistic Regression on the Analysis of Chilean Children's Fears	UNIVERSITAS PSYCHOLOGICA	2015	14	1	0	Chilean study
+221	Vesel, L; Waller, K; Dowden, J; Fotso, JC	Psychosocial support and resilience building among health workers in Sierra Leone: interrelations between coping skills, stress levels, and interpersonal relationships	BMC HEALTH SERVICES RESEARCH	2015	15		0	Sierra Leone study
+222	Siriwardhana, C; Abas, M; Siribaddana, S; Sumathipala, A; Stewart, R	Dynamics of resilience in forced migration: a 1-year follow-up study of longitudinal associations with mental health in a conflict-affected, ethnic Muslim population	BMJ OPEN	2015	5	2	0	Sri Lankan study
+223	Lunt, N; Exworthy, M; Hanefeld, J; Smith, RD	International patients within the NHS: A case of public sector entrepreneurialism	SOCIAL SCIENCE & MEDICINE	2015	124		0	Duplicate of 88
+224	Ungar, M	Practitioner Review: Diagnosing childhood resilience - a systemic approach to the diagnosis of adaptation in adverse social and physical ecologies	JOURNAL OF CHILD PSYCHOLOGY AND PSYCHIATRY	2015	56	1	0	Not empirical paper
+225	Heijmans, M; Waverijn, G; Rademakers, J; van der Vaart, R; Rijken, M	Functional, communicative and critical health literacy of chronic disease patients and their importance for self-management	PATIENT EDUCATION AND COUNSELING	2015	98	1	0	"Dutch study
+Duplicate of 82"
+226	Nunes, JA; Ferreira, P; Queiros, F	Taking part: Engaging knowledge on health in clinical encounters	SOCIAL SCIENCE & MEDICINE	2014	123		0	Portuguese study
+227	Helms, SW; Choukas-Bradley, S; Widman, L; Giletta, M; Cohen, GL; Prinstein, MJ	Adolescents Misperceive and Are Influenced by High-Status Peers' Health Risk, Deviant, and Adaptive Behavior	DEVELOPMENTAL PSYCHOLOGY	2014	50	12	0	"US-based study
+Full-text obtained"
+228	Tucker, CM; Wippold, GM; Smith, TM; Desmond, FF; Arthur, TM; Butler, AM; Pauly, RR; Surrency, SL	Association of Health Self-Empowerment with Health-Promoting Behaviors among Chronically Ill African American and non-Hispanic White Adolescents	JOURNAL OF HEALTH CARE FOR THE POOR AND UNDERSERVED	2014	25	4	0	US-based study
+229	Orton, E; Kendrick, D; West, J; Tata, LJ	Persistence of Health Inequalities in Childhood Injury in the UK; A Population-Based Cohort Study of Children under 5	PLOS ONE	2014	9	10	1	
+230	Fritz, H; Lysack, C	I see it now: Using photo elicitation to understand chronic illness self-management	CANADIAN JOURNAL OF OCCUPATIONAL THERAPY-REVUE CANADIENNE D ERGOTHERAPIE	2014	81	4	0	"Canadian study
+Duplicate of 80"
+231	Peres, H; Glazer, Y; Landau, D; Marks, K; Abokaf, H; Belmaker, I; Cohen, A; Shoham-Vardi, I	Understanding Utilization of Outpatient Clinics for Children with Special Health Care Needs in Southern Israel	MATERNAL AND CHILD HEALTH JOURNAL	2014	18	8	0	Israeli study
+232	Agenor, PR; Canuto, O; da Silva, LP	On gender and growth: The role of intergenerational health externalities and women's occupational constraints	STRUCTURAL CHANGE AND ECONOMIC DYNAMICS	2014	30		0	Simulation: based on hypothetical data Full-text obtained
+233	Roh, YH; Chang, JY; Kim, MU; Nam, SK	The Effects of Income and Skill Utilization on the Underemployed's Self-Esteem, Mental Health, and Life Satisfaction	JOURNAL OF EMPLOYMENT COUNSELING	2014	51	3	0	"South Korean study
+Duplicate of 79"
+234	Chen, JY; Clark, MJ; Chang, YY; Liu, YY; Chang, CY	Factors Affecting Perceptions of Family Function in Caregivers of Children With Attention Deficit Hyperactivity Disorders	JOURNAL OF NURSING RESEARCH	2014	22	3	0	Taiwanese study
+235	Wu, PC; Liu, SY; Pan, SC	Does Misery Index Matter for the Persistence of Health Spending? Evidence from OECD Countries	SOCIAL INDICATORS RESEARCH	2014	118	2	0	Simulation based model
+236	Dray, J; Bowman, J; Freund, M; Campbell, E; Wolfenden, L; Hodder, RK; Wiggers, J	Improving adolescent mental health and resilience through a resilience-based intervention in schools: study protocol for a randomised controlled trial	TRIALS	2014	15		0	Australian study
+237	Betancourt, TS; Ng, LC; Kirk, CM; Munyanah, M; Mushashi, C; Ingabire, C; Teta, S; Beardslee, WR; Brennan, RT; Zahn, I; Stulac, S; Cyamatare, FR; Sezibera, V	Family-based prevention of mental health problems in children affected by HIV and AIDS: an open trial	AIDS	2014	28		0	"Rwandan/US study
+Specific population: affected by AIDS"
+238	Nelson, K; Drain, N; Robinson, J; Kapp, J; Hebert, P; Taylor, L; Silverman, J; Kiefer, M; Lessler, D; Krieger, J	Peer Support for Achieving Independence in Diabetes (Peer-AID): Design, methods and baseline characteristics of a randomized controlled trial of community health worker assisted diabetes self-management support	CONTEMPORARY CLINICAL TRIALS	2014	38	2	0	Not UK clinical sites
+239	Pakpour, AH; Gellert, P; Asefzadeh, S; Sniehotta, FF	Planning Predicts Dental Service Attendance and the Effect is Moderated by Dental Anxiety and Educational Status: Findings from a One-Year Prospective Study	APPLIED PSYCHOLOGY-HEALTH AND WELL BEING	2014	6	2	0	"Iranian
+Duplicate of paper 75"
+240	Cornwell, EY	Social Resources and Disordered Living Conditions: Evidence From a National Sample of Community-Residing Older Adults	RESEARCH ON AGING	2014	36	4	0	"US-based study
+Duplicate of 76"
+241	Reeves, D; Blickem, C; Vassilev, I; Brooks, H; Kennedy, A; Richardson, G; Rogers, A	The Contribution of Social Networks to the Health and Self-Management of Patients with Long-Term Conditions: A Longitudinal Study	PLOS ONE	2014	9	6	1	
+242	Albor, C; Uphoff, EP; Stafford, M; Ballas, D; Wilkinson, RG; Pickett, KE	The effects of socioeconomic incongruity in the neighbourhood on social support, self-esteem and mental health in England	SOCIAL SCIENCE & MEDICINE	2014	111		1	
+243	Bucchianeri, MM; Eisenberg, ME; Wall, MM; Piran, N; Neumark-Sztainer, D	Multiple Types of Harassment: Associations With Emotional Well-Being and Unhealthy Behaviors in Adolescents	JOURNAL OF ADOLESCENT HEALTH	2014	54	6	0	"US-based study
+Duplicate of 74"
+244	Kuwert, P; Knaevelsrud, C; Pietrzak, RH	Loneliness Among Older Veterans in the United States: Results from the National Health and Resilience in Veterans Study	AMERICAN JOURNAL OF GERIATRIC PSYCHIATRY	2014	22	6	0	US-based study
+245	Ree, E; Odeen, M; Eriksen, HR; Indahl, A; Ihlebaek, C; Hetland, J; Harris, A	Subjective Health Complaints and Self-Rated Health: Are Expectancies More Important Than Socioeconomic Status and Workload?	INTERNATIONAL JOURNAL OF BEHAVIORAL MEDICINE	2014	21	3	0	Norwegian study
+246	Fisher, K; Newbold, KB	Validity of the SF-12 in a Canadian Old Order Mennonite Community	APPLIED RESEARCH IN QUALITY OF LIFE	2014	9	2	0	Canadian study
+247	Holly, D; Sharp, J	Addressing health inequities: coronary heart disease training within learning disabilities services	BRITISH JOURNAL OF LEARNING DISABILITIES	2014	42	2	0	Duplicate of 73
+248	Yi, JY; Zhong, B; Yao, SQ	Health-related quality of life and influencing factors among rural left-behind wives in Liuyang, China	BMC WOMENS HEALTH	2014	14		0	Chinese study
+249	Moodley, J	Women's mental health: coping mechanisms in the context of poverty	JOURNAL OF PSYCHOLOGY IN AFRICA	2014	24	3	0	South African study
+250	Bellis, MA; Hughes, K; Leckenby, N; Perkins, C; Lowey, H	National household survey of adverse childhood experiences and their relationship with resilience to health-harming behaviors in England	BMC MEDICINE	2014	12		1	
+251	Edwards, L; Thomas, C; Gregory, A; Yardley, L; O'Cathain, A; Montgomery, AA; Salisbury, C	Are People With Chronic Diseases Interested in Using Telehealth? A Cross-Sectional Postal Survey	JOURNAL OF MEDICAL INTERNET RESEARCH	2014	16	5	1	
+252	Aantjes, CJ; Ramerman, L; Bunders, JFG	A systematic review of the literature on self-management interventions and discussion of their potential relevance for people living with HIV in sub-Saharan Africa	PATIENT EDUCATION AND COUNSELING	2014	95	2	0	Sub-Saharan Africa
+253	Caplan, MA	Financial Coping Strategies of Mental Health Consumers: Managing Social Benefits	COMMUNITY MENTAL HEALTH JOURNAL	2014	50	4	0	"US-based study
+Duplicate of 72"
+254	Marck, K; Glover, M; Kira, A; McCool, J; Scragg, R; Nosa, V; Bullen, C	Protecting children from taking up smoking: parents' views on what would help	HEALTH PROMOTION JOURNAL OF AUSTRALIA	2014	25	1	0	"New Zealand study
+Duplicate of 69"
+255	Iten, AE; Jacobs, EA; Lahiff, M; Fernandez, A	Undocumented Immigration Status and Diabetes Care Among Mexican Immigrants In Two Immigration Sanctuary Areas	JOURNAL OF IMMIGRANT AND MINORITY HEALTH	2014	16	2	0	"US-based study
+Duplicate of 70"
+256	Kouam, CE; Delisle, H; Ebbing, HJ; Israel, AD; Salpeteur, C; Aissa, MA; Ridde, V	Perspectives for integration into the local health system of community-based management of acute malnutrition in children under 5 years: a qualitative study in Bangladesh	NUTRITION JOURNAL	2014	13		0	Bangladeshi study
+257	Uijtdewilligen, L; Twisk, JWR; Chinapaw, MJM; Koppes, LLJ; Van Mechelen, W; Singh, AS	Longitudinal Person-Related Determinants of Physical Activity in Young Adults	MEDICINE AND SCIENCE IN SPORTS AND EXERCISE	2014	46	3	0	"Dutch study
+Duplicate of 68"
+258	Simning, A; Conwell, Y; van Wijngaarden, E	Cognitive impairment in public housing residents living in Western New York	SOCIAL PSYCHIATRY AND PSYCHIATRIC EPIDEMIOLOGY	2014	49	3	0	US-based study
+259	Dale, S; Cohen, M; Weber, K; Cruise, R; Kelso, G; Brody, L	Abuse and Resilience in Relation to HAART Medication Adherence and HIV Viral Load Among Women with HIV in the United States	AIDS PATIENT CARE AND STDS	2014	28	3	0	US-based study
+260	Haycock, D; Smith, A	Sports participation and health during periods of educational transition: a study of 30-35-year-olds in north-west England	SPORT EDUCATION AND SOCIETY	2014	19	2	0	Duplicate of 67
+261	Horrocks, C; Johnson, S	A socially situated approach to inform ways to improve health and wellbeing	SOCIOLOGY OF HEALTH & ILLNESS	2014	36	2	0	Not empirical paper
+262	Weaver, RR; Lemonde, M; Payman, N; Goodman, WM	Health capabilities and diabetes self-management: The impact of economic, social, and cultural resources	SOCIAL SCIENCE & MEDICINE	2014	102		0	Canadian study
+263	Diehl, K	A PROGRAM FOR IMPROVING HEALTH AND STRESS MANAGEMENT FOR ADOLESCENTS FROM LOW-INCOME FAMILIES: INTEGRATING BEHAVIORAL COPING SKILLS, NUTRITION EDUCATION AND YOGA	JOURNAL OF ADOLESCENT HEALTH	2014	54	2	0	US-based study
+264	Feinglass, J; Nonzee, NJ; Murphy, KR; Endress, R; Simon, MA	Access to Care Outcomes: A Telephone Interview Study of a Suburban Safety Net Program for the Uninsured	JOURNAL OF COMMUNITY HEALTH	2014	39	1	0	Duplicate of 65
+265	Allmark, P; Bhanbhro, S; Chrisp, T	An argument against the focus on Community Resilience in Public Health	BMC PUBLIC HEALTH	2014	14		0	Not empirical paper
+266	Lofters, A; Slater, M; Kirst, M; Shankardass, K; Quinonez, C	How Do People Attribute Income-Related Inequalities in Health? A Cross-Sectional Study in Ontario, Canada	PLOS ONE	2014	9	1	0	Canadian study
+267	Maneze, D; Dennis, S; Chen, HY; Taggart, J; Vagholkar, S; Bunker, J; Liaw, ST	Multidisciplinary care: experience of patients with complex needs	AUSTRALIAN JOURNAL OF PRIMARY HEALTH	2014	20	1	0	Duplicate of 66
+268	Robinson, JK; Gaber, R; Hultgren, B; Eilers, S; Blatt, H; Stapleton, J; Mallett, K; Turrisi, R; Duffecy, J; Begale, M; Martini, M; Bilimoria, K; Wayne, J	Skin Self-Examination Education for Early Detection of Melanoma: A Randomized Controlled Trial of Internet, Workbook, and In-Person Interventions	JOURNAL OF MEDICAL INTERNET RESEARCH	2014	16	1	0	"US-based study
+Population: melanoma
+Full-text obtained"
+269	Leung, P; LaChapelle, AR; Scinta, A; Olvera, N	Factors Contributing to Depressive Symptoms among Mexican Americans and Latinos	SOCIAL WORK	2014	59	1	0	US-based study
+270	Small, N; Blickem, C; Blakeman, T; Panagioti, M; Chew-Graham, CA; Bower, P	Telephone based self-management support by 'lay health workers' and 'peer support workers' to prevent and manage vascular diseases: a systematic review and meta-analysis	BMC HEALTH SERVICES RESEARCH	2013	13		0	Primarily US-based
+271	Panic, M; Ford, JD	A Review of National-Level Adaptation Planning with Regards to the Risks Posed by Climate Change on Infectious Diseases in 14 OECD Nations	INTERNATIONAL JOURNAL OF ENVIRONMENTAL RESEARCH AND PUBLIC HEALTH	2013	10	12	0	Not UK-based
+272	Johnston, DW; Schurer, S; Shields, MA	Exploring the intergenerational persistence of mental health: Evidence from three generations	JOURNAL OF HEALTH ECONOMICS	2013	32	6	1	
+273	Sherman, J	Surviving the Great Recession: Growing Need and the Stigmatized Safety Net	SOCIAL PROBLEMS	2013	60	4	0	US-based study
+274	Heaven, PCL; Ciarrochi, J; Leeson, P; Barkus, E	Agreeableness, conscientiousness, and psychoticism: Distinctive influences of three personality dimensions in adolescence	BRITISH JOURNAL OF PSYCHOLOGY	2013	104	4	0	Duplicate of 49
+275	Waldbrook, N	Formerly Homeless, Older Women's Experiences with Health, Housing, and Aging	JOURNAL OF WOMEN & AGING	2013	25	4	0	Duplicate of 48
+276	Babiarz, P; Widdows, R; Yilmazer, T	BORROWING TO COPE WITH ADVERSE HEALTH EVENTS: LIQUIDITY CONSTRAINTS, INSURANCE COVERAGE, AND UNSECURED DEBT	HEALTH ECONOMICS	2013	22	10	0	US-based study
+277	Priest, N; Paradies, Y; Trenerry, B; Truong, M; Karlsen, S; Kelly, Y	A systematic review of studies examining the relationship between reported racism and health and wellbeing for children and young people	SOCIAL SCIENCE & MEDICINE	2013	95		0	Systematic review: mostly US-based studies
+278	Byrd-Craven, J; Massey, AR	Lean on me: Effects of social support on low socioeconomic-status pregnant women	NURSING & HEALTH SCIENCES	2013	15	3	0	US-based study
+279	Roy, J; Schurer, S	GETTING STUCK IN THE BLUES: PERSISTENCE OF MENTAL HEALTH PROBLEMS IN AUSTRALIA	HEALTH ECONOMICS	2013	22	9	0	Australian study
+280	Arcury, TA; Bell, RA; Altizer, KP; Grzywacz, JG; Sandberg, JC; Quandt, SA	Attitudes of Older Adults Regarding Disclosure of Complementary Therapy Use to Physicians	JOURNAL OF APPLIED GERONTOLOGY	2013	32	5	0	US-based study
+281	Fagg, JH; Curtis, SE; Cummins, S; Stansfeld, SA; Quesnel-Vallee, A	Neighbourhood deprivation and adolescent self-esteem: Exploration of the 'socio-economic equalisation in youth' hypothesis in Britain and Canada	SOCIAL SCIENCE & MEDICINE	2013	91		0	Duplicate of 45
+282	Cairns-Nagi, JM; Bambra, C	Defying the odds: A mixed-methods study of health resilience in deprived areas of England	SOCIAL SCIENCE & MEDICINE	2013	91		0	Duplicate of 46
+283	Wang, HL; Booth-LaForce, C; Tang, SM; Wu, WR; Chen, CH	Depressive symptoms in Taiwanese women during the peri- and post-menopause years: Associations with demographic, health, and psychosocial characteristics	MATURITAS	2013	75	4	0	Taiwanese study
+284	Tabb, KM; Gavin, AR; Guo, YQ; Huang, H; Debiec, K; Katon, W	Views and Experiences of Suicidal Ideation During Pregnancy and the Postpartum: Findings from Interviews with Maternal Care Clinic Patients	WOMEN & HEALTH	2013	53	5	0	US-based study
+285	Mezuk, B; Abdou, CM; Hudson, D; Kershaw, KN; Rafferty, JA; Lee, H; Jackson, JS	White Box Epidemiology and the Social Neuroscience of Health Behaviors: The Environmental Affordances Model	SOCIETY AND MENTAL HEALTH	2013	3	2	0	US-based study
+286	Balabanova, D; Mills, A; Conteh, L; Akkazieva, B; Banteyerga, H; Dash, U; Gilson, L; Harmer, A; Ibraimova, A; Islam, Z; Kidanu, A; Koehlmoos, TP; Limwattananon, S; Muraleedharan, VR; Murzalieva, G; Palafox, B; Panichkriangkrai, W; Patcharanarumol, W; Penn-Kekana, L; Powell-Jackson, T; Tangcharoensathien, V; McKee, M	Good Health at Low Cost 25 years on: lessons for the future of health systems strengthening	LANCET	2013	381	9883	0	Not UK based
+287	Haque, MA; Budi, A; Malik, AA; Yamamoto, SS; Louis, VR; Sauerborn, R	Health coping strategies of the people vulnerable to climate change in a resource-poor rural setting in Bangladesh	BMC PUBLIC HEALTH	2013	13		0	Bangladeshi study
+288	Rahman, MM; Gilmour, S; Saito, E; Sultana, P; Shibuya, K	Self-reported illness and household strategies for coping with health-care payments in Bangladesh	BULLETIN OF THE WORLD HEALTH ORGANIZATION	2013	91	6	0	Bangladeshi study
+289	McCoy, SK; Wellman, JD; Cosley, B; Saslow, L; Epel, E	Is the belief in meritocracy palliative for members of low status groups? Evidence for a benefit for self-esteem and physical health via perceived control	EUROPEAN JOURNAL OF SOCIAL PSYCHOLOGY	2013	43	4	0	US-based study
+290	Decker, MR; Nair, S; Saggurti, N; Sabri, B; Jethva, M; Raj, A; Donta, B; Silverman, JG	Violence-Related Coping, Help-Seeking and Health Care-Based Intervention Preferences Among Perinatal Women in Mumbai, India	JOURNAL OF INTERPERSONAL VIOLENCE	2013	28	9	0	Indian study
+291	Webel, AR; Cuca, Y; Okonsky, JG; Asher, AK; Kaihura, A; Salata, RA	The impact of social context on self-management in women living with HIV	SOCIAL SCIENCE & MEDICINE	2013	87		0	Duplicate of 43
+292	Benzeval, M; Green, MJ; Macintyre, S	Does Perceived Physical Attractiveness in Adolescence Predict Better Socioeconomic Position in Adulthood? Evidence from 20 Years of Follow Up in a Population Cohort Study	PLOS ONE	2013	8	5	0	Scottish study
+293	Gagnon, AJ; Carnevale, F; Mehta, P; Rousseau, H; Stewart, DE	Developing population interventions with migrant women for maternal-child health: a focused ethnography	BMC PUBLIC HEALTH	2013	13		0	Canadian study
+294	Hardon, A; Idrus, NI; Hymans, TD	Chemical sexualities: the use of pharmaceutical and cosmetic products by youth in South Sulawesi, Indonesia	REPRODUCTIVE HEALTH MATTERS	2013	21	41	0	Duplicate of 42
+295	Major, B; Mendes, WB; Dovidio, JF	Intergroup Relations and Health Disparities: A Social Psychological Perspective	HEALTH PSYCHOLOGY	2013	32	5	0	Duplicate of 40
+296	Polonijo, AN; Carpiano, RM	Social inequalities in adolescent human papillomavirus (HPV) vaccination: A test of fundamental cause theory	SOCIAL SCIENCE & MEDICINE	2013	82		0	US/Canadian study
+297	Tol, WA; Song, SZ; Jordans, MJD	Annual Research Review: Resilience and mental health in children and adolescents living in areas of armed conflict - a systematic review of findings in low- and middle-income countries	JOURNAL OF CHILD PSYCHOLOGY AND PSYCHIATRY	2013	54	4	0	Low/middle income countries
+298	Ewelukwa, O; Onoka, C; Onwujekwe, O	Viewing health expenditures, payment and coping mechanisms with an equity lens in Nigeria	BMC HEALTH SERVICES RESEARCH	2013	13		0	Nigerian study
+299	Edge, D	Why are you cast down, o my soul? Exploring intersections of ethnicity, gender, depression, spirituality and implications for Black British Caribbean women's mental health	CRITICAL PUBLIC HEALTH	2013	23	1	0	Duplicate of 38
+300	Gomez, FR; Jaramillo, TZ; Beltran, LG	Colombian health care system: results on equity for five health dimensions, 2003-2008	REVISTA PANAMERICANA DE SALUD PUBLICA-PAN AMERICAN JOURNAL OF PUBLIC HEALTH	2013	33	2	0	Colombian study
+301	Ferres, ED; Megias, JL; Exposito, F	Gender-based violence against women with visual and physical disabilities	PSICOTHEMA	2013	25	1	0	"Full-text obtained
+Spanish study"
+302	Blickem, C; Blakeman, T; Kennedy, A; Bower, P; Reeves, D; Gardner, C; Lee, V; Chew-Graham, C; Richardson, G; Brooks, H; Dawson, S; Mossabir, R; Jariwala, P; Swallow, A; Kontopantelis, E; Gaffney, H; Small, N; Spackman, E; Rogers, A	The clinical and cost-effectiveness of the BRinging Information and Guided Help Together (BRIGHT) intervention for the self-management support of people with stage 3 chronic kidney disease in primary care: study protocol for a randomized controlled trial	TRIALS	2013	14		0	Population: only patients with chronic kidney disease (CKD)
+303	D'Souza, MS; Karkada, SN; Somayaji, G	Factors associated with health-related quality of life among Indian women in mining and agriculture	HEALTH AND QUALITY OF LIFE OUTCOMES	2013	11		0	Indian study
+304	Fisher, KA; Newbold, KB; Eyles, JD; Elliott, SJ	Physical health in a Canadian Old Order Mennonite community	RURAL AND REMOTE HEALTH	2013	13	1	0	Canadian study
+305	Siddiqi, A; Kawachi, I; Keating, DP; Hertzman, C	A COMPARATIVE STUDY OF POPULATION HEALTH IN THE UNITED STATES AND CANADA DURING THE NEOLIBERAL ERA, 1980-2008	INTERNATIONAL JOURNAL OF HEALTH SERVICES	2013	43	2	0	US-based study
+306	Miller-Lewis, LR; Searle, AK; Sawyer, MG; Baghurst, PA; Hedley, D	Resource factors for mental health resilience in early childhood: An analysis with multiple methodologies	CHILD AND ADOLESCENT PSYCHIATRY AND MENTAL HEALTH	2013	7		0	Australian study

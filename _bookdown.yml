@@ -1,0 +1,11 @@
+new_session: no
+rmd_files: ["index.Rmd",
+            "01-introduction.Rmd",
+            "02-health-resilience-literature.Rmd",
+            "03-systematic-review.Rmd",
+            "04-spatial-microsimulation-literature.Rmd",
+            "05-methods.Rmd",
+            "06-resilience-sms.Rmd",
+            "07-policy-analysis.Rmd",
+            "08-conclusions.Rmd",
+            "09-bibliography.Rmd"]

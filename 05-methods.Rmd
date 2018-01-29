@@ -1,0 +1,1082 @@
+# Data and Methods {#methods}
+
+> I have measured out my life with coffee spoons.
+>
+> T. S. Eliot
+
+<!-- TODO: replace \overline{} with \mean{} -->
+
+## Introduction {#methods-intro}
+
+This chapter descibes the data and methods used to produce a spatially microsimulated data set.
+Broadly the steps involved in producing the simulated data were: identify suitable data sets; prepare these data sets; select appropriate constraint and target variables; create the simulation; and validate the simulation.
+
+Because producing a spatially microsimulated dataset requires both a lot of time and computational power---both to obtain and prepare the data properly and to perform the actual reweighting---I chose to produce a minimal 'pilot' spatial microsimulation model before completing the full model.
+By producing a minimal model I was able to quickly produce a reweighted dataset which offered me a number of advantages.
+
+First, by producing a minimal simulation I was able to quickly develop and improve the code base used to produce the reweighted data, as iterations can be faster when working with smaller data.
+This helped me to improve my own understanding of the process and to develop code known to produce accurate simulations.
+Between completing the pilot simulation and producing the final simulation model I developed this template into a CRAN (Comprehensive R Archive Network)^[CRAN is analguous to the standard library in many other computer languages such as `C++` or `Python`.] package called `rakeR`.^[https://cran.r-project.org/package=rakeR]
+This eliminated many of the manual steps involved in microsimulation, reducing the possibility of human error creeping in to the process.
+
+Second, by simulating a target variable that is also in the census I was able to externally validate the quality of the simulation.
+Externally validating the results of a spatial microsimulation model is challenging---if it was easy, we would not need to produce the simulation in the first place!---so this is a good way to test the performance of the model.
+This is not to say that the accuracy of the final target variables will be the same as the pilot, but it does identify any errors introduced by the code and does give an indication that the simulation will converge.
+
+Third, being able to compare simuated data with known values made it possible to test how the size of the target zones affected the quality of the simulation.
+Small areas in the UK are typically considered to include, in increasing size, output areas, lower layer super output areas (LSOAs), middle layer super output areas (MSOAs), and sometimes wards.
+Depending on the size of target area the simulation performs differently, so I was able to assess the quality of simulations with different zone sizes by comparing known values with simulated values.
+I was also able to compare the quality of results obtained by just reweighting (fractional weights) against those obtained by reweighting and integerising (integerised weights).
+
+
+## Data
+Deterministic IPF requires two input data sources.
+First, it requires data about individuals.
+This is typically taken from survey data in which each row is a case or individual.
+The geographical origin of each case or individual is not known at the small area level in this data set; this is what we will be simulating.
+This data is commonly referred to as the individual--level data, microdata, or the survey data.
+Table \@ref(tab:example-survey-data) illustrates what typical survey data looks like.
+Each row is an individual, and each column is a variable.
+
+```{r example-survey-data}
+us %>%
+  select(pidp, age, sex, qual, llid) %>%
+  slice(1:5) %>%
+  rename(
+    "id"                = pidp,
+    "qualification"     = qual,
+    "long-term illness" = llid
+  ) %>%
+  knitr::kable(caption = "Example survey data")
+```
+
+Second, it requires aggregate data about small areas.
+This is typically taken from the census, in which each row is a small area and each column is an aggregated count.
+This aggregate data is used to 'constrain' the weighting so that when the simulated individual--level data is aggregated it matches the actual aggregated data as closely as possible [@cassells2013a].
+This data is commonly referred to as the aggregate data, constraint data, or even census data, reflecting the fact that the census is the most common source of area--level aggregate data.
+Table \@ref(tab:example-census-data) illustrates what typical constraint or census data looks like.
+Each row is a small area (in the case of this example, a sample of output area codes in Doncaster), and each column is an aggregate count of a variable.
+
+```{r example-census-data}
+pilot_con %>%
+  select(code, sex_female, sex_male, car_0, car_1, car_2_plus) %>%
+  slice(1:5) %>%
+  rename(
+    "female"         = sex_female,
+    "male"           = sex_male,
+    "no cars"        = car_0,
+    "1 car"          = car_1,
+    "2 or more cars" = car_2_plus
+  ) %>%
+  kable(caption = "Example census data")
+```
+
+I will use the terms 'survey data' and 'census data' to refer to the two data sources respectively.
+This reflects the sources of data I use rather than more abstract terminology.
+
+### Survey data
+<!--
+- Which waves should I use?
+    + All of them, so build up 'most recent known' response
+-->
+
+I required a survey data source to contain a variety of health outcome measures as these would become target variables.
+The survey data also needed to include a number of socio--economic and demographic factors which match those in the census as these would form the basis of the simulation constraints.
+Examples of these include age, sex, ethnicity, education or qualifications, socio--economic position, and housing tenure.
+
+The survey sampling frame should include respondents from at least England and Wales.
+Wider sampling frames, such as Great Britain or the United Kingdom, were considered.
+Sources sampling only one country, for example just Wales or Scotland, were not.
+This is necessary so that the sample in the survey matches the population from the census (see Section \@ref(sampling-frame)).
+
+The survey does not necessarily need to be representative, for example by being based on an entirely random sample.
+This is because the reweighting algorithm matches individuals to areas based on known data, in effect producing its own survey weights.
+This allowed me to include surveys that were comprehensive but not necessarily representative without the need to apply corrective weights (see, for example, @lumley2010a, chap. 7).
+
+The survey data should contain as large a sample as possible to maintain the diversity of respondents.
+Health resilient individuals, as we have seen in Chapter \@ref(reslit), are outliers by definition, and the proportion of individuals considered resilient ranged from $20\%$ to $2.5\%$ ($1.96$ standard deviations).
+As I am effectively attempting to understand between $2.5$--$20\%$ of the original sample size, a large initial sample leaves me with a reasonable sample size to investigate.
+
+I considered a number of data sources, many available from the UK Data Service's *health and health behaviour* data discovery service^[https://www.ukdataservice.ac.uk/get-data/themes/health].
+I excluded aggregate data sets and data sets only collected in one country of the United Kingdom.
+This left a number of potential data sets to use, including: the 1946, 1958, 1970, and 2000--01 birth cohort studies; Health and Lifestyle Survey (HALS); health surveys for England, Wales, Scotland, and Northern Ireland; Infant Feeding Survey; Life Opportunities Survey; Living Costs and Food Survey; National Diet and Nurtition Surveys (NDNS); Opinions and Lifestyle Survey; Surveys of Psychiatric Morbidity; UK Time Use Survey; and Understanding Society.
+
+Many of the surveys available would have met my criteria and would have been suitable for use, and subsequent researchers may wish to attempt to replicate the spatial microsimulation using different data sets.
+Ultimately I chose *Understanding Society* because it fulfilled my criteria for health, socio--economic, and demographic variables, and had the largest sampling frame with $40,000$ households sampled in the first wave [@ukds-us].
+
+Understanding Society had the added benefit that it is relatively recent and waves were contemporaneous with the 2011 census data, making it appropriate to use with the most recent census data and related geographical boundaries.
+The years of data collection do not match exactly, but this is a common problem in spatial microsimulation and a solution necessarily involves a 'pragmatic compromise' [@campbell2016a, p. 3].
+
+I used cases from Understanding Society waves `a_` through ``r latest_wave``  [@understandingsociety2016a].
+The file serial number for *Understanding Society* is 6614.
+They were obtained from the UK Data Service under usage number 75413.
+Data for these waves were collected between the years 2009--2015.
+Table \@ref(tab:wave-years) shows the years each wave of data were collected.
+
+```{r wave-years}
+wave_years <- data.frame(
+  Wave  = c("e",    "d",    "c",    "b",    "a"),
+  y2009 = c("",     "",     "",     "",     "2009"),
+  y2010 = c("",     "",     "",     "2010", "2010"),
+  y2011 = c("",     "",     "2011", "2011", "2011"),
+  y2012 = c("",     "2012", "2012", "2012", ""),
+  y2013 = c("2013", "2013", "2013", "",     ""),
+  y2014 = c("2014", "2014", "",     "",     ""),
+  y2015 = c("2015", "",     "",     "",     "")
+)
+
+knitr::kable(wave_years, caption = "Years of data collection by wave")
+```
+
+`data-raw/0-prep-understanding-society.R` (see Section \@ref(thesis-structure)) prepares a 'tidy' [@wickham2014a] dataset and saves it for use in the simulation.
+The aim of the processes was to obtain the most recent data for each individual in Understanding Society and treat this collated data as one large cross--section.
+The longitudinal nature of the data is lost, but this is not the focus of this research and the amalgamation of waves effectively increases the diversity from which to choose individuals for the area.
+This approach can reduce error size [@edwards2009a, p. 1133] which is beneficial in this case.
+Subsequent research may wish to consider the longitudinal nature of health resilience, and Understanding Society may be a useful data set for this.
+The cross--section was constructed to include the most recent information known about each individual.
+
+Individual responses from each wave were loaded in turn.
+These files are named `x_indresp`, where `x_` is a one--character prefix identifying each wave individually.
+For example the most recent wave is identified by the prefix ``r latest_wave``.
+Variables within each wave were prefixed with the appropriate wave identifier.
+For example, age at wave ``r latest_wave`` might be labelled `f_age`, at wave `e_` would be labelled `e_age`, and so on.
+These individual files were joined using `FULL` joins on person ID (`pidp`) which are unique to each respondent and consistent across waves.
+A `FULL` join---equivalent to a SQL `FULL OUTER JOIN`---ensures cases are not dropped if the respondent is not present in all waves.
+Household IDs are not consistent across waves, so cannot be used for this join^[See https://www.understandingsociety.ac.uk/support/issues/481#change-1638].
+
+Household responses (`x_hhresp`) were loaded and joined to each individual using the appropriate household identifier from each wave (`x_hidp`).
+For example, individuals in `f_indresp` are joined to their household data in `f_hhresp` using `f_hidp`, present in both files.
+`LEFT` joins are used for this purpose.
+
+Answers coded as 'missing', 'proxy', 'inapplicable', 'refusal', or 'don't know' in Understanding Society were recoded as an explicit missing value (`NA` in `R`).
+'Refusal' and 'don't know' are not technically a missing value as they tell us something about the respondent, but they have been coded as such and removed because such information is not required in this instance.
+Missing values could then be removed prior to analysis if necessary.
+
+Not all variables were measured in all waves.
+Because of the longitudinal nature of the dataset many variables, such as ethnicity, did not need to be repeated and were typically present in the first wave the respondent participated in.
+This was handled by taking the most recent known data for each individual in building the cross--section of data to use.
+For example, if individuals had ethnicity data missing in wave ``r latest_wave`` I looked back as far as necessary to obtain this information.
+In this way I was able to create a complete cross--section with each respondent's most recent information, which was then validated and checked before use.
+
+After completing the final data frame $`r format(nrow(us), big.mark = ",", trim = TRUE)`$ individuals were eligible for inclusion in my analysis.
+Using estimates for health resilient individuals of between $2.5$--$20\%$, this equates to between approximately $`r format(round(0.025 * nrow(us), digits = 0), big.mark = ",", trim = TRUE)`$ and $`r format(round(0.2 * nrow(us), digits = 0), big.mark = ",", trim = TRUE)`$ individuals.
+
+### Census data
+<!--
+- Does it matter that the census data is now out of date?
+    + No.
+-->
+
+The 2011 census tables [@nomis2013a; @census] were used as constaints.
+The data contained in the census is now several years old.
+For example economically active unemployment in Doncaster has risen from $5.5\%$ as identified in the census in 2011 [@nomis2013a; @census] to $6.1\%$ in 2016 [@don-lmp].
+However the census is the most suitable data available to serve as constraints because it provides accurate aggregate data capturing nearly the whole population in each small area.
+The 2011 census data has the advantage of being the most recent census data available, and it is contemporaneous with a number of the waves used for the survey data.
+
+Census constraint data were downloaded from Nomis using the Nomis RESTful API^[https://www.nomisweb.co.uk/api/v01/help] and prepared prior to the simulation itself in `data-raw/2-simulate-pilot.R`.
+Table \@ref(tab:census-table-ids) shows the census tables used and their respective IDs.
+
+```{r census-table-ids}
+census_tables <- data.frame(
+  table_id = c("KS102EW",       "KS601UK",           "..."),
+  variable = c("Age structure", "Economic activity", "...")) %>%
+  rename(
+    "ID"       = table_id,
+    "Variable" = variable
+  )
+
+kable(census_tables, caption = "Census variables and table IDs")
+```
+
+
+## Sampling frame
+
+For the spatial microsimulation to produce valid results the sampling frame of the survey data must match the population of the constraint data.
+The simulation will not fail, but the quality and validity of the results will be affected and incorrect results could be produced.
+
+Section \@ref(survey-data) stated that the survey data should include England and Wales.
+This is to match the population given in the census tables available by default from Nomis.
+There are, however, some differences between the sampling frame used in the survey data with the population data gathered in the census.
+
+### Age
+Only individuals aged 16 and over are asked to complete a full survey in *Understanding Society* [@knies2015a, p. 8].
+Therefore the *Understanding Society* data only contains individuals aged 16 and over, while the census includes all individuals, including those aged 0--15.
+To ensure the populations from *Understanding Society* and the census matched, individuals aged 15 and below were removed from the census.
+
+The precise process to remove these individuals from the census varied by measure, and these are documented in `data-raw/2-simulate-pilot.R`.
+Typically the census tables either included individuals aged 16 and over---for example economic activity questions, or contained age information as either individual year or as bands so the appropriate age groups could be removed [@ons2011a].
+
+
+### Communal establishment residents
+The census contains responses from individuals in non--private accommodation---such as nursing homes, hospitals, student halls of residence, military accommodation and barracks, and prisons [@ons2014b]---while *Understanding Society* does not[^priv-comm] [@buck2012a, p. 9].
+
+[^priv-comm]: In a private communication, a member of the *Understanding Society* sampling team clarified that only residents living in private households were included in the inital sample in 2007/8 but that if respondents moved into communal establishments they were followed up if possible in their new residence in subsequent waves [@kaminska2015a].
+Communal residents are not, however, systematically sampled so *Understanding Society* is still best considered a survey of residents living in private accommodation only.
+
+To perform the spatial microsimulation without making allowance for residents in communal establishments could introduce a systematic bias to the results.
+The problem arises because residents in communal establishments may differ in important ways to residents living in private accommodation, and these can't be simulated if they do not exist in the individual--level data.
+
+For example, [@cassells2013a] argue that if there are a large number of care home residents in an area who are present in the census but not the individual--level survey, the spatial microsimulation will use the survey respondents to populate the area erroneously [@cassells2013a, p. 12].
+In this example, survey respondents who are the same age as those in the care home will be used to populate the area as they will match the requirements of the constraints, but these individuals are likely to have better health than their contemporaries living in care homes so the health of this age group will be inflated in these areas.
+
+There are essentially three potential ways to mitigate this issue.
+One is to impute these individuals and add them to the individual--level survey data.
+Another is to remove communal establishment residents from the census.
+The final option is to acknowledge and document the problem and the effects it might have on the simulation results.
+
+Imputing responses is problematic; although an individual sample of records from the census is available that could be used to weight the samples there is no way to relate this to the target variable.
+Imputation was therefore discounted as an option to address this issue.
+Instead, removal of communal establishment residents was attempted, with varying degrees of success.
+
+```{r prison-map, cache=TRUE, fig.cap="Doncaster output areas with prisons (source: 2011 Census tables; Ministry of Justice)"}
+tm_shape(don_oa) +
+  tm_borders(col = "grey70") +
+tm_shape(don_oa[!is.na(don_oa@data$prison_pop), ]) +
+  tm_fill(col = "grey40") +
+  tm_layout(frame = FALSE)
+```
+
+A relatively unique concern to this research is the fact that Doncaster is home to four prisons and young offender institutions: HMP \& YOI Doncaster; HMP \& YOI Hatfield; HMP Lindholme; and HMP \& YOI Moorland [@moj2015a].
+The total offender population is `r sum(don_oa@data$prison_pop, na.rm = TRUE)`, or just over one percent of the Doncaster population.
+Table \@ref(tab:prison-pop) shows the population of each prison based on the 2011 census [@ons2011a].
+
+```{r prison-pop}
+don_oa@data %>%
+  filter(!is.na(prison_pop)) %>%
+  select(code, prison_pop) %>%
+  rename(`Output area`         = code,
+         `Prisoner population` = prison_pop) %>%
+  arrange(`Output area`) %>%
+kable(row.names = FALSE, booktabs = TRUE,
+      caption = "Doncaster prison population 2011.")
+```
+
+The proportion of prisoners in each of these output areas varies from 44\% to 87\%.
+In these output areas in particular, the characteristics of non--prisoners will be attributed to a large number of prisoners who are not represented in *Understanding Society*.
+This is problematic because prisoners have been demonstrated to have, on average, poorer mental and physical health than non-prisoners [@fazel2011a].
+
+Two approaches were tested to remove prisoners from the census.
+The first, more nuanced, approach was to estimate the appropriate number of individuals to remove based on characteristics of prisoners in the sample of census microdata [@ons2015d].
+This approach did not work because in some cases too many individuals were removed.
+This left negative numbers of individuals for some characteristics in some zones.
+To correct this would have involved a largely arbitrary decision about which demographic category to re-assign these individuals to, which would be difficult to justify.
+Code for this approach is documented in `data-raw/prisoners-deprecated.R` for reference, but was not implemented.
+
+The second approach to remove prisoners was simply to remove the zones affected.
+For prisoners this meant removal of three output areas in which the prisons are located.
+Using this approach did mean that some non-prison residents were removed from the model, but this is arguably not a significant issue because the prisoners made up the majority of the population in these areas, and people in similar areas will have similar characteristics so such individuals are not 'lost'.
+This is the approach that I ultimately implemented, leaving 985 output areas in the simulation.
+
+Doncaster also has a number of care homes.
+Removing care home residents and other community establishment residents was less feasible than removing prisoners.
+This was because the location of residential and nursing homes was not focussed on a small number of output areas as it was for the prisoners, and were instead dispersed throughout the district.
+Figure \@ref(fig:care-homes) shows the location of nursing and residential care homes in Doncaster, of which there are `r nrow(care_homes@data)` unique establishments [@cqc2016a], with the number of people aged 65 and over by community area.
+
+```{r care-homes, cache=TRUE, fig.width=7, fig.height=7, fig.cap="Location of nursing and residential care homes in Doncaster community areas (source: Care Quality Commission)"}
+tm_shape(don_comm) +
+  tm_borders(col = "grey70") +
+  tm_fill(col = "pop_65_plus", title = "Population aged 65 and over") +
+tm_shape(care_homes) +
+  tm_bubbles(col = "type", palette = "Dark2", size = 0.5,
+             title.col = "Care home type") +
+tm_layout(frame = FALSE)
+```
+
+Note, some care home establishments are in zones without any care home residents.
+This may be due to record swapping as part of the anonymisation procedure if these zones only include a small number of care home residents.
+
+The number of residents in residential and nursing care homes in Doncaster on census day 2011 was 1,906, or just less than one per cent of the overall Doncaster population [@ons2011a].
+This is similar to the number of prisoners, but because they are spread across a significantly larger number of areas, they are less likely to have a large effect on these areas.
+Additionally, only age groups 65 and above in the zones are typically affected.
+Thus these individuals were left in the constraints.
+
+Leaving residential and nursing care home residents and other community establishment residents in the model *will* affect the results.
+Specifically the model will likely over--estimate the health of older residents, which should be remembered and considered when examining the results of the microsimulation.
+Studies of care home migration in Sheffield have indicated that the effect this has on the over 65 population mortality is minimal [@maheswaran2014a], so it seems likely the effect of care home residents on the model will be small and not significant.
+
+### Regional sampling
+All eligible individuals from *Understanding Society* were used, rather than only individuals from Yorkshire and The Humber.
+Some authors have suggested that better results can be obtained by sampling from within regions only, as "[t]his avoids filling... Sheffield with Londoners" [@anderson2007a, p. 15].
+Other suggested approaches include use of a 'geographical multiplier' or including a geographical constraint [@ballas2005a; @ballas2005b, p. 22--23], essentially so that 'local' individuals are more likely to be included in a zone than those living further away.
+Conversely [@tanton2013b] compared the difference between sampling nationally and from within regions and concluded there was not a significant difference in their results [-@tanton2013b, p. 166].
+
+Analysis of area classifications produced by the [@ons2015c] suggested regional sampling was not necessary and could be detrimental to the results because it would reduce the sample size significantly.
+These area classifications use a wide range of information from the census to group together similar areas based on a number of characteristics [@ons2015c].
+These characteristics include age, ethnicity, number of children in the household, marital status, car or van ownership, employment, number of rooms and other characteristics of the household's accommodation.
+Using these classifications, figure \@ref(fig:supergroup8) shows LADs in England and Wales belonging to supergroup 8, which includes Doncaster.
+There are a large number of areas similar to Doncaster outside Yorkshire and The Humber, including clusters in Wales and the North East, so to restrict the simulation to use only individuals from the Yorkshire and The Humber region would exclude individuals from these areas with similar characteristics.
+Similarly, local authority districts in Yorkshire and The Humber region are not homogeneous so to restrict the sample would not necessarily populate the model with similar individuals.
+
+```{r supergroup8, fig.width=7, fig.height=7, fig.cap="Local authority districts (LADs) classified as supergroup 8. Doncaster and Yorkshire and The Humber are outlined for context", cache=TRUE}
+tm_shape(lads) +
+  tm_borders(col = "grey70") +
+tm_shape(lads[lads@data$supergroup == 8, ]) +
+  tm_fill(col = "#756bb1") +  # from colorbrewer purples palette
+tm_shape(yh_region) +
+  tm_borders(col = "grey30") +
+tm_shape(don_outline) +
+  tm_borders(col = "black") +
+tm_layout(frame = FALSE)
+```
+
+
+## Target (dependent) variable
+A number of suitable health variables were available in *Understanding Society* to serve as a target variable for this pilot.
+I wanted to simulate a target variable that was also available in the census data to help with externally validating the model (see \@ref(methods-validation)).
+Health outcome variables that are available in both *Understanding Society* and the census were limiting long--term illness or disability and self--reported general health.
+
+In *Understanding Society* limiting long--term illness or disability (referred to as 'long--standing illness or disability' in this data source) is asked as follows [@understandingsociety2016a]:
+
+> Do you have any long--standing physical or mental impairment, illness or disability? By 'long-standing' I mean anything that has troubled you
+over a period of at least 12 months or that is likely to trouble you over a period of at least 12 months.
+
+Responses can be either yes or no.
+Figure \@ref(fig:plot-llid-us) shows the prevalence of long--standing illnesses or disabilities in *Understanding Society* after removing missing responses.
+
+```{r plot-llid-us, fig.height=3.5, fig.cap="Long-standing illness or disability prevalence in Understanding Society", cache=TRUE}
+us %>%
+  select(pidp, llid) %>%
+  na.omit() %>%
+  mutate(
+    llid = forcats::fct_recode(llid, Yes = "llid_yes", No = "llid_no")
+  ) %>%
+  ggplot(data = ., aes(llid)) + geom_bar() +
+    xlab("Long-standing illness or disability") +
+    ylab("Count") +
+    theme_minimal() + theme(legend.title = element_blank())
+```
+
+The census similarly asks:
+
+> Are your day--to--day activities limited because of a health problem or disability which has lasted, or is expected to last, at least 12 months?
+> Include problems related to old age [@nationalarchives2016a].
+
+Possible responses are: 'Yes, limited a lot'; 'Yes, limited a little'; and'No'.
+To make the two data sources compatible it is necessary to 'collapse' the census responses to match those in *Understanding Society*.
+We can add 'Yes, limited a lot' and 'Yes, limited a little' responses together to match 'Yes' so the two data sources can be compared.
+Figure \@ref(fig:plot-llid-act) shows the prevalence of limiting long--term illness or disabilities in Doncaster based on data from the 2011 census.
+
+```{r plot-llid-act, fig.height=3.5, fig.cap="Limiting long-term illness or disability in Doncaster from 2011 census", cache=TRUE}
+don_oa@data %>%
+  select(code, cen_llid_not, cen_llid_yes) %>%
+  ungroup() %>%
+  select(-code) %>%
+  summarise_all(sum) %>%
+  gather(key = "llid_type", value = "freq") %>%
+  mutate(
+    llid_type =
+      forcats::fct_recode(llid_type, No = "cen_llid_not", Yes = "cen_llid_yes")
+  ) %>%
+  ggplot(data = ., aes(llid_type, freq)) + geom_bar(stat = "identity") +
+    xlab("Limiting long-term illness or disability") +
+    ylab("Count") +
+    theme_minimal() + theme(legend.title = element_blank())
+```
+
+The semantics of the two questions are slightly different, but both are conceptually similar and are attempting to determine if the respondent is affected by an illness or disability over a period of 12 months or more.
+
+Self--reported general health is also asked in both data sources but the possible responses differ.
+In *Understanding Society* respondents are asked if their health in general is excellent, very good, good, fair, or poor.
+In the 2011 census possible responses are instead very good, good, fair, bad, or very bad.
+Matching responses between the two data sources is problematic.
+There is no clear way to match 'excellent' health or 'poor' health with the levels from the census.
+Similarly, fair health could be considered worse in *Understanding Society* than in the census, given their 'rank' in the ordering of the responses.
+For this reason I will use limiting--long term illness or disability for external validation, as matching the levels across the two data sets for this variable is less ambiguous.
+
+
+## Constraints {#methods-constraints}
+
+In Section \@ref(smslit-constraint-config) we saw that the configuration of contraints---the selection and ordering---may affect the simulation.
+In practice my choice of constraint was limited to variables that were available in both the census and *Understanding Society*, but this still offered a rich pool of information to choose from.
+To ensure the constraints I chose created an optimal model I selected them based on theory (see Section \@ref(factors-affecting-mental-health)) and empirically tested these to ensure they correlated well with my target variable.
+This section describes how I made my initial selection of constraints, how I matched these in both the census and *Understanding Society*, and how I ensured the populations in the census matched across variables.
+In the next section I describe how I empirically tested their correlation with my target variable, then how I ordered these for entry into the simulation.
+
+
+### Initial choice
+
+My choice of constraints included essential demographic information, such as age, ethnicity, and sex.
+I also chose to include highest education qualification as this has a known relationship with health outcomes.
+I also wanted to include an indicator for poverty or deprivation, as this is known to be a powerful predictor of health outcomes and inequality (see Section \@ref(factors-affecting-mental-health)).
+There is no income variable in the census, so instead I used indirect measures as indicators of poverty, including car availabilty, housing quality, and home ownership [@senior2002a].
+These are asked in both the census and in *Understanding Society* so can be used as constraint variables.
+
+I am not suggesting that the lack of these amenities or non--ownership housing tenure should be enough to consider a household in poverty.
+Instead they may indicate reduced or limited financial resources which is linked to poorer health outcomes.
+Similar measures have been used as markers of deprivation, for example by @townsend1988a.
+
+My final choice of constraints for this pilot were: age; ethnicity; sex; highest educational qualification; car or van availability; and housing tenure.
+
+
+### Matching variable levels
+
+In order to be used as constraints the variable levels must match *precisely* between the survey and the census data [@tanton2013b].
+The definitions used in many demographic variables matched exactly, so no further recoding was required.
+In some cases it was necessary to recode some variables before performing the logistic regression tests.
+These are performed by the scripts `data-raw/0-prep-understanding-society.R` for survey variables and `data-raw/2-simulate-pilot.R` for census variables, and are described in brief here.
+
+Ages were given as individual years in *Understanding Society*, so were recoded or 'cut' into bands that matched those already available in the census.
+
+Ethnicity was only available with a reduced classification in the census with age information, which was necessary to remove children and young people aged under 16 from the constraints.
+To match the census, I therefore had to recode ethnicity in *Understanding Society* to match the reduced levels available in the census with age information by combining some ethnic groups.
+
+Tenure was grouped differently in the census and in the survey.
+Those who owned their home with a mortgage or loan and those with shared ownership were grouped together in the census but separate in *Understanding Society* so were recoded in the survey to merge these two groups.
+In the census private renters and those living rent--free were grouped together, while social renters were a separate classification.
+In *Understanding Society* both private renters and social renters were grouped together.
+To address this it was necessary to amalgomate private renters, social renters, and those living rent--free in to one group in both the census and the survey.
+This was less than ideal, but the only classification the two data sources allowed.
+
+Education was perhaps the most challenging variable to prepare for comparison between *Understanding Society* and the census.
+The census provides the highest qualification by level, from no qualifications, through Level 1 qualifications, Level 2 qualifications, apprenticeships, Level 3 qualifications, Level 4 qualifications and above, and finally other qualifications not captured with these categories.
+This allows regulated qualifications in England and Wales from different frameworks to be compared [@govuk2016a].
+
+*Understanding Society*, on the other hand, provides the highest education qualification the respondent reported, based largely on academic qualifications types, such as degree, higher degree, 'A'--level, GCSEs, other qualifications, and no qualifications.
+To compare the two classifications, I converted the qualifications given in *Understanding Society* to levels.
+
+GCSEs were problematic because GCSEs grades D--G are considered level 1, while five GCSEs grades A\*--C are considered level 2 [@govuk2016b].
+To solve this I coded all GCSEs as a 'Level 2 qualifications', in effect treating this as 'up to and including Level 2'.
+For the census data to match I simply added the number of individuals with Level 1 qualifications and Level 2 qualifications together, to create a comparable 'up to and including Level 2 qualifications' classification in the census.
+
+AS and A level qualifications were coded as level 3 qualifications.
+Degree and other higher degree qualifications were coded as level 4.
+Apprenticeships in *Understanding Society* were coded as 'other qualification', so apprenticeships in the census were added to 'other qualifications' to match.
+Figure \@ref(fig:qual-bar) shows the final coding and their respective proportions in *Understanding Society*.
+
+```{r qual-bar, fig.height=3.5, fig.cap="Highest qualification", cache=TRUE}
+us %>%
+  select(pidp, qual) %>%
+  na.omit() %>%
+  ggplot(data = ., aes(qual)) + geom_bar() +
+  xlab("Highest qualification level") +
+  ylab("Count")
+```
+
+### Matching census populations
+
+If the populations of the individual census constraints do not match the model will fail to constrain and not produce results.
+The number of respondents in each zone for each constraint must match exactly for the simulation to work.
+For example, the population of each zone in the age census table must match the population of the same zone in the ethnicity census table.
+
+For most census tables the populations already matched so no preparation was necessary.
+In some cases the populations did not match and it was necessary to re--weight these to match populations in other variables.
+It is possible that some form of statistical disclosure control, for example record swapping or small cell adjustment, has been applied to maintain the anonymity of indvididuals, particularly for the small areas geographies I am using, which could explain why the populations did not match exactly [@onsndb, pp. 6--7].
+Some variables are collected about households or a household reference person, rather than individuals within the household.
+This too could cause the population of the zones to be different.
+In either case, the solution to infer populations is acceptable as many characteristics of the household, such as socio--economic position, are determined by the resources---such as cars---available to household overall.
+
+There are three possible values for car ownership in the census, and these were recoded in the survey to match.
+These are the household has no cars, one car, or two or more cars.
+To impute 'correct' zone populations for the car ownership table I calculated the proportion of respondents that had no cars, one car, or two or more cars in each zone.
+This was then multiplied against the known population of the zone.
+The result was a fraction, which can be fatal for individuals, so this number was rounded to a whole number.
+Finally, where the imputed population now had one person too many or too few due to rounding, this was taken away from or added to the modal category to minimise the change in the proportions.
+This procedure is documented in `data-raw/2-simulate-pilot.R`.
+
+
+## Empirically test constraints {#methods-test-cons}
+
+Because limiting long--term illness or disability is measured at the binary level---yes or no, the assumption of linearity between variables necessary for linear regression would be unmet, making linear regression unsuited to this task [@field2012a, pp. 314--315].
+Instead, logistic regression is the most appropriate statistical test to use.
+Logistic regression predicts the *probability* of an event occurring, rather than the *value* of the event, making it suitable for use with binary dependent variables.
+Equation \@ref(eq:logreg) shows the logistic regression equation:
+
+\begin{equation}
+  P(Y) = \frac{1}
+    {1 + e^{-(b_{0} + b_{1}X_{1i} + b_{2}X_{2i} + ... b_{n}X_{ni})}}
+  (\#eq:logreg)
+\end{equation}
+
+where $P(Y)$ is the probability of event $Y$ occurring, $b_{0}$ is the intercept, and $b_{n}$ is the regression coefficient of variable $X_{ni}$.
+
+```{r llid-model-relevel}
+# Relevels factors so output of models is more sensible
+us$llid <- relevel(us$llid, ref = "llid_no")
+
+us$age  <- relevel(us$age,  ref = "age_16_17")
+us$sex  <- relevel(us$sex,  ref = "sex_female")
+us$eth  <- relevel(us$eth,  ref = "eth_british")
+us$qual <- relevel(us$qual, ref = "qual_0")
+us$car  <- relevel(us$car,  ref = "car_0")
+us$ten  <- relevel(us$ten,  ref = "ten_owned_outright")
+```
+
+```{r llid-model-naomit}
+us_llid <- us %>%
+  select(llid,
+         age, eth, sex, qual, car, ten) %>%
+  na.omit()
+```
+
+In `R` the model is set up using the `glm()`---generalised linear model---function with a binomial family.
+After removing missing cases the model was input as follows ($n = `r format(nrow(us_llid), big.mark = ",", trim = FALSE)`$):
+
+```{r llid-baseline-model}
+m_llid_base <- glm(
+  llid ~ 1,
+  data = us_llid,
+  family = binomial()
+)
+```
+
+```{r llid-model, echo=TRUE}
+m_llid <- glm(
+  llid ~ age + eth + sex + qual + car + ten,
+  data = us_llid,
+  family = binomial())
+```
+
+```{r llid-model-clean, cache=TRUE}
+m_llid_aic <- AIC(m_llid)
+m_llid <- check_logit(m_llid)
+
+m_llid_base_aic <- AIC(m_llid_base)
+
+m_llid$ind$predictor <- m_llid$ind$predictor %>%
+  stringr::str_replace("^age",     "") %>%
+  stringr::str_replace("sex",      "") %>%
+  stringr::str_replace("car[a-z]", "c") %>%
+  stringr::str_replace("ten",      "") %>%
+  stringr::str_replace("qual[q]",  "q") %>%
+  stringr::str_replace("eth",      "")
+```
+
+```{r check-aic-pilot, echo=FALSE, include=FALSE}
+assertthat::assert_that(m_llid_aic < m_llid_base_aic)
+```
+
+The model overall is an improvement on the baseline model, as the AIC is lower than the baseline model `r m_llid_aic` (compared to `r m_llid_base_aic` for the baseline model).
+The Nagelkerke *pseudo--*$R^2$ of the model is $`r m_llid[["over"]][["nagelkerke"]]`$ and the likelihood ratio = $`r m_llid[["over"]][["diff_deviance"]]`$ ($df =$ $`r m_llid[["over"]][["diff_df"]]`$, $\chi^2 \approx$ $`r m_llid[["over"]][["chisq_prob"]]`$).
+Most levels of age and tenure, and all levels of ethnicity, sex, highest qualification, and car ownership were statistically significant ($p << 0.05$; $95\%$ confidence intervals of the odds ratio do not cross $1.0$).
+
+Most levels of age were statistically significant.
+Respondents aged 18--24 were not statistically significantly more likely to have a limiting long--term illness or disability compared to the reference group (ages 16--17).
+All other age groups were more likely to have a limiting long--term illness or disability, and the likelihood increases dramatically with age, as would be expected.
+
+All ethnic groups had lower odds of having a limiting long--term illness or disability than the reference group (White British), and these differences were statistically significant.
+Black African and Black Caribbean respondents, for example, were only about half as likely to have a limiting long--term illness or disability as White British respondents.
+Males had lower odds of having a limiting long--term illness or disability than females.
+
+Individuals with higher qualifications had lower odds of having a limiting long--term illness or disability than the reference group of no qualifications.
+The likelihood decreased with each additional level of qualification gained, so that individuals with level 4 and above qualifications were least likely to have a limiting long--term illness or disability.
+Respondents with 'other' qualifications were still less likely to have a limiting long--term illness or disability than the reference group.
+
+Car ownership is associated with lower odds of limiting long--term illness or disability, and the odds continue to decrease for families with more than one car.
+Home ownership---either owning outright or owning with a mortgage---is associated with lower odds of limiting long--term illness or disability than renting, and the odds for both kinds of ownership are not statistically different so are similar.
+
+```{r llid-model-results}
+knitr::kable(m_llid$ind, row.names = FALSE, caption = "LLID model summary")
+```
+
+<!-- Notes
+PMJ: Would you expect to see (logistic) regression diagnostics in the thesis? Should I add them, or should I leave the pilot as it is and do them for the final model(s), or should I just not bother and just do validation?
+DB: I don't think it is necessary to have the diagnosdtics, but if you have them you could perhaps add them in an appendix? (but not worth doing if it takes time). I think the focus should be on validation
+-->
+
+With constraints selected it was then necessary to order them for entry in the spatial microsimulation algorithm.
+Some authors argue that constraints should be entered so that the 'weakest' variable is entered first and subsequent variables improve the model fit (see Section \@ref(smslit-constraint-config)).
+
+The order of the constraints can be informed by $\beta$ coefficients, odds, or log odds.
+These do not identify the variables with the greatest effect on the predictive power of the model, but do suggest an order based on the effect of the variables on the outcome.
+Using log odds, the values furthest from $0.0$ have the greatest effect on the outcome, so are entered last.
+The log odds of the model are listed in table \@ref(tab:llid-log-odds-table).
+
+```{r calc-log-odds}
+m_llid[["ind"]]$log_odds <- log(m_llid[["ind"]]$odds)
+```
+
+```{r llid-log-odds-table}
+knitr::kable(
+  m_llid[["ind"]][, c("predictor", "log_odds")],
+  caption = "Model predictors with log odds",
+  row.names = FALSE
+)
+```
+
+While there is variation within the levels of each variable, broadly the order of the 'weakest' to the most powerful variable is: sex; highest qualification; housing tenure; ethnicity; car ownership; and finally age.
+
+I tested to see if the constraint order affected the simulation results, as theoretically it should not.
+I did this by comparing simulation results produced using the constraint order outlined above with simulation results produced using a randomised constraint order.
+In all cases the difference between the results was negligible, so most likely other orderings of constraints will most likely have produced nearly identical results.
+See `data-raw/constraint-order-comparison.R` for code that made this comparison.
+
+
+## Number of cases
+There are $`r format(nrow(us), big.mark = ",", trim = FALSE)`$ cases in *Understanding Society*, but after removing missing cases $`r format(nrow(pilot_ind), big.mark = ",", trim = FALSE)`$ remain.
+Table \@ref(tab:cases-vars-table) shows the number of cases remaining as additional variables are added to the model.
+
+```{r cases-vars-setup}
+vars <- list(c("age",
+               "age, sex",
+               "age, sex, eth",
+               "age, sex, eth, qual",
+               "age, sex, eth, qual, car",
+               "age, sex, eth, qual, car, tenure"))
+
+n_cases <- list()
+n_cases[[1]] <- nrow(na.omit(us[, c("llid", "age")]))
+n_cases[[2]] <- nrow(na.omit(us[, c("llid", "age", "sex")]))
+n_cases[[3]] <- nrow(na.omit(us[, c("llid", "age", "sex", "eth")]))
+n_cases[[4]] <- nrow(na.omit(us[, c("llid", "age", "sex", "eth",
+                                    "qual")]))
+n_cases[[5]] <- nrow(na.omit(us[, c("llid", "age", "sex", "eth",
+                                    "qual", "car")]))
+n_cases[[6]] <- nrow(na.omit(us[, c("llid", "age", "sex", "eth",
+                                    "qual", "car", "ten")]))
+
+cases <- data.frame(
+  unlist(vars),
+  format(unlist(n_cases), big.mark = ",", trim = FALSE),
+  stringsAsFactors = FALSE
+)
+colnames(cases) <- c("Variables", "Cases")
+```
+
+```{r cases-vars-table}
+knitr::kable(cases, row.names = FALSE,
+             caption = "Cases remaining by included variables")
+```
+
+There is clearly a trade--off to be made between the number of variables included in the simulation and the number of cases lost through missing data.
+I decided to include ethnicity in the model because it is such a fundamental piece of demographic information that the richness of the simulation would be lost if it were excluded.
+Having decided to include ethnicity there were very few additional cases lost through missing data after adding qualifications, car ownership, and housing tenure, so these were including in the simulation.
+
+
+## Hardware
+Spatial microsimulation is becoming more possible with the increasing capabilities of consumer computers, but is still a relatively computationally intensive task.
+A modern desktop computer with $16$ gigabyes of memory was used to prepare and reweight the datasets.
+This was sufficient to work with the individual--level and aggregate--level datasets, and compute the reweighted matrices for each area.
+
+
+## Software
+The spatial microsimulation was prepared and performed in `R` (`r version$version.string`) [@R-base].
+`R` was ideally suited to this task because it is both a statistical analysis programme as well as a programming language, so it was able to handle all of the tasks required of spatial microsimulation within one environment.
+These included: obtaining, loading [@R-readr] and 'tidying' [@wickham2014a] datasets [@R-dplyr; @R-tidyr]; regression analysis for selecting and testing variables and results; for the spatial microsimulation [@R-rakeR] itself; for GIS [@R-sp; @R-rgdal; @R-rgeos]; and for writing output and plotting charts [@R-ggplot2; @R-tmap].
+
+`R` is free software (both in the sense of 'free of charge' and 'free speech').
+`R` is also a scripted, interpreted, language.
+Both of these characteristics mean that it is easy for others to obtain the software and run the code used to perform the spatial microsimulation, validate the ouputs or use the code in their own projects.
+Code for this project can be obtained or forked from [`https://github.com/philmikejones/hrsim`](https://github.com/philmikejones/hrsim).
+
+There is a recent precedent of researchers using `R` for spatial microsimulation [@campbell2011a; @lovelace2013a; @nzmbie2015a].
+This body of good quality code, as well as policy and peer-reviewed outputs, attests to the robustness of `R` for spatial microsimulation.
+
+I used 'Git' [@git] and 'GitHub' [@github] for code version control, for backups, and to manage issues; Travis CI [@travisci] for continuous integration testing; and Codecov [@codecov] for testing coverage.
+The simulation was run on a computer running a Linux operating system [@ubuntu].
+
+### rakeR
+
+Building on code written by @lovelace2016a I wrote the `rakeR` package [@R-rakeR] to aid the spatial microsimulation.
+This removes the need for a lot of the manual data manipulation stages as these are now done automatically by the software.
+The advantages of this are the ability to create spatial microsimulations more quickly, as there are fewer steps involved, and the reduction of opportunities for human error to creep into the simulation.
+
+`rakeR` accepts two data frames as arguments, one for the individual--level survey data and one for the combined aggregated census data.
+It then returns a single data frame of weights or integerised cases, as requested by the user, with the simulated microdata.
+Source code for `rakeR` can be obtained from `https://github.com/philmikejones/rakeR`; the CRAN (Comprehensive R Archive Network) package can be obtained from `https://cran.r-project.org/package=rakeR`; or installed in `R` with `install.packages("rakeR")`.
+
+`rakeR` is designed to be robust and this is achieved through defensive programming practices.
+It will 'fail fast' [@wickham2015a, p. 169] if it encounters any errors or ambiguities, for example if the inputs are not of the expected type.
+It will not, for example, attempt to infer an option or input data type if they are misspecified.
+This has the advantage that it will not produce spurious or incorrect answers, which is particularly dangerous if the user is unaware the answer provided are spurious.
+Component functions are unit tested to verify their results compared to known, good simulations.
+`rakeR` version 0.1.2 was used to simulate the pilot.
+
+
+## Weighting {#methods-weighting}
+Having chosen and prepared suitable constraints and decided on their order of entry into the model, I turned to performing the spatial microsimulated itself.
+The final model will be used to compare current circumstances and a small number of discrete 'snapshots' of proposed changes to factors that are hypothesised to affect resilience [@ballas2005a, p. 8].
+<!-- TODO calculate confidence intervals around estimations? see Adam and Elle's Wales document, p. 13 -->
+
+Fractional weights were created using the `weight()` function in the `rakeR` package which in turn uses the `ipfp` package [@ipfp2013a].
+This is used because it is written in `C` so is at least an order of magnitude quicker than base `R` [@lovelace2016a].
+The `weight()` function accepts the survey data frame and the census data as arguments and produces a table of fractional weights for each individual in each zone.
+Effectively the entire survey population is copied exactly into each zone then, in each zone in turn, the individuals in that zone are reweighted by the algorithm to match the appropriate constraint tables.
+The resulting data is structured like a cube, with each 'slice' through the cube representing a zone, and on each slice is a data frame containing the individuals in the survey with their appropriate weights.
+
+Simulated data is produced for each zone in Doncaster that matches the real population in size and constraint characteristics as closely as possible.
+Alongside these simulated constraint variables the simulation contains the target variable, limiting long--term illness or disability, which I have used for external validation.
+
+I simulated weights for output areas (OAs), lower--layer super output areas (LSOAs), and middle--layer super output areas (MSOAs) simultaneously.
+This allowed me to test if the size of the zone being simulated affects the accuracy of the model.
+
+The fractional weights are difficult to work with on their own, so the reweighted results were 'extracted' and integerised using the `integerise()` function which aggregates the individuals in each zone and turns the fractional weights into integers.
+I used the 'truncate, replicate, sample' (TRS) method of integerisation because it provides more accurate results than other approaches [@lovelace2013b, p. 10].
+
+Integerised weights are typically used if they are being entered into a dynamic or agent--based model.
+Although I am not using a dynamic model, integerised cases have the advantage of being more meaningful because each case represents a simulated individual.
+By simulating both I was able to compare the accuracy of the results of both methods.
+Integerised weights are also useful to provide 'case studies' that are illustrative of individuals affected by policy changes [@campbell2013a].
+I select a number of simulated individuals as case studies in Section \@ref(policy-case-studies).
+
+
+## Validation {#methods-validation}
+
+The simulated population ($`r format(sum(pilot_oa_ext[["total"]]), big.mark = ",", trim = FALSE)`$) matched the actual population exactly ($`r format(sum(pilot_con_pops), big.mark = ",", trim = FALSE)`$) indicating the simulation has constrained accurately overall.
+The correlation between the simulated and actual population in each zone can be used to assess the quality of the simulation.
+The correlation statistic is standardised, so a value of 1 is ideal.
+The correlation between the simulated and integerised zone populations and the actual zone populations for this simulation is $`r cor(pilot_con_pops, pilot_oa_ext[["total"]])`$.
+
+A chart of the simulated and actual zone populations confirms the simulated populations are accurate (Figure \@ref(fig:pilot-oa-pop-plot)).
+As the simulated constraint should equal the 'real' constraint, the 'ideal' line of $y = x$ is plotted on each chart rather than the actual line of best fit.
+
+```{r pilot-oa-pop-plot, fig.width=7, fig.height=7, fig.cap="Actual population against simulated population at output area level", cache=TRUE}
+sim_act <- data.frame(
+  code = pilot_con$code,
+  act = pilot_con_pops,
+  sim = pilot_oa_ext$total,
+  stringsAsFactors = FALSE, row.names = NULL
+)
+
+ggplot(data = sim_act) +
+  geom_point(aes(act, sim)) +
+  geom_smooth(aes(act, act), method = "lm") +
+  coord_equal()
+```
+
+It is also possible to test the correlation between the simulated and actual populations by variable.
+Figures \@ref(fig:plot-int-val-age) and \@ref(fig:plot-int-val-eth) show the model fit for age 30--44 and White British ethnicity respectively.
+They are illustrative of the accuracy of the fit of the model to the actual data.
+Plots for each level of each variable were created which fit the actual data very accurately.
+These are not shown because of their similarity to the displayed plots but can be found in the `figures/cache/` directory.
+
+```{r pilot-int-val, message=FALSE, warning=FALSE, include=FALSE}
+if (!file.exists("figures/cache/internal_val_age_90_plus.pdf")) {
+  # exclude code, total, and llid_ vars
+  variables <- colnames(pilot_oa_ext[, !names(pilot_oa_ext) %in%
+                                   c("code", "total", "llid_yes", "llid_no")])
+  variables <- variables[!variables == "llid_correc"]
+
+  lapply(variables, function(x) {
+
+    ggplot() +
+      geom_point(aes(pilot_oa_ext[[x]], pilot_con[[x]])) +
+      geom_smooth(aes(pilot_con[[x]], pilot_con[[x]]), method = "lm") +
+      xlab(paste(x, "(actual)")) +
+      ylab(paste(x, "(simulated)")) +
+      coord_equal()
+
+    ggsave(filename = paste0("internal_val_", x, ".pdf"),
+           path = "figures/cache/")
+
+  })
+}
+```
+
+```{r plot-int-val-age, out.width="100%", fig.cap="Internal validation of age"}
+knitr::include_graphics("figures/cache/internal_val_age_30_44.pdf")
+```
+
+```{r plot-int-val-eth, out.width="100%", fig.cap="Internal validation of ethnicity"}
+knitr::include_graphics("figures/cache/internal_val_eth_british.pdf")
+```
+
+$t$--tests of the simulation indicated that all categories of all variables are from the same distribution because they are not statistically significant.
+These tests suggest the spatial microsimulation is performing well and that the results match 'real' data well.
+Table \@ref(tab:pilot-ttests) summarises the results of the *t*--test for each category of variable.
+
+```{r pilot-ttests}
+variables <- colnames(pilot_con[, 2:ncol(pilot_con)])  # drop `code`
+
+pilot_ttests <- lapply(as.list(variables), function(x) {
+
+  result <- t.test(pilot_con[[x]], pilot_oa_ext[[x]],
+                   var.equal = TRUE, alternative = "two.sided")
+
+  result <- data.frame(
+    x,
+    result[["statistic"]],
+    result[["p.value"]],
+    stringsAsFactors = FALSE, row.names = NULL
+  )
+
+  colnames(result) <- c("variable", "statistic", "p_value")
+
+  result
+
+})
+
+pilot_ttests <- dplyr::bind_rows(pilot_ttests)
+
+knitr::kable(
+  pilot_ttests,
+  caption = "Result of t-tests comparing simulated against actual data")
+```
+
+```{r pilot-tae}
+pilot_tae <- calc_tae(pilot_con_pops, pilot_oa_ext$total)
+pilot_sae <- pilot_tae / sum(pilot_con_pops)
+```
+
+The total absolute error overall is $`r format(sum(abs(pilot_tae)), digits = 2)`$, making the standardised absolute error overall $`r sum(abs(pilot_sae))`$, both negligible amounts.
+These results are extremely encouraging; no area has an SAE of 0.1 or greater, which is suitable for simulating a relatively rare event (see Section \@ref(smslit-validation)).
+The mean SAE is $`r mean(pilot_sae)`$ with a standard deviation of $`r sd(pilot_sae)`$, meaning the errors are well within the validation criteria and are effectively zero for practical purposes.
+These are significantly better than thresholds suggested by @birkin1988a and @smith2009a.
+
+As with internal validation, to externally validate the model the simulated values should exactly match the values from the census for each zone which, if plotted, produces a line of $y = x$.
+Figure \@ref(fig:plot-pilot-ext-val) shows this comparison for this pilot simulation.
+
+```{r plot-pilot-ext-val, fig.height=7, fig.width=7, fig.cap="External validation of pilot simulation", cache=TRUE}
+ggplot(data = don_oa@data) +
+  geom_point(aes(cen_llid_yes, pilot_oa_ext$llid_yes)) +
+  geom_smooth(aes(cen_llid_yes, cen_llid_yes), method = "lm") +
+  xlab("Observed limiting long-term illness or disability count") +
+  ylab("Simulated limiting long-term illness or disability count") +
+  coord_equal()
+```
+
+```{r pilot-ext-ttest}
+pilot_ext_ttest <- t.test(pilot_oa_ext$llid_yes, don_oa@data$cen_llid_yes,
+                          var.equal = TRUE, alternative = "two.sided")
+```
+
+An equal variance, two-tailed *t*--test can again be used for the purpose of statistically comparing the actual with simulated counts.
+In this instance the result is statistically significant ($`r pilot_ext_ttest[["statistic"]]`$, $p \approx `r pilot_ext_ttest[["p.value"]]`$).
+The residuals from the mean with no model were smaller than the residuals against the ideal line in this case because the simulation consitently over--estimated the number of people with a limiting long--term illness or disability.
+
+```{r pilot-ext-corrected-ttest}
+pilot_ext_ttest_corr <- t.test(pilot_oa_ext$llid_correc, don_oa@data$cen_llid_yes,
+                               var.equal = TRUE, alternative = "two.sided")
+```
+
+As the over--estimation was consistent a commensurate, consistent, adjustment was made to the model data.
+A 'calibration' or 'alignment' such as this has been used in similar circumstances [@morrissey2013a, p. 222].
+Each simulated value was reduced by the difference in means ($\overline{sim} - \overline{real}$) producing a more accurate simulation, illustrated in Figure \@ref(fig:pilot-ext-val-corrected).
+Applying a fixed correction to each value of the difference between the observed mean and the simulated mean improved the model fit, which is confirmed by a *t*--test ($`r pilot_ext_ttest_corr[["statistic"]]`$, $p \approx `r pilot_ext_ttest_corr[["p.value"]]`$).
+
+```{r pilot-ext-val-corrected, fig.width=7, fig.height=7, fig.cap="Actual against simulated population with a limiting long-term illness or disability, corrected", cache=TRUE}
+ggplot() +
+  geom_point(aes(don_oa@data$cen_llid_yes, pilot_oa_ext$llid_correc)) +
+  geom_smooth(aes(don_oa@data$cen_llid_yes, don_oa@data$cen_llid_yes), method = "lm") +
+  xlab("Observed limiting long-term illness or disability count") +
+  ylab("Corrected simulated limiting long-term illness or disability count") +
+  coord_equal()
+```
+
+```{r pilot-sei}
+pilot_sei <- calc_sei(pilot_oa_ext$llid_correc, don_oa@data$cen_llid_yes)
+```
+
+The 'Standard Error around Identity (SEI)' provides another measure of similarity and is a measure of residuals from the 'ideal' line of $y = x$.
+@ballas2007a stipulate the SEI is calculated as "[t]he square root of the average of the sum of the squared deviations about that line" [@ballas2007a, pp. 58--59], so is a measure of the 'average' deviation from the ideal line for all zones, with smaller numbers indicating smaller deviations.
+The SEI for the corrected vector is $`r pilot_sei`$ against an average population size of `r median(pilot_con_pops)`, suggesting a good fit between simulated and actual data.
+
+```{r per-error}
+pilot_perc_error <- calc_perc_error(pilot_oa_ext$llid_correc, 
+                                    don_oa@data$cen_llid_yes, 
+                                    pilot_con_pops)
+```
+
+A final method of external validation is to calculate the percentage of simulated individuals in each area who are incorrectly classified, a method used by @smith2011a, p. 621.
+The percentage error is calculated as the mean of the absolute differences between the number of simulated individuals and the number of 'real' individuals with a limiting long--term illness or disability, divided by the total individuals for each zone.
+The overall percentage error for the corrected simulation is therefore $`r pilot_perc_error * 100`\%$.
+These results compared favourably with the results obtained by @smith2011a.
+
+
+## Comparison of weights and integerised simulations {#methods-weight-int-comp}
+
+```{r weight-int-comp, fig.width=7, fig.height=7, fig.cap="Comparison of fractional weight and integerised weight distributions (red = fractional weights; blue = integerised weights)", cache=TRUE}
+weight_comp <- pilot_oa_int %>%
+  group_by(zone) %>%
+  count(llid) %>%
+  tidyr::spread(llid, n) %>%
+  select(-llid_no) %>%
+  rename(llid_int = llid_yes) %>%
+  inner_join(pilot_oa_ext[, c("code", "llid_yes")],
+             by = c("zone" = "code")) %>%
+  rename("llid_weight" = llid_yes) %>%
+  inner_join(don_oa@data[, c("code", "cen_llid_yes")],
+             by = c("zone" = "code")) %>%
+  rename("llid_act" = cen_llid_yes)
+
+ggplot(data = weight_comp) +
+  geom_point(aes(llid_act, llid_weight), colour = "red", alpha = 0.4) +
+  geom_point(aes(llid_act, llid_int), colour = "blue", alpha = 0.4) +
+  xlab("Actual (observed) LLID") +
+  ylab("Simulated LLID") +
+  coord_equal()
+```
+
+```{r weight-int-ttest}
+weight_int_ttest <- t.test(weight_comp$llid_int, weight_comp$llid_weight,
+                           var.equal = TRUE, alternative = "t")
+```
+
+Figure \@ref(fig:weight-int-comp) illustrates the similarity between the fractional and integerised weights.
+Red indicates a fractional weight, and blue indicates an integerised weight.
+A two--sided, equal variance *t*--test confirms the distributions are statistical similar ($`r weight_int_ttest[["statistic"]]`$, $p = `r weight_int_ttest[["p.value"]]`$).
+Based on this, either the integerised weights or fractional weights could be used.
+I use both the fractional and the integerised weights in different circumstances.
+For single variables I opted to use the fractional weights, but for comparison of multiple variables I used integerised weights instead because they are more intuitive.
+The integerised weights could be used for a future dynamic or agent--based model with confidence.
+
+
+## Comparison of geography zone sizes
+
+<!--
+- Why are some OAs not simulating correctly?
+    + Check IMD, neigbourhood deprivation; is one group simulating poorly
+-->
+
+```{r sum-lmsoa}
+lu <- geolookup::oa_lsoa_msoa_lad
+
+llid_cen_lsoa <- don_oa@data %>%
+  select(code,
+         cen_llid_little, cen_llid_lot, cen_llid_not,
+         cen_llid_yes, cen_llid_yes_p) %>% 
+  dplyr::inner_join(lu[, c("oa_cd", "lsoa_cd")], by = c("code" = "oa_cd")) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(-code) %>%
+  rename(code = lsoa_cd) %>%
+  group_by(code) %>%
+  summarise_all(sum)
+
+llid_cen_msoa <- don_oa@data %>%
+  select(code,
+         cen_llid_little, cen_llid_lot, cen_llid_not,
+         cen_llid_yes, cen_llid_yes_p) %>% 
+  dplyr::inner_join(lu[, c("oa_cd", "msoa_cd")], by = c("code" = "oa_cd")) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(-code) %>%
+  rename(code = msoa_cd) %>%
+  group_by(code) %>%
+  summarise_all(sum)
+
+pilot_lsoa_ext$llid_yes <- pilot_lsoa_ext$llid_yes -
+  (mean(pilot_lsoa_ext$llid_yes) - mean(llid_cen_lsoa$cen_llid_yes))
+
+pilot_msoa_ext$llid_yes <- pilot_msoa_ext$llid_yes -
+  (mean(pilot_msoa_ext$llid_yes) - mean(llid_cen_msoa$cen_llid_yes))
+```
+
+```{r geo-compare, fig.height=7, fig.width=7, fig.cap="Comparison of OA (blue), LSOA (red), and MSOA (green) simulations", cache=TRUE}
+ggplot() +
+  geom_point(aes(don_oa@data$cen_llid_yes, pilot_oa_ext$llid_correc),
+             colour = "blue") +
+  geom_smooth(aes(don_oa@data$cen_llid_yes, don_oa@data$cen_llid_yes),
+              method = "lm", colour = "blue") +
+  geom_point(aes(llid_cen_lsoa$cen_llid_yes, pilot_lsoa_ext$llid_yes),
+             colour = "red") +
+  geom_smooth(aes(llid_cen_lsoa$cen_llid_yes, llid_cen_lsoa$cen_llid_yes),
+              method = "lm", colour = "red") +
+  geom_point(aes(llid_cen_msoa$cen_llid_yes, pilot_msoa_ext$llid_yes),
+             colour = "green") +
+  geom_smooth(aes(llid_cen_msoa$cen_llid_yes, llid_cen_msoa$cen_llid_yes),
+              method = "lm", colour = "green") +
+  xlab("Census values of LLID") +
+  ylab("Simulated values of LLID") +
+  coord_equal()
+```
+
+All zone sizes simulate well when the correction is applied (Figure \@ref(fig:geo-compare)).
+The external validation shows incremental improvement as geographical zone size increases but the simulation of output areas is more detailed than LSOA or MSOA without much loss of accuracy.
+Smaller geographies provide less homogeneity and more detail, without much loss of accuracy, so a simulation at output area level is most appropriate.
+
+```{r geo-compare-stat-setup}
+geo_compare_stat <- data.frame(
+  zone_size   = c("OA", "LSOA", "MSOA"),
+  
+  correlation = c(cor(pilot_con_pops,      pilot_oa_ext$total),
+                    cor(pilot_con_lsoa_pops, pilot_lsoa_ext$total),
+                    cor(pilot_con_msoa_pops, pilot_msoa_ext$total)),
+  
+  sae         = c(sum(abs(pilot_con_pops - pilot_oa_ext$total)) /
+                      sum(pilot_con_pops),
+                    sum(abs(pilot_con_lsoa_pops - pilot_lsoa_ext$total)) / 
+                      sum(pilot_con_lsoa_pops),
+                    sum(abs(pilot_con_msoa_pops - pilot_msoa_ext$total)) /
+                      sum(pilot_con_msoa_pops)),
+  
+  sei         = c(calc_sei(pilot_oa_ext$llid_correc, don_oa@data$cen_llid_yes),
+                    calc_sei(pilot_lsoa_ext$llid_yes, llid_cen_lsoa$cen_llid_yes),
+                    calc_sei(pilot_msoa_ext$llid_yes, llid_cen_msoa$cen_llid_yes)),
+                    
+  perc_error  = c(calc_perc_error(pilot_oa_ext$llid_correc,
+                                  don_oa@data$cen_llid_yes,
+                                  pilot_con_pops),
+                  calc_perc_error(pilot_lsoa_ext$llid_yes,
+                                  llid_cen_lsoa$cen_llid_yes,
+                                  pilot_con_lsoa_pops),
+                  calc_perc_error(pilot_msoa_ext$llid_yes,
+                                  llid_cen_msoa$cen_llid_yes,
+                                  pilot_con_msoa_pops)))
+```
+
+```{r geo-compare-stat}
+knitr::kable(geo_compare_stat, caption = "Comparison of simulation at OA, LSOA, and MSOA geographies")
+```
+
+Table \@ref(tab:geo-compare-stat) compares summary statistics across the three geographical levels.
+
+
+## Results
+
+### Ouptut areas
+
+By comparing the simulated and actual proportion of people with a limiting long--term illness or disability, it is clear how close the simulated values are to the known values.
+The mean simulated proportion is $`r mean(don_oa@data$p_llid_sim)`$ with standard deviation of $`r sd(don_oa@data$p_llid_sim)`$, compared to the actual median proportion of $`r mean(don_oa@data$cen_llid_yes_p)`$ with standard deviation of $`r sd(don_oa@data$cen_llid_yes_p)`$.
+
+The biggest discrepancy between the simulated data and the actual values is that in a small number of cases the simulation does not assign enough people with a limiting long--term illness or disability: it undersimulates.
+The maximum proportion assigned by the simulation is $`r max(don_oa@data$p_llid_sim)`$ compared to $`r max(don_oa@data$cen_llid_yes_p)`$ for the actual data.
+However, only eight output areas---or less than $1\%$---have an actual maximum proportion higher than $`r max(don_oa@data$p_llid_sim)`$, suggesting the simulation has estimated that majority of cases of limiting long--term illness or disability well.
+
+This is further demonstrated by the similarity of the thematic maps produced.
+Figure \@ref(fig:llid-sim-oa) shows the simulated proportion of individuals in each output area with a limiting long--term illness or disability.
+Figure \@ref(fig:llid-sim-oa-cen) shows the actual proportion of individuals in each output area with a limiting long--term illness or disability, based on the 2011 census.
+
+```{r llid-sim-oa, cache=TRUE, fig.cap="Limiting long-term illness or disability spatial microsimulation results for Doncaster output areas", fig.width=7, fig.height=7}
+tm_shape(don_oa) +
+  tm_borders(col = "grey70") +
+  tm_fill(col = "p_llid_sim", palette = "YlOrBr", style = "fixed",
+          breaks = c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+          title = "Simulated proportion of
+residents with limiting long-term
+illness or disability") +
+tm_layout(frame = FALSE)
+```
+
+```{r llid-sim-oa-cen, cache=TRUE, fig.cap="Limiting long-term illness or disability from census", fig.width=7, fig.height=7}
+tm_shape(don_oa) +
+  tm_borders(col = "grey70") +
+  tm_fill(col = "cen_llid_yes_p", palette = "YlOrBr", style = "fixed",
+          breaks = c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+          title = "Census proportion of
+residents with limiting long-term
+illness or disability") +
+tm_layout(frame = FALSE)
+```
+
+```{r llid-sim-comm, cache=TRUE, eval=FALSE, fig.cap="Limiting long-term illness or disability spatial microsimulation results for Doncaster community areas", fig.width=7, fig.height=7}
+tm_shape(don_comm) +
+  tm_borders(col = "grey70") +
+  tm_fill(col = "p_llid_sim", palette = "YlOrBr",
+          title = "Simulated proportion of residents with limiting long-term illness or disability") +
+tm_layout(frame = FALSE)
+```
+
+```{r llid-sim-comm-cen, cache=TRUE, eval=FALSE, fig.cap="Limiting long-term illness or disability from census", fig.width=7, fig.height=7}
+tm_shape(don_comm) +
+  tm_borders(col = "grey70") +
+  tm_fill(col = "cen_llid_yes_p", palette = "YlOrBr",
+          title = "Census proportion of residents with limiting long-term illness or disability") +
+tm_layout(frame = FALSE)
+```
+
+The simulation picks up high proportions of limiting long--term illness or disability in areas across the borough, including Conisbrough and Mexborough to the west, Carcroft to the north, Thorne and Armthorpe to the east, and Rossington to the south.
+
+The simulation has picked up one output area with a high proportion of limiting long--term illness or disability.
+This is the output area to the south of Rossington and east of the A1(M) at the council boundary.
+I believe this is because there is a high number of residents who have never worked or are long--term unemployed (NS--SEC 8) living in this area,  `r don_oa@data$lt_unem_8[don_oa@data$code == "E00038597"]` compared to a mean of just `r mean(don_oa@data$lt_unem_8)`.
+
+If the survey data set has a disproportionate number of people who have never worked or are long--term unemployed, but not on medical grounds, this may affect the simulation.
+For example, a bias in the survey sample design may have identified people who have never worked because their partner works instead which may not fit the demographic of this area.
+
+
+## Conclusion
+
+This chapter is a proof--of--concept spatial microsimulation using Understanding Society (*Understanding Society*) respondents and 2011 census tables obtained from Nomisweb.
+It simulates if the population have or have had a health condition for each resident in Doncaster aged 16 and above.
+It uses a self--written package for R, `rakeR`, to perform the spatial microsimulation using the iterative proportional fitting method.
+
+The final output of the spatial microsimulation model is a data table with one row per geographical zone and one column per variable, included the simulated variable.
+The results of the internal validation are encouraging and suggest this model forms a good basis to expand to include resilience and indicators of poverty, which I simulate in the next chapter.

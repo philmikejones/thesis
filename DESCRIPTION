@@ -1,0 +1,32 @@
+Package: hrsim
+Title: hrsim: A spatial microsimulation analysis of health inequalities and health resilience
+Version: 1.0.0
+Authors@R: person("Phil Mike", "Jones", email = "phil.jones@sheffield.ac.uk", role = c("aut", "cre"))
+Description: A spatial microsimulation analysis of health inequalities and health resilience in Doncaster, South Yorkshire.
+Depends:
+    R (>= 3.3.1)
+License: file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    bookdown,
+    knitr,
+    tidyverse,
+    magrittr,
+    sp,
+    rgdal,
+    rgeos,
+    tmap,
+    broom,
+    stringr,
+    rakeR,
+    cartogram,
+    sf
+Remotes: philmikejones/geolookup
+RoxygenNote: 6.0.1
+Suggests: forcats,
+    rmapshaper,
+    testthat,
+    geolookup,
+    car,
+    jsonlite

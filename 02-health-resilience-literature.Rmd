@@ -1,0 +1,387 @@
+# Health resilience literature {#reslit}
+
+
+## Introduction {#reslit-intro}
+
+In this chapter I summarise the available literature on resilience, and health resilience more specifically.
+Early literature on resilience tended to be psychological in nature, and this still has important implications for contemporary resilience literature.
+Most notably, it is this early literature that first used the notions of risk exposure, positive outcomes, and protective factors which still frame the majority of resilience research today.
+
+As part of this summary I describe some of the measures of risks, positive outcomes, and protective factors used in this research.
+I expand on this list in Chapter \@ref(sysrev), which is a systematic scoping review of health resilience literature I use to identify the range of measures used to articulate risks and positive health outcomes.
+
+I conclude by outlining some of the determinants of health that affect clinical depression which inform my selection of independent variables for the spatial microsimulation model, which I describe further in Chapter \@ref(smslit).
+
+
+## History of resilience {#reslit-history}
+
+Research into resilience is generally considered to have first emerged in the 1970s [@sameroff1983a; @luthar2000a; @schoon2006a].
+Examples of resilience research from this era include research into the outcomes of children recruited for 'Project Competence' based in Minnesota [@garmezy1984a; @odougherty1990a], children born in 1955 in Kauai, Hawaii [@werner1977a; @werner1992a], and children in the 1970 Rochester longitudinal study [@sameroff1983a; @sameroff1990a].
+
+The hallmark of these studies was their investigation of high--risk children and young people who exhibited positive outcomes.
+These young people at high--risk who nevertheless experienced positive outcomes were considered 'resilient'.
+The researchers studied and hypothesised about what factors might have encouraged positive outcomes in these high--risk young people.
+These were deemed to be 'protective factors', and they existed in the middle of the pathway between risk exposure and positive outcome, forming a barrier preventing the transition from high--risk status to negative outcome seen in some individuals.
+
+A common methodological approach [@werner1977a; @werner1992a; @schoon2006a] was to use longitudinal data, allowing the researchers to track the choronology of risk, protective factors, and outcomes.
+For example, Werner and Smith used data from the 1955 birth cohort study of children born on the island of Kauai, Hawaii.
+As well as data available in the birth cohort---which provided information on the cohort at birth, infancy, age two, and age ten---the authors performed their own follow--ups at age 17 to 18 beginning in 1972 [@werner1977a] and age 31 to 32 beginning in 1985 [@werner1992a].
+Figure \@ref(fig:kauai-map) shows the location of Kauai in the Hawaii archipelago (boundary data from @hawaii-boundary).
+
+```{r kauai-map, cache=TRUE, fig.cap="Kauai is north west in the Hawaii archipelago"}
+tm_shape(hawaii) +
+  tm_fill("lightgrey") +
+  tm_borders("darkgrey") +
+tm_shape(kauai) +
+  tm_fill("darkgrey") +
+  tm_borders("darkgrey") +
+tm_scale_bar(position = c("center", "bottom")) +
+tm_layout(frame = FALSE)
+```
+
+This pioneering research tended to focus on the psychological and psychosocial domains.
+Perhaps because of the focus on the psyche, high--risk status tended to be identified by psychological measures, such as a mental illness diagnoses.
+Similarly, at first protective factors that were internal to the child or young person were considered, such as their temperament or social skills.
+"As work in the area evolved, however, researchers increasingly acknowledged that resilience may often derive from factors external to the child" [@luthar2000a, p. 544].
+This developed into the theory that three groups of protective factors affected the development of resilience in such children and young people: attributes of the children themselves; attributes of their families; and the availability of external sources of support and the ability of the family to obtain them [@garmezy1986a, p. 511; @luthar2000a, p. 544].
+
+As research in this field developed so too did the understanding of protective factors.
+Instead of a barrier that resilient individuals had---and non--resilient individuals did not---a more nuanced understanding of 'protective mechanisms' or 'processes' developed.
+These enable *some* individuals under *some* circumstances to be resilient, that is it is the combination of the individual's own abilities and their current circumstances that allows them to remain resilient in the face of risk [@rutter1987a, p. 317].
+
+Not dissimilar to attempts to understand 'the causes of the causes' [@rose1992a; @marmot2010a] of poor health outcomes in health inequalities research, the focus of resilience research moved on to try to understand the 'causes of the causes' of positive outcomes.
+Self--esteem, for example, is undeniably beneficial for individuals who have it as it helps them to achieve and maintain good mental and physical health.
+But rather than seeing 'self--esteem' as the source of resilience, authors [@rutter1987a; @schoon2006a] asked what enables some individuals to develop and maintain self--esteem when others in similar circumstances do not?
+
+> ... we need to ask why and how some individuals manage to maintain high self--esteem and self--efficacy in spite of facing the same adversities that lead other people to give up and lose hope.
+> *How* is it that some people have confidants to whom they can turn? *What* has happened to enable them to have social supports that they can use effectively at moments of crisis? [@rutter1987a, p. 317, emphasis added]
+
+
+## Risk and positive outcomes {#reslit-risk-positive-outcomes}
+
+Despite similarities in this literature there were differences in how each study operationalised resilience [@luthar2000a], with different measures of 'high--risk' and positive outcomes.
+Some measure of high--risk status and some measure of positive outcome are necessary to articulate resilience, but there is no standard definition or criteria for deciding what these should be.
+I return to this issue in Chaper \@ref(sysrev) but outline some of the measures used for each below.
+
+Given the psychological origin of this research many psychological and psychosocial measures and definitions were used to identify 'at risk' or 'high risk' children and young people in these studies.
+@garmezy1974a considered a child to be 'at risk' "if there is a greater likelihood that he [sic] will develop a mental disorder than a randomly selected child from the same community" [@garmezy1974a, p. 17].
+Similar measures of at--risk children included those with a mother with a diagnosis of schizophrenia [@sameroff1990a], affective disorder, or personality disorder [@garmezy1984a].
+Studies using the 1955 Kauai birth cohort considered high--risk children as those with: a learning disability diagnosis and recommendation to attend special educational classes; a need of long--term---greater than six months---mental health services; a need of short--term---less than or equal to six months---mental health services; or those with a `new behavioural problem' when followed--up at age 10 [@werner1977a, p. 26].
+
+In time later studies used more general risks that extended beyond the psychological.
+These risks included: socio-economic disadvantage; urban poverty; community violence; chronic illness; and catastrophic life events [@luthar2000a, p. 554].
+In a later follow--up @werner1992a considered 72 cohort members (42 females and 30 males) who were born into poor families---as measured by the 'breadwinner's occupation', income, and condition of housing---and who experienced additional 'potent' risk factors before age two to be high--risk.
+In studies that examined medical risk, severe heart defects---cyanotic congenital heart defects [@odougherty1990a], moderate or severe perinatal stress, low--birth weight (<2,500g), physical handicaps, and alcoholic parents [@werner1992a, p. 55] were taken as the risk exposure.
+
+The positive outcomes resilient children achieved---and researchers measured---included: educational achievement; low unemployment; higher employment grade; lower reported work--related stress; marriage or entering a long--term commited relationship (females); placing a high value on parenting and caring for their children; remaining law--abiding (especially when compared to non--resilient, high--risk peers); and an absence of significant mental health problems [@werner1992a, pp. 59--63].
+
+
+## Protective factors {#reslit-protective-factors}
+
+Early research into resilience began by examining the types of factors that enabled children and young people to achieve positive adaptation and positive social adjustment despite being considered 'high--risk' or 'at risk' [@garmezy1974a; @garmezy1984a; @werner1977a; @werner1992a; @luthar2000a].
+@werner1977a, for example, found the resilient children in their study differed from their non--resilient peers in a number of ways.
+
+They found that most of the resilient children grew up in a family with a maximum of three other siblings (four children in total) and that there were at least two years between the resilient child and any other siblings [@werner1992a, p. 56].
+The resilient children had not experienced any prolonged separation fom a primary caregiver in their first year of life, and they formed a close bond with one or more caregivers who could be either parental or 'substitute parents', for example a grandparent or older sibling [@werner1992a, p. 56].
+
+As infants they had temperaments that "elicited positive attention", were considered active, affectionate (females), and good-natured (males), and also had "fewer eating and sleeping habits that distressed their parents" [@werner1992a, p. 56].
+
+In difference to their low--risk peers, the high--risk resilient group tended to withdraw from troubled relationships with parents, but it could be argued the low--risk group did not *need* to as they did not experience the same problems with their relationships with their parents.
+Many of the children, by nature of being from high--risk families, had parents who divorced, had illnesses, or lived in households with 'chronic family discord' [@werner1992a, p. 65].
+The resilient children tended to cope by becoming detached or withdrawn from these situations, in comparison to their high--risk peers who continued to be involved [@werner1992a, p. 65].
+
+Despite this the resilient cohort's family played an important role in the positive outcomes of many of the resilient children, despite contributing to or causing their high--risk status.
+Educational level of an opposite--sex parent was strongly associated with positive adaptation in adulthood [@werner1992a, p. 177].
+The males tended to have older fathers, had more positive interactions with caregivers, and had higher ratings of family stability [@werner1992a, p. 179].
+
+In addition to family, community also played an important role in the resilient cohort's positive adaption.
+Resilience was associated with having additional caring adults, including grandparents, uncles and aunts, neighbours, parents of partners and boy-- or girlfriends, youth leaders, church leaders, and, in adolescence, teachers [@werner1992a, p. 178; @garmezy1974a, p. 64].
+
+These factors all suggest that, despite their adverse beginnings, these resilient children learned how to establish and maintain important social relationships with family, peers, and elders who they are able to draw on for support and encouragement.
+This is in contrast to their peers who were high--risk but not resilient, who struggled to achieve positive outcomes and who may have lacked the social skills necessary to form such bonds.
+
+In cases where children had mental health problems the ability of the family to obtain psychological and psychiatric support from professional and community services---and the knowledge of the existence of such support---helped the children to manage their condition [@garmezy1974a, p. 63; @werner1977a, p. 216].
+
+Perhaps one of the most powerful protective factors among the resilient young people was "... faith that life made sense, [and] that the odds could be overcome" [@werner1992a, p. 177], an 'internal locus of control'.
+Locus of control and competence had a positive effect even on high--risk youths with more severe needs, such as learning disability or long--term mental health problems:
+
+> The degree to which youth had faith in the effectiveness of their own actions was related not only to the effectiveness with which they used their intellectual resources in scholastic achievement but also to positive change in behaviour in adolescence.
+An internal locus of control was a significant correlate of improvement [@werner1977a, p. 220]
+
+Work ethic ('hard work' and 'persistence') was mentioned by young people with more severe mental health issues in childhood who later improved [@werner1977a, p. 221].
+
+Werner and Smith argued that one of the biggest differences separating the high--achieving and low--achieving high--risk individuals was their goal setting and aspirations.
+Career and employment success was the most important goal for the resilient cohort but the lowest priority for their non--resilient peers [@werner1992a, p. 69].
+
+The resilient cohort faced many of the same difficulties as their high--risk peers, but took opportunities when presented with them to recover from these difficulties.
+These opportunities presented at 'major life transitiions', and included marriage or entering a long--term committed relationship, the birth of a child, employment and establishment of a career, graduating from high school, going to and graduating from college (university), joining the military, and becoming an active member of a church group [@werner1992a, p. 178].
+The authors contrasted the resilient cohort's focus on taking opportunities with their high--risk peers who instead discussed life events that limited opportunities, including divorce or the break--up of a long--term relationship, the death of a parent (women), and moving away from home (men) [@werner1992a, p. 178].
+
+The resilient cohort overall had greater work satisfaction, measured by self--rated satisfaction with work or school achievement at age 31 or 32 when asked in a structured interview or self--completion questionnaire [@werner1992a, p. 179].
+The resilient cohort had higher self--rated satisfaction with their state of life [@werner1992a, p. 181].
+
+In adulthood the resilient cohort tended to have positive relationships with their parents--in--law or the parents of their long--term partner, and many resilient women in particular sought emotional support from their parents--in--law [@werner1992a, p. 66].
+The resilient cohort had more 'satisfying' relationships with their siblings as adults based on self--rated responses, and this was most notable among siblings who had alcoholic or mentally ill parents [@werner1992a, p. 67].
+They also had more satisfying relationships with parents, spouses or partners, and children at age 31 or 32 [@werner1992a, p. 180].
+
+Their relationships with friends were more complex; they shared a similar number of friends with their high--risk peers and had similar satisfaction with their relationships, but tended to be more self--reliant and rely on friends less for financial support and counsel than their high--risk peers [@werner1992a, p. 68--69].
+As outlined above these resilient individuals tended to have an internal locus of control and be more self--confident, so it is perhaps not surprising that they relied on themselves more to address problems.
+In addition, they may simply have had greater financial resources as a result of their employment---which tended to be of a higher grade---or simply be better at managing their own money.
+
+
+### Sex and gender
+
+The authors noted that resilient girls tended to have increased autonomy and responsibility in households where the mother worked and the father was absent, for example by providing care to younger siblings [@werner1992a, p. 57].
+For women, having a mother who had steady employment also had positive results [@werner1992a, p. 177].
+
+Resilient women were significantly more likely to have had "regular household chores and domestic responsiblity during adolescence" while resilient men had higher self--rated temperament and activity scores [@werner1992a, p. 177].
+It seems unlikely that such a result is genetic given what is known about gendered role profiles but, nevertheless, perhaps the resilient young people found their lives somehow easier if they conformed to these gendered expectations.
+
+Resilient boys tended to have a positive male role model, although this was not necessarily the child's father [@werner1992a, p. 57].
+Both resilient boys and resilient girls had additional role models outside of the family, including close friends, teachers, neighbours, youth leaders, ministers or faith leaders, or elders [@werner1992a, p. 57].
+
+In females, internal protective factors---self--esteem, for example---had the biggest effect on resilience.
+For males, outside sources of support---for example from caregivers, friends, and family---had the biggest effect on resilience.
+
+### Development stage
+
+Because of the longitudinal nature of these studies the authors were able to explore which factors affected the participants's resilience at any given developmental stage.
+By comparing groups of children and young people with different socio-economic and familial circumstances in early life and comparing their trajectories into adulthood these studies were able to explore which factors led to positive outcomes.
+
+In the 1972 follow--up Werner and Smith were successful in tracking down 88\% of the original Kauai cohort.
+This included an 'at--risk' and a control group of young people, matched for age, sex, socio-economic status, and ethnicity.
+In the 1985 follow--up the researchers managed to obtain responses from 82\% of the original cohort, for which data was available at birth, infancy, age two, age 10, and age 18 [@werner1992a, p. 34].
+All participants were surveyed for education and health outcomes, ability, achievement, and personality using standard instruments contemporary for the time [@werner1977a, p. 24].
+
+@werner1992a suggest that during infancy and early childhood, constitutional factors such as health and temperament played the biggest part in effecting resilience.
+This changed as the resilient children matured, and by middle school their verbal and reasoning skills played a bigger part in their positive development.
+By late adolescence and adulthood their personality characteristics---self--esteem and internal locus of control---most helped to reinforce their resilience and positive adaptation [@werner1992a, p. 57].
+
+At age two the resilient cohort displayed alertness and autonomy, sought out experiences, had a 'positive social orientation', and had better communication, locomotion, and self--help skills than their high--risk but non--resilient peers [@werner1992a, p. 56].
+The coping style of the primary caregiver at age two, observed by psychologists and paediatricians, was linked with positive adaptation, as was the presence of rules and structure in the household.
+
+In infancy the resilient group had good sleeping and eating habits, and were considered 'affectionate and cuddly' (girls) or 'very active' (boys) [@werner1992a, p. 173].
+At age two assessments by paediatricians and psychologists found the resilient children to be more agreeable, relaxed, responsive, self--confident, and sociable.
+In comparison, their high--risk non--resilient peers were characterised by anxiety, fearfulness and suspicion and were more frequently withdrawn [@werner1992a, p.176].
+
+At age ten, teachers (for boys) and parents (for girls) noted fewer behavioural problems, and at age 17 and 18 the resilient cohort enjoyed greater popularity among their peers [@werner1992a, p. 176].
+In grade four (approximate age nine to ten) the resilient children had higher reading achievement scores, especially among the boys [@werner1992a, p. 176].
+In elementary school the resilient children got along well with classmates, had better reasoning skills, better reading skills, and had many interests including "activities and hobbies that were not narrowly sex--typed" [@werner1992a, p. 56].
+
+Between age 10 to follow--up at age 17--18 'perception of parental understanding', peer support, the young person's belief in their own abilities, hard work, persistence, and ability to communicate in the first language of the island (`standard English') were associated with improvement and positive change [@werner1977a, p. 216].
+
+The authors compared characteristics of these high--risk children who had positive outcomes with high--risk children who did not fare so well by ages 10 and 18, matched for age and sex.
+These young people by contrast had learning problems, mental health problems, and 'serious delinquencies' [@werner1992a, p. 56].
+
+In senior year of high school (approximate age 18) the resilient group considered their school experience to be more positive and had higher---and more realistic---expectations for their future [@werner1992a, p. 176].
+In addition, their interviewers considered them to have higher self--esteem.
+
+In adulthood (ages 31 and 32) the resilient group had lower self--rated distress and emotionality using the EAS temperament survey instrument, and women had higher self--rated sociability and lower anger [@werner1992a, p. 176].
+The authors also found a significant association between the resilient groups' problem solving skills (PMA IQ) at age ten and successful adaptation in adulthood [@werner1992a, p. 176].
+
+### Validation
+
+Using discriminant function analysis, Werner and Smith were able to enter these protective factors chronologically into their model.
+In 94.4\% of cases they were able to identify the correct, resilient, individuals by entering all protective factors.
+The authors were still able to identify the majority---87.5\%---of individuals correctly by entering protective factors the cohort were exposed to between birth and age two [@werner1992a, p.182--183].
+Crucially the success rate was similar, even higher, for high--risk non--resilient peers (96.8\%, all protective factors) suggesting validity in the measures [@werner1992a, p. 183].
+
+
+## Geography and health resilience {#reslit-geography}
+
+The historical resilience literature I described in Sections \@ref(reslit-history) to \@ref(reslit-protective-factors) was based on individual, and sometimes family, experiences of risk and positive outcomes which rarely discussed environmental, area--based, or geographical factors external to the subjects that may have contributed to their resilience.
+As studies of resilience in other disciplines began to appear, the range of measures expanded beyond the individual and included geographical resilience literature which took account of area--based factors for the first time.
+
+> In psychology literature `resilience' describes the process whereby people avoid the negative outcomes associated with risks.
+Related processes may operate at the population level, with some deprived communities resisting the detrimental health effects of adverse socioeconomic conditions, while others succumb [@doran2006a, p. 686].
+
+As well as broadening the range of measures of risk and positive outcomes to the health domain, geographical resilience literature also used a range of geographical units to assess area--based effects [@doran2006a; @tunstall2007a; @mitchell2009a; @cairns2012a; @nagi2013a].
+
+@doran2006a found several English local authorities that had better than expected life expectancy for their level of deprivation.
+They identified deprived local authority districts using the Townsend material deprivation index [@townsend1988a] using data from the 1991 census and sociodemographic context from Office for National Statistics *classification of local and health authorities of Great Britain* [@doran2006a, p. 686].
+They found these strong predictors of life expectancy using Spearman's rank correlation coefficients [@doran2006a, p. 688].
+
+Taking the highest standardised residuals to be 'resilient', @doran2006a found 'education centres' to have comparatively high life expectancy given their level of deprivation [@doran2006a, p. 682], but mining, manufacturing, and industrial areas often underperformed in terms of life expectancy [@doran2006a, p. 687].
+They argue that most outliers are not atypical and may be part of a long--term pattern of inequality where the north is more deprived.
+
+@tunstall2007a examined the relationship between age--specific mortality and long--term economic adversity using data from 1971--2001 in parliamentary constituencies in Britain.
+They used a bespoke index of adversity constructed from census variables to primarily identify areas of low labour market activity which was strongly correlated with common deprivation measures [@tunstall2007a, p. 338].
+Using this measure they identified 54 'persistently disadvantaged' areas.
+For these 54 areas the authors calculated a 'resilience score' based on the mortality distribution compared to deprivation through time [@tunstall2007a, p. 338] and identified 18 above--average resilient areas.
+Barnsley East and Mexborough was one of the resilient areas identified [@tunstall2007a, p. 340].
+This parliamentary constituency no longer exists but did overlap the Doncaster local authority district.
+Figure \@ref(fig:bem-constituency) shows where the Barnsley East and Mexborough parliamentary constituency (grey polygon) overlapped with the Doncaster local authority district (black outline).
+
+```{r bem-constituency, cache=TRUE, fig.width=7, fig.height=7, fig.cap="Barnsley East and Mexborough Parliamentary Constituency"}
+tm_shape(sy_county) +
+  tm_borders(col = "dark grey") +
+tm_shape(bem) +
+  tm_fill(col = "grey") +
+tm_shape(don_outline) +
+  tm_borders(col = "black") +
+tm_layout(frame = FALSE)
+```
+
+@mitchell2009a also examined the relationship between low mortality rates and 'persistent economic adversity' from 1971--2001 in 54 parliamentary constituencies using mixed methods.
+Barnsley East and Mexborough parliamentary constituency was identified as a resilient area using their criteria of "significantly lower mortality rates" [@mitchell2009a, p. 19].
+
+They argue that one of their case study areas with a large South East Asian and Caribbean population had lower than expected mortality, perhaps because people with these ethnic backgrounds have lower rates of cancer mortality and cardiovascular mortality, respectively [@mitchell2009a, p. 19].
+Howevever, this did not hold for other resilient areas: "[s]ome of the resilient areas were among Britain's most ethnically mixed, yet other very mixed areas were not resilient" [@mitchell2009a, p. 19].
+They found little difference between the availability of green space between resilient and non--resilient areas [@mitchell2009a, p. 20], but this could not take account of the quality of these green spaces.
+Similarly levels of social capital were not significantly different between resilient and non--resilient areas, using political participation---measured by voter abstention rates in general elections from 1979--2001---as "a valid proxy for the degree of social capital in a community" [@mitchell2009a, p. 21].
+They did find that "resilient constituencies were significantly better at retaining or attracting population in the face of economic adversity than the non--resilient areas" [@mitchell2009a, p. 20].
+
+The lack of difference between resilient and non--resilient areas could be attributed to the 'crudeness' of the quantitative measures used---something that subsequent studies have attempted to address [@cairns2012a; @nagi2013a], or evidence that another attribute must also be present in areas that acts as a 'catalyst' to improve resilience [@mitchell2009a, p. 21].
+
+Because of the crudeness of health outcome measures in these studies @cairns2012a expanded this research to include morbidity indicators.
+These included self--reported general health and limiting long--term illness or disability, but were also able to include emergency hospital admissions and chronic heart disease (CHD) hospital admissions from the 2011 hospital episode statistics [@cairns2012a, p. 928--929] which they combined into a composite mortality index.
+They used multiple correspondence analysis (MCA) to test the association between area resilience and ethnic density---living in an area with a high proportion of people with the same ethnic background, residential mobility---the rate of moving in and out of an area, employment type, housing tenure, and social cohesion---using a proxy index of social fragmentation [@cairns2012a, p. 928--929].
+
+They found 15 mortality resilient parliamentary consituencies, nine morbidity resilient areas, and four were resilient for morbidity and mortality [@cairns2012a, p. 930].
+Areas were considered resilient if they were in the highest quartile for the composite mortality index [@cairns2012a, p. 930].
+Doncaster was not among the resilient areas identified in this study.
+Factors the authors suggest help improve health resilience were availability of social housing, higher quality employment---in higher occupational grades, and relatively high ethnic density [@cairns2012a, p. 932].
+
+Cairns later extended her research to examine outliers of the relationship between socio--economic deprivation and poorer population health at the area level [@nagi2013a].
+They measured deprivation using the Townsend material deprivation score [@townsend1988a] and used a combination of morbidity and mortality health measures, including self--reported general health, self--reported limiting long--term illness or disability, and premature mortality at the area level [@nagi2013a, p. 229].
+'Areas' examined were England and Wales local authority districts (LADs) and census area statistic wards (CASWARDs).
+Using these measures, @nagi2013a used regression tree classification---alternatively known as recursive partitioning---to separate resilient from non--resilient areas, using a standardised residual of less than $-1.96$ to signify a resilient area [@nagi2013a, p. 231].
+Aggregate tables from the 2011 census were not yet available at the time this study was published, so there is an opportunity to update analyses of resilient areas with 2011 data.
+
+The authors found the only resilient local authority districts, using their criteria, were in London and the East of England.
+There was greater variation among CASWARDS with resilient areas found in all regions except the North West, suggesting resilience could be predominantly a small--area phenomenon [@nagi2013a, p. 231].
+
+@nagi2013a used Townsend material deprivation scores to articulate risk, with high scores over a long period of time (1971--2011) associated with high risk.
+Using this measure the authors studied *areas* rather than *individuals*. 
+They choose not to assess the whole spectrum of deprivation, instead concentrating on the bottom quintile (most deprived 20\%) in their analysis.
+To measure health outcomes they analysed self--reported general health and limiting long--term illness or disability from the census, and premature mortality---defined as those who died below the age of 75 years---after standardising for age and sex using the England population as reference [@nagi2013a, p. 231].
+
+
+## How many are resilient?
+
+One of the areas of contention about health resilience is, exactly what proportion of the population are resilient?
+The psychological literature tended to identify an outcome that must be met to consider an individual resilient.
+For example, @werner1992a considered children to be resilient if they were exposed to a defined risk but achieved a positive outcome.
+"... one out of every three of these high risk children (some 10\% of the total cohort) had developed into a competent, confident, and caring young adult by age 18" [@werner1992a, p. 2].
+
+Geographical health resilience literature tends to specify a threshold over which *areas* are resilient because this literature tends to deal with information about individuals aggregated to a the area level.
+For example @nagi2013a considered a standardised residual of $\leq 1.96$ to indicate 'health resilient' areas [@nagi2013a, p. 231].
+They found between three and five health resilient LADs for each of the morbidity and mortality measures they analysed, all of which were within London or East of England regions only.
+This equates to approximately 1.4\% of LADs, based on 354 LADs examined [@nagi2013a, p. 230].
+
+When analysing CASWARDs they found between 62 and 90 health resilient areas depending on the health outcome measure used.
+In addition they found 36 health resilient areas common to all three measures of morbidity and premature mortality.
+The 36 common CASWARDs equates to less than 0.5\% of CASWARDs identified as health resilient, while the maximum 90 health resilient CASWARDs (identified by self--reported health) equates to only 1.1\%.
+
+This second approach works well on an area--level basis, as the number of people who have a positive health outcome is a continuous variable so a standard deviation or other numerical threshold is a useful approach.
+One of the main advantages of using the spatially microsimulated data set, though, is that it is possible to work with individual--level data.
+
+I will use a combination of these two approaches, essentially specifying individual--level and area--level criteria.
+I have chosen to use clinical depression as the health outcome measure to indicate resilience (see Section \@ref(ressim-targets)).
+As this outcome is binary---does or does not have clinical depression---a numerical threshold will not work.
+Instead I will consider individuals with a high--risk exposure but not clinical depression to be resilient.
+Alongside this I use area--level aggregate measures of deprivation.
+I examine these empirically after simulating the data set in section \@ref(ressim-results).
+
+
+## Factors affecting mental health {#factors-affecting-mental-health}
+
+As with psychological resilience, geographical health resilience literature uses measures of risk, positive outcomes, and protective factors to articulate resilience.
+For health resilience, the risk or exposure is usually a measure of deprivation, and the positive outcome is usually an indication of positive health or wellbeing.
+I outline these more comprehensively in Chapter \@ref(sysrev).
+
+By articulating health resilience as the relationship between deprivation (risk) and positive health outcomes (positive outcome) this can be thought of as an expression or function of the social determinants of health, and of health inequalities more generally.
+
+The study of health inequalities and, later, the social determinants of health emerged after careful observation of cardio--vascular health and premature mortality of government employees in Westminster in the 1980s.
+The study by Marmot and his colleagues demonstrated that civil servants of lower employment grade had poorer health than their contemporaries of higher employment grade overall [@marmot1984a; @brunner2006a].
+The social determinants of health attempt to explain the causes and mechanisms underpinning these health inequalities.
+
+Here I outline a few key determinants of health using, where possible, results of systematic literature reviews that considered clinical depression.
+These either informed my theoretical selection of independent variables that I used to construct my model in Chapters \@ref(methods) and \@ref(ressim)), so that I could control for them, or for the analysis I present in Chapter \@ref(policy), or both.
+
+### Age {#reslit-age}
+
+Age is an important determinant of health in its own right, as people tend to experience an increased number and range of detrimental health outcomes as they grow older.
+These can include sensory loss, musculo--skeletal conditions, diabetes, chronic obstructive pulmonary disease (COPD), depression, coronary heart disease (CHD), and stroke (@who-ageing, @ageuk-conditions).
+Onset of these, and other conditions, are often a result of biological damage in older age, but this varies between individuals and is affected by other factors such as socio--economic position [@mcmunn2006a].
+
+Late--life depression can differ from depression among younger sufferers.
+Depression among older people can be associated with a loss of physical functioning in addition to other risk factors, and anxiety is higher among older people with depression [@pruckner2017a, p. 662].
+There may also be additional risks for older people with depression.
+A study of participants in the Swedish National Study on Aging and Care found that older people aged 60 and over showed cognitive decline overall, but that respondents transitioning into a depressed state showed expedited cognitive decline [@pantzar2017a, p. 681].
+It was not clear if younger people transitioning into a depressed state were also at greater risk of cognitive decline, but this was nevertheless a risk for older people.
+
+While people of any age can be depressed, or transition into depression, there are additional risk factors and outcomes for older people with depression.
+
+### Sex {#reslit-sex}
+
+A systematic review of 47 primary studies compared the prevalence of post--stroke depression (PSD) among men and women.
+The majority of studies found that the prevalence of PSD was higher among women [@poynter2009a, pp. 565--566].
+Furthermore, women are at risk of antenatal depression, the prevalence of which is approximately 10\% in the United States [@mukherjee2016a].
+I am not aware of any systematic reviews in the last 30 years that consider the prevalence of clinical depresion by sex.
+However, these studies suggest there may be a difference in depression prevalence between men and women, and that women are both at greater risk of depression and have additional risk factors that could mean they transition into depression.
+
+### Ethnicity {#reslit-ethnicity}
+
+A systematic literature review and meta--analysis of clinical depression prevalence among minority and majority ethnic groups reported mixed findings [@tarricone2012a].
+Of the twenty--five included studies, ten reported a significant difference between ethnic minority and ethnic majority groups.
+However, of these ten, four reported higher prevalence rates of depression for ethnic majority groups, and the remaining six reported higher prevalence among ethnic minority groups [@tarricone2012a, p. 102].
+
+Another systematic review of pregnant women in the United States found that clinical depression prevalence was higher among non--Hispanic Blacks (NHB) and Hispanics, compared to non--Hispanic White (NHW) individuals [@mukherjee2016a, p. 1793].
+It is not clear why the two systematic reviews reached different conclusions, but it may be associated with the different populations in the study, and ethnic--minority women or ethnic--minority women who are pregnant are at greater risk of depression.
+The evidence for an association between ethnicity and clinical depression in general, however, is ambivalent, and may be modified by other socio--demographic characteristics or context.
+
+### Economic activity {#reslit-economic-activity}
+
+Studies have demonstrated that unemployment is associated with poor mental health and greater depression prevalence [@jefferis2010a; @khlat2004a].
+In addition to the greater risk from being unemployed, there is evidence that the *duration* of unemployment is also associated with increased prevalence of depression.
+@stankunas2006a, for example, found that people unemployed for twelve months or more in Lithuania had higher depression scores on the Beck Depression Inventory (DBI) instrument than those who were unemployed for less than twelve months, and both groups had higher depression than their employed counterparts.
+In a longitudinal study of young people in the United States @mossakowski2009a again found that unemployment was associated with greater prevalence of depressive symptoms.
+This study did not find that the duration out of the labour market was associated with depressive symptoms, but that past unemployment duration did have a negative effect on depression [@mossakowski2009a, p. 1829].
+
+### Education {#reslit-education}
+
+Higher education status is argued to protect against mental health issues and cognitive decline [@mclaren2015a].
+In a representative study of Finnish adolescents, education was found to protect against the risk of depression, even among adolescents at high--risk of depression based on their parental income and socio--economic position [@korhonen2017a].
+
+### Income, deprivation, and poverty {#reslit-income}
+
+Area--level income and poverty is associated with higher prevalence of depression [@hiilamo2014a; @poetz2007a].
+Studies have also demonstrated an association between individual--level income and clinical depression [@pickett2015a; @aranda2011a].
+For example in a study of the Danish workforce, @cleal2017a found that those with diabetes were more likely to have depression than those without, but that this was even higher among Danes in the lowest socio--economic position and with lowest incomes.
+Income inequality may also exacerbate an individual's depression.
+It is hypothesised that income inequality can 'get under the skin' [@vanDeurzen2015a], and that countries with higher income inequalities report greater numbers of people with depressive symptoms [@vanDeurzen2015a, pp. 485--486].
+
+### Housing {#reslit-housing}
+
+Poor quality housing is associated with poorer physical health outcomes, but a number of recent studies also suggest an association between housing quality and mental health and clinical depression.
+For example in a study of US mothers @corman2016a find an association between depressive mothers and poorer housing quality in terms of heating and energy insecurity, and food insecurity [@corman2016a, p. 82].
+The affordability of housing is also an important consideration to health outcomes.
+Using data from the UK Annual Population Survey @reeves2016a demonstrated that a reduction in housing benefit was associated with an increase in clincial depression in the UK.
+
+### Marital status {#reslit-marital-status}
+
+@hosseinpour2012a demonstrated that people who were single and had never married experienced the best self-reported health. Respondents who were married or cohabiting reported slightly worse health than their single peers, while those who were divorced, separated, or widowed reported the worst health overall (2012, p. 3). Sacker et al, however, found no relationship between cohabitation status and general health independent of other factors (2009, p. 132).
+
+### Social isolation {#reslit-soc-isol}
+
+A recent systematic review of social isolation and loneliness demonstrated overwhelmingly that they are associated with detrimental physical and mental health [@courtin2017a], although in most cases the studies were unable to identify a causal mechanism or pathway [@courtin2017a, pp. 804--805].
+The most commonly used measures of physical and mental health were cardiovascular health and depression, respectively.
+The studies were typically of older adults, although a study of primary and secondary school age children also found an association between social isolation or loneliness and poorer mental health [@matthews2015a].
+
+
+## Conclusion {#reslit-conclusion}
+
+In this chapter I have briefly outlined the history of the health resilience literature, from its beginnings in psychological research in understanding positive outcomes in the face of risk.
+Over the course of the last forty to fifty years the field has developed, and a geographical health resilience literature has emerged that takes into account area--based positive outcomes.
+Throughout these literatures there are a range of measures used as health outcomes, risks, and protective factors or characteristics which I explore in more detail in Chapter \@ref(sysrev).
+My choice of outcome variable is nevertheless informed by this initial literature review.
+
+A key feature of any health resilience literature is how resilient individuals or areas are to be categorised.
+Some require an approach based on categorical information, while some---typically aggregated area--level data---use a numerical threshold as a 'cut--off'.
+I will need to use a combination of both, and I explore this emprically in Chapter \@ref(ressim).
+
+The rest of the thesis proceeds as follows.
+Chapter \@ref(sysrev) expands on many of the issues identified in this chapter, namely the measures used as health outcomes, risk, and protective factors.
+Chapter \@ref(smslit) then discusses the spatial microsimulation technique, how it has been used in similar fields successfully before, and what it can offer the understanding of health resilience.
+Further chapters then test the spatial microsimulation method, simulate and describe the results of the health resilience simulation in Doncaster, and offer policy analyis and suggestions based on these results.

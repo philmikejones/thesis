@@ -1,0 +1,658 @@
+# Systematic review {#sysrev}
+
+```{r systematic-review-numbers}
+# papers identified
+pq  <- 116
+wos <- 190
+dup <- 50
+tot <- pq + wos - dup
+
+# papers selected
+ab  <- 157
+ft  <- 68
+inc <- 20
+man <- 1
+```
+
+## Introduction {#intro-systematic-review}
+
+A preliminary review of relevant literature, which I described in Chapter \@ref(reslit), revealed a broad range of ways in which 'health resilience' was conceptualised and operationalised.
+That is to say, exactly what health resilience meant and how it was measured varied from study to study.
+This ambiguity extended to both the characteristics thought to influence resilience as well as the health outcome deemed to be affected by resilience.
+
+The variety suggested there was little consensus about how health resilience was defined and measured, limiting its practical use in empirical research and policy making.
+It therefore became apparent that a comprehensive understanding of the range of concepts and definitions used in this research field would be essential in order to understand the diversity of evidence and to choose appropriate concepts and definitions to apply in future work.
+To ascertain the range of uses of the term in empirical literature I undertook a systematic scoping review of relevant studies.
+
+This chapter: describes the methods used to select, appraise, and synthesise relevant empirical studies; presents a summary of the individual papers; and provides a synthesis of the various ways health resilience was operationalised in this literature.
+It is presented using the recommendations stated in the Preferred Reporting items for Systematic Reviews and Meta-Analyses (PRISMA) statement [@prisma2013a; @moher2009a], adapted to suit a social science study.
+These recommendations were followed to allow readers to assess the quality of the review and its findings, and replicate it if desired [@booth2012a, ch. 9].
+
+
+## Rationale
+
+A systematic scoping review was undertaken to explore the ways in which health resilience was used in empirical literature.
+A systematic scoping review was ideally suited to this task because it is a tool intended to gather the breadth of information available about a topic efficiently and comprehensively.
+@booth2012a describe the scoping review as a "preliminary assessment of potential size and scope of available research literature [which] [a]ims to identify [the] nature and extent of research evidence" [-@booth2012a, p. 27 [adapted from table 2.3]].
+In addition the scoping review does not typically appraise the quality of the evidence, which fits the requirements of my review as this was not appropriate.
+The synthesis and output of the scoping review can also be a narrative, which again fits the requirements of this review.
+A properly conducted systematic review will also mitigate issues of bias, which will help to ensure the results of the review are a valid reflection of the state of the existing literature on health resilience.
+
+
+## Objective {#sysrev-objective}
+
+The objective or research question that initially defined this systematic review was stated as:
+
+> What literature is available about the associations between the socio--economic position of working--age individuals (aged 16--74) in England and Wales and their health, and their ability to recover from, or avoid, poor health?
+
+During the review process it also became apparent the objective needed to be more specific.
+Instead of simply *identifying* papers about health resilience, it became clear I needed to focus on the *measures* used to operationalise health resilience.
+Because of this I updated the objective to be:
+
+> How are 'socio--economic position', 'health' and, therefore, 'resilience' operationalised in literature which mentions these---or synonymous---terms which is based on research of individuals aged 16 and over conducted in the United Kingdom?
+
+
+## Methods
+
+### Eligibility criteria {#sysrev-eligibility}
+
+The eligibility criteria were designed to favour breadth, rather than sensitivity or specificity [@booth2012a, p. 70], since the aim of this review was to explore the extent of literature available.
+
+Studies that only included children, specifically aged less than 16, were excluded.
+This was done so that the results of the systematic review would be based on the same age group as that in *Understanding Society* which the simulations in chapters \@ref(methods) and \@ref(ressim) are based on.
+
+Studies that were not based on data or respondents from the United Kingdom, or one of its constituent countries, were excluded.
+I made this decision to match the geography of the data sources I used in the spatial microsimulation.
+England is the geographical focus of my case study area.
+I use census data from England and Wales to constrain the spatial microsimulation.
+Respondents in *Understanding Society* are from any of the four UK countries.
+
+Some empirical papers and systematic reviews were based on international data or data from multiple countries, often as a comparison.
+It was necessary to make a judgement about whether to include such papers or not, balancing the desire for a comprehensive review with maintaining applicability to the UK.
+Often I opted to ensure applicability by only considering results from UK studies where possible, or by excluding the paper where it was not possible to determine the applicability to the UK[^applicability].
+
+[^applicability]: For transparency I have documented all such decisions in `inst/systematic_review/2017-systmatic-review-results.csv`
+
+English language papers were included.
+Papers in other languages were excluded as it seemed highly unlikely any relevant articles would be published in other languages given the geographical area of interest.
+
+The exposure of interest is resilience or resistance to the 'usual' detrimental effects of poor socio--economic position on health.
+That is, where respondents have better health than expected for their economic, social and environmental circumstances.
+
+No comparison group is included in this study.
+'Negative outliers'--- such as the 'Glasgow effect' [@livingston2014a]---are not included because of the increase in scope this would introduce.
+Furthermore it does not necessarily follow that the mechanisms creating worse health than expected would lead to any insight in to the mechanisms creating health resilience when reversed.
+
+Outcomes of interest were anticipated to include, but not be limited to, measures of life expectancy, mortality, healthy life expectancy, morbidity, self--reported illness and limiting long-term illness, prevalence of disease, and incidence of disease.
+
+Dates of coverage included empirical research published within the most recent five years, that is 2012--2017.
+Earlier research was excluded to capture the 'state--of--the--art' of empirical research on resilience.
+Useful concepts and measures developed prior to this period are assumed to be updated or used by literature created during this more recent period.
+
+I excluded identified titles that were not peer--reviewed articles, PhD theses, or systematic reviews themselves.
+I did not include 'grey literature', such as policy literature, in this systematic review.
+This was decided to help ensure the included titles met a minimum quality standard based on their peer--reviewed status.
+
+During the course of the review it became apparent that a small number of studies had been identified by the search strategy that needed to be excluded because they were not relevant to the resilience of the general population.
+The general characteristic of these papers was: they studied a population with a specific, usually physical, usually chronic, pathology; and tested an intervention to improve this pathology.
+For example, @knott2013a tested an intervention to help patients with Type--2 diabetes improve their self--management of their condition, while @blickem2013a test an intervention called 'BRIGHT' to help patients with stage 3 chronic kidney disease (CKD).
+
+Deciding to exclude such papers was problematic but in general I excluded papers that focused on a physical pathology---such as diabetes or CKD---but left in mental or psychological pathologies---such as depression.
+An important component of resilience is psychological coping and adaptation (see Section \@ref(reslit-history); @schoon2006a) so mental or psychological pathologies did not necessarily make a study irrelevant in the same way that management of a physical condition did.
+
+As the nature of this review is to scope out the breadth of literature on the subject of health resilience I defaulted to including a paper unless it clearly did not benefit the review.
+Nevertheless, because of the subjectivity of this decision I solicited a second opinion from a colleague to maintain validity and reproducibility of the review.
+I asked if they would include or exclude the affected papers based on my inclusion criteria and relevance to the resilience of the general population.
+In all cases their second opinion matched my original decision[^second-opinion].
+
+[^second-opinion]:  See `inst/systematic_review/2017-systematic-review-results.csv`.
+
+### Information sources
+I used the ProQuest[^pq] and Web of Science [^wos] portals to conduct my search.
+Relevant social science and health science databases were selected, and others excluded, based on the taxonomies provided by the respective portal.
+ProQuest databases searched were: ProQuest Dissertations & Theses UK & Ireland; ProQuest Dissertations & Theses Abstract and Indexing (A&I); Physical Education Index; Applied Social Sciences Index & Abstracts (ASSIA); Education Database; Social Services Abstracts; Sociological Abstracts; and Worldwide Political Science Abstracts.
+The Web of Science search included the Social Science Citation Index (SSCI).
+
+[^pq]: `http://search.proquest.com`
+[^wos]: `http://webofknowledge.com`
+
+I excluded some social science or health science databases, for example the Education Resources Information Centre (ERIC), because they were based in a country other than the United Kingdom.
+
+### Search terms
+To ensure comprehensive results were obtained I used the academic thesauri available through ProQuest [^pqt] to obtain synonyms for 'resilience' and 'socio--economic position'.
+All relevant social science, medicine and general science thesauri were searched, while those not relevant---for example Aquatic Sciences \& Fisheries Abstracts (ASFA) thesaurus---were excluded.
+
+Only 'matched terms' from relevant databases were included.
+These were terms at the same level in the topic hierarchy.
+For example, when searching for resilience, 'personality' was found as a parent term but was too broad to be a synonym for resilience and was excluded.
+
+Where there are differences in the British English and American English spelling of these terms, suitable adjustments were made to the search syntax to account for these.
+For example, 'behaviour' was searched for as `|behavio*r|` taking account of the spelling both with and without a 'u'.
+
+[^pqt]: `http://search.proquest.com/thesaurus/browsepage/`
+
+### Search
+
+Synonyms for resilience and socio--economic position were searched for in the title and abstract, increasing the likelihood of obtaining only relevant papers (the Web of Science portal uses a 'Topic' field to refer to both title and abstract).
+The search query was structured so resilience and its synonyms were searched for within three words of the word 'health', ensuring terms such as 'health resilience' or 'resilience to poor health' were both included.
+Finally, socio--economic position was added to the search query as an 'AND' term, such that both concepts were included.
+
+I used the 'Advanced Search' or 'Command Line' search functionality to specify the inclusion and exclusion terms.
+Syntax and full inclusion criteria are included in `systematic_review/`.
+The ProQuest[^pq_search] and the Web of Science[^wos_search] searches can be replicated in full by users with appropriate log--in credentials.
+
+[^pq_search]: `https://goo.gl/vxoahW`
+[^wos_search]: `https://goo.gl/mUq41J`
+
+Most articles were not tagged with a specific geography or country of study so no results were narrowed by location at this stage.
+Instead I opted to do this manually after obtaining the abstract or full--text as applicable.
+
+### Search results {#sysrev-search-results}
+
+Using the search strategy outlined above, $`r wos`$ papers were identified by Web of Science and $`r pq`$[^num_proq_res] were identified by ProQuest, or $`r pq + wos`$ papers in total.
+Paper details were downloaded to a spreadsheet programme for further review.
+
+[^num_proq_res]: ProQuest erroneously reports this as, variously, $156$, $128$, or $122$.
+I assume this is because the search algorithm returns an estimate of the number of results based on its index.
+I have based the final number of 116 on the number of records available for export.
+
+In total $`r dup`$ articles were identified in both the ProQuest search and the Web of Science search, suggesting a degree of reliability to the search criteria.
+After removing these duplicates $`r tot`$ articles remained to be reviewed for inclusion.
+
+### Study Selection
+
+```{r selection-flowchart, fig.width=7, fig.height=7, fig.cap="Review and selection of articles"}
+knitr::include_graphics("figures/cache/flowchart.pdf")
+```
+
+Figure \@ref(fig:selection-flowchart) summarises the process used to select relevant research papers.
+Titles were reviewed and papers excluded in cases where the study unambiguously did not meet the eligibility criteria, for example because the study was based on data obtained in a country other than England or Wales.
+Abstracts for all remaining articles were then obtained.
+I reviewed these and included or excluded these based on the eligibility criteria specified in Section \@ref(sysrev-eligibility).
+In cases where the abstract did not provide enough information, the full--text of the article was obtained for further scrutiny.
+
+Of the original $`r tot`$ papers, $`r tot - ab`$ papers were unambiguously not relevant based on their title and excluded.
+Abstracts were obtained for the remaining $`r ab`$ papers and reviewed.
+$`r ab - ft`$ papers were removed after reviewing their abstract, leaving $`r ft`$ papers for which the full--text was obtained.
+Of these $`r ft - inc`$ did not meet the eligibility criteria after reviewing the appropriate section---typically the methods section---of the paper.
+This left $`r inc`$ papers which met the eligibility criteria for inclusion in this review.
+
+I manually added one paper to the review in addition to those found by the systematic search strategy.
+These papers were found through the bibliographies of the included studies.
+In total $`r inc + man`$ papers were included in this review.
+
+### Data collection process
+The data collection instrument is found in `inst/systematic_review/`.
+For each paper the: population of study; method or methods used; 'outcome' or 'dependent' measure, usually a measure of (good) health; concept or measure of resilience; limitations; and key results and summary were extracted and recorded.
+
+The population or sampling frame, methods, limitations, and key results and summary were generally explicit and could be extracted and summarised easily.
+The outcome measures and sources of resilience were not always so orderly, typically in papers that were only incidentally concerned with resilience.
+In these cases I have extracted all empirical variables used in the study and exercised my judgement as to how to best to record these.
+
+
+## Results {#sysrev-results}
+
+```{r res-outcome-measures-prep}
+res_outcome_measures <- data.frame(
+  paper_13  = c("13",
+               "Health",
+               "Self-reported general health"),
+  paper_16  = c("16",
+               "Quality of Life",
+               "WHOQOL-BREF"),
+  paper_23a = c("23",
+                "Motivation",
+                "Self-reported"),
+  paper_23b = c("",
+                "Self-esteem",
+                "Self-reported"),
+  paper_23c = c("",
+                "Non-smoker",
+                "Self-reported"),
+  paper_32a = c("32",
+                "Low premature mortality",
+                "Mortality <75"),
+  paper_32b = c("",
+                "Low morbidity",
+                "Self-reported general health"),
+  paper_32c = c("",
+                "",
+                "Limiting long-term illness"),
+  paper_37  = c("37",
+                "Mental health",
+                "Self-reported"),
+  paper_46a = c("46",
+                "Low premature mortality",
+                "Mortality <75"),
+  paper_46b = c("",
+                "Low morbidity",
+                "Self-reported general health"),
+  paper_46c = c("",
+                "",
+                "Limiting long-term illness"),
+  paper_67  = c("67",
+                "Sports participation",
+                "Self-reported"),
+  paper_78a = c("78",
+                "Lower depression/anxiety",
+                "Self-rated"),
+  paper_78b = c("",
+                "",
+                "Hospital Anxiety and Depression Scale (HADS)"),
+  paper_78c = c("",
+                "",
+                "Depression Anxiety Stress Scale (DASS-21)"),
+  paper_78d = c("",
+                "",
+                "Questionnaire on Resources and Stress (QRS)"),
+  paper_78e = c("",
+                "",
+                "Anxiety inventory"),
+  paper_78f = c("",
+                "Lower anger",
+                "Profile of Mood States (POMS)"),
+  paper_78g = c("",
+                "Lower negative mood",
+                "Profile of Mood States (POMS)"),
+  paper_78h = c("",
+                "Self-esteem",
+                "Rosenberg self-esteem scale"),
+  paper_78i = c("",
+                "Various",
+                "Various bespoke measures"),
+  paper_90  = c("90",
+                "Preventable mortality",
+                "All-cause mortality"),
+  paper_96a = c("96",
+                "Well-being",
+                "Self-reported"),
+  paper_96b = c("",
+                "",
+                "WHO Wellbeing Index"),
+  paper_96c = c("",
+                "",
+                "Self-reported general health"),
+  paper_98a = c("98",
+                "Well-being",
+                "Bespoke"),
+  paper_98b = c("",
+                "Self-efficacy",
+                "Bespoke"),
+  paper_98c = c("",
+                "Social support",
+                "Bespoke"),
+  paper_173a = c("173",
+                 "Well-being",
+                 "General Health Questionnaire (GHQ)"),
+  paper_173b = c("",
+                 "Mental control",
+                 "Thought Control Questionnaire (TCQ)"),
+  paper_195  = c("195",
+                 "Management of conditions",
+                 "Self-reported"),
+  paper_204a = c("204",
+                 "Morbidity",
+                 "Self-reported general health"),
+  paper_204b = c("",
+                 "",
+                 "Limiting long-term illness"),
+  paper_204c = c("",
+                 "Mortality",
+                 "All-cause premature mortality"),
+  paper_206  = c("206",
+                 "Resilience",
+                 "25-item resilience scale"),
+  paper_208a = c("208",
+                 "Physical health",
+                 "Cardiovascular disease"),
+  paper_208b = c("",
+                 "",
+                 "Respiratory illness"),
+  paper_208c = c("",
+                 "Mental health",
+                 "Depression"),
+  paper_208d = c("",
+                 "Sleep quality",
+                 "Sleep disturbance"),
+  paper_241a = c("241",
+                 "Health self-management",
+                 "Health Education Impact Questionnaire (HEIQ)"),
+  paper_241b = c("",
+                 "Healthy behaviours",
+                 "Summary of Diabetes Self-Care Activities Scale (SDSCA)"),
+  paper_241c = c("",
+                 "Physical health",
+                 "Short-form 12 (SF-12)"),
+  paper_241d = c("",
+                 "Emotional well-being",
+                 "Two items taken from ESS 2010"),
+  paper_241e = c("",
+                 "Health economics",
+                 "Quality Adjusted Life Years (QALYs)"),
+  paper_242a = c("242",
+                 "Depression and anxiety",
+                 "Self-reported"),
+  paper_242b = c("",
+                 "Social Support",
+                 "Two items from MCS"),
+  paper_242c = c("",
+                 "Self-esteem",
+                 "Abridged Rosenberg Self-esteem Scale"),
+  paper_250  = c("250",
+                 "No health harming behaviours",
+                 "Various behaviours included"),
+  paper_272a = c("272",
+                 "Mental health",
+                 "Malaise Inventory"),
+  paper_272b = c("",
+                 "",
+                 "Strengths and Difficulties Questionnaire (SDQ-25)"),
+  paper_307a = c("307",
+                 "Mental well-being",
+                 "Self-reported"),
+  paper_307b = c("",
+                 "Social well-being",
+                 "Reduced social activities"),
+  stringsAsFactors = FALSE
+)
+
+res_outcome_measures <- t(res_outcome_measures)
+colnames(res_outcome_measures) = c("Paper", "Outcome", "Variable(s)")
+```
+
+```{r res-charac-measures-prep}
+res_charac_measures <- data.frame(
+  paper_13a = c("13",
+                "Bonding social capital",
+                "Neighbourhood cohesion"),
+  paper_13b = c("",
+                "",
+                "Neighbourhood trust"),
+  paper_13c = c("",
+                "",
+                "Neighbourhood belonging"),
+  paper_13d = c("",
+                "",
+                "Civic participation"),
+  paper_13e = c("",
+                "Bridging social capital",
+                "Social cohesion"),
+  paper_13f = c("",
+                "",
+                "Mutual respect"),
+  paper_13g = c("",
+                "",
+                "Heterogeneous relationships"),
+  paper_13h = c("",
+                "Linking social capital",
+                "Political participation"),
+  paper_13i = c("",
+                "",
+                "Political activism"),
+  paper_13j = c("",
+                "",
+                "Political efficacy"),
+  paper_13k = c("",
+                "",
+                "Political trust"),
+  paper_16  = c("16",
+                "Cognitive ability",
+                "Moray House Test no. 12"),
+  paper_23  = c("23",
+                "Support/encouragement",
+                "Self-reported"),
+  paper_32a = c("32",
+                "Place attachment",
+                "Self-reported"),
+  paper_32b = c("",
+                "Social capital",
+                "Self-reported"),
+  paper_32c = c("",
+                "Natural environment",
+                "Self-reported"),
+  paper_37a = c("37",
+                "Employment",
+                "Self-reported"),
+  paper_37b = c("",
+                "Finances/income",
+                "Self-reported"),
+  paper_37c = c("",
+                "Social isolation",
+                "Self-reported"),
+  paper_37d = c("",
+                "Occupational capital",
+                "Skills learned through occupation"),
+  paper_37e = c("",
+                "Social support",
+                "Self-reported"),
+  paper_46a = c("46",
+                "Place attachment",
+                "Self-reported"),
+  paper_46b = c("",
+                "Social capital",
+                "Self-reported"),
+  paper_46c = c("",
+                "Natural environment",
+                "Self-reported"),
+  paper_67  = c("67",
+                "Sport involvement in youth",
+                "Self-reported"),
+  paper_78a = c("78",
+                "Coping strategy",
+                "Ways of Coping scale (WOC)"),
+  paper_78b = c("",
+                "",
+                "Multidimensional Coping Inventory (MCI)"),
+  paper_78c = c("",
+                "",
+                "Brief Social Support Questionnaire"),
+  paper_78d = c("",
+                "",
+                "Coping Orientations to Problems Experienced (COPE)"),
+  paper_78e = c("",
+                "",
+                "Social Support Index"),
+  paper_78f = c("",
+                "",
+                "Bespoke measures"),
+  paper_90  = c("90",
+                "Behaviour",
+                "Smoking, alcohol consumption, diet, exercise"),
+  paper_96  = c("96",
+                "State social support",
+                "Sickness benefit provision"),
+  paper_98  = c("98",
+                "Peer support",
+                "Self-reported"),
+  paper_173a = c("173",
+                 "Repressive coping",
+                 "Spielberger State-Trait Anxiety Inventory (STAI)"),
+  paper_173b = c("",
+                 "",
+                 "Marlowe-Crowne Social Desirability Scale (MC)"),
+  paper_195  = c("195",
+                 "Access to healthcare",
+                 "Self-reported"),
+  paper_204a = c("204",
+                 "Greater distance to brownfield",
+                 "Previously Developed Land Index (PDL)"),
+  paper_204b = c("",
+                 "Low environmental deprivation",
+                 "MED-Ix database"),
+  paper_206  = c("206",
+                 "Resilience",
+                 "Resilience Scale (RS-25)"),
+  paper_208a = c("208",
+                 "Gender",
+                 ""),
+  paper_208b = c("",
+                 "Age",
+                 "Self-reported"),
+  paper_208c = c("",
+                 "Education level",
+                 "Self-reported"),
+  paper_208d = c("",
+                 "Employment",
+                 "Self-reported"),
+  paper_208e = c("",
+                 "Income",
+                 "Financial problems in last year"),
+  paper_208f = c("",
+                 "Area of residence",
+                 "Area-level deprivation"),
+  paper_241a = c("241",
+                 "Network member characteristics",
+                 "Number of 'nodes' within 5 minutes"),
+  paper_241b = c("",
+                 "",
+                 "Percent nodes giving support within 5 minutes"),
+  paper_241c = c("",
+                 "",
+                 "Number of frequent contacts (>1/week)"),
+  paper_241d = c("",
+                 "",
+                 "Number of cohabitants"),
+  paper_241e = c("",
+                 "",
+                 "Binary: network include spouse/partner"),
+  paper_241f = c("",
+                 "Social network characteristics",
+                 "Number of different relationship 'types'"),
+  paper_241g = c("",
+                 "",
+                 "Number of network pairs who know each other"),
+  paper_241h = c("",
+                 "",
+                 "Support given to others"),
+  paper_241i = c("",
+                 "",
+                 "Social resources measure"),
+  paper_241j = c("",
+                 "",
+                 "Involvement in groups or organisations"),
+  paper_241k = c("",
+                 "Network change",
+                 "Binary: network member lost in last 12 months"),
+  paper_241l = c("",
+                 "",
+                 "Total network members lost in 12 months"),
+  paper_242  = c("242",
+                 "Individual's similarity with area status",
+                 "Education and occupation"),
+  paper_250  = c("250",
+                 "Low Adverse Childhood Experiences (ACE)",
+                 "Various, incl.: abuse, parental separation, etc."),
+  paper_272  = c("272",
+                 "No exposure to familial mental health",
+                 "Parental and grandparental mental health"),
+  paper_307a = c("307",
+                 "Budgeting skills",
+                 "Self-reported"),
+  paper_307b = c("",
+                 "Money management skills",
+                 "Self-reported"),
+  stringsAsFactors = FALSE
+)
+
+res_charac_measures <- t(res_charac_measures)
+colnames(res_charac_measures) = c("Paper", "Resilience concept", "Variable(s)")
+```
+
+Here I present a 'narrative' or 'textual' analysis [@booth2012a, pp. 145--149] of all the studies collectively to identify areas of homogeneity or similarity.
+Statistical meta--analysis are not possible or necessary given the disparate nature of the measures used in each study.
+
+Twenty--one papers were included in this review.
+Ten papers were predominantly quantitative [@poortinga2012a; @mottus2012a; @mackenbach2015a; @wel2015a; @erskine2016a; @bambra2015a; @sull2015a; @albor2014a; @bellis2014a; @johnston2013a].
+Five were qualitative in nature [@matthews2012a; @cameron2013a; @haycock2014a; @mastrocola2015a; @fenge2012a].
+Four were mixed--methods studies [@cairns2013a; @nagi2013a; @robinson2015a; @reeves2014a].
+Two were systematic literature reviews [@lai2014a; @glonti2015a].
+
+Three papers were longitudinal in nature, comparing data from at least two time points.
+These papers found that conditions at baseline were significantly associated with health outcomes [@mottus2012a; @erskine2016a]; or that parental (and even grandparental) conditions affected child outcomes [@johnston2013a].
+
+Many of the papers were not primarily concerned with health resilience, but this is not surprising given the goal of the search strategy was breadth rather than sensitivity or specificity (see Section \@ref(sysrev-eligibility)).
+Nevertheless, all papers discussed some measure, concept, or intervention that could improve the health outcome of study even if this was not explicitly conceptualised as a source of resilience.
+For example @mottus2012a establish a 'typical' relationship between neighbourhood deprivation (Scottish Indices of Multiple Deprivation (SIMD)) and quality of life as an outcome measure, and tested to see if cognitive ability mediates this relationship.
+
+The papers covered a broad range of populations or used broad sampling frames.
+Of those that were empirical---that is, excluding the systematic reviews---two were international with a focus on Europe [@mackenbach2015a; @wel2015a], while the remainder sampled individuals from various areas of the United Kingdom.
+Of these, seven were broadly representative of at least England [@poortinga2012a; @bellis2014a; @johnston2013a], or used census data [@cairns2013a; @nagi2013a; @bambra2015a] and so were nationally representative.
+
+The remaining papers sample from more specific, less representative, populations.
+Some studies sample from various geographical regions of the UK.
+@mottus2012a sample from older people in Edinburgh, @haycock2014a sample adults aged 30--35 years from north west England, @sull2015a recruit employees from an NHS Hospital Trust in northern England, and @fenge2012a sample older people from south England who are 'asset--rich, income--poor.'
+Other samples are from 'at--risk' populations.
+@matthews2012a recruit care leavers or Looked After Children (LAC), @robinson2015a sample unemployed men aged 45--60, and @mastrocola2015a carry out interviews with sex workers.
+
+Given the disparate nature of the studies the same concept was sometimes considered a source of resilience by some studies, and sometimes an outcome by others.
+For example @mottus2012a consider quality of life an outcome, which includes physical, psychological, social, and environmental domains of life quality.
+@cairns2013a and @nagi2013a, on the other hand, hypothesise that the natural environment is a source of resilience.
+I suggest this is further evidence that the nature, and especially the causal nature, of health improvement and resilience is not well known.
+In general, however, outcome variables tended to be a measure of individual mental or physical health, not area or spatial health, so this is how I will operationalise my simulation in Chapter \@ref(ressim).
+
+```{r res-outcome-measures-table}
+knitr::kable(res_outcome_measures, row.names = FALSE,
+             caption = "Outcome variables measured")
+```
+
+Outcome measures included, variously: self--reported general health [@poortinga2012a; @cairns2013a; @nagi2013a; @wel2015a; @bambra2015a]; quality of life or quality adjusted life--years [@mottus2012a; @reeves2014a]; psychological functioning or well--being [@matthews2012a]; absence of risk--taking behaviours or participating in healthy behaviours [@matthews2012a; @reeves2014a; @bellis2014a]; low premature mortality [@cairns2013a; @nagi2013a; @bambra2015a]; limiting long--term illness (LLTI) [@cairns2013a; @nagi2013a; @bambra2015a]; sports participation [@haycock2014a]; lower depression, anxiety, anger, or negative mood [@lai2014a, systematic review; @albor2014a; @johnston2013a]; low mortality [@mackenbach2015a]; mental well--being [@wel2015a; @erskine2016a; @reeves2014a; @fenge2012a; @cameron2013a]; effective management of chronic conditions [@mastrocola2015a; @reeves2014a]; self--esteem [@albor2014a]; low social isolation [@fenge2012a]; and bespoke resilience scores [@robinson2015a; @sull2015a].
+Table \@ref(tab:res-outcome-measures-table) summarises the outcome measures.
+
+```{r res-charac-measures-table}
+knitr::kable(res_charac_measures, row.names = FALSE,
+             caption = "Sources of resilient characteristics")
+```
+
+Sources of resilience---or at least opportunities to improve the health outcome measure---included: social capital or social networks [@poortinga2012a; @cairns2013a; @nagi2013a; @robinson2015a; @reeves2014a]; cognitive ability in childhood [@mottus2012a]; a mentor or someone to provide support [@matthews2012a]; place attachment [@cairns2013a; @nagi2013a]; natural environment [@cairns2013a; @nagi2013a]; being in or returning to employment, income, or social class [@cameron2013a; @glonti2015a; @reeves2014a]; involvement in sports in childhood and youth [@haycock2014a]; 'problem--focused' coping [@lai2014a, systematic review]; behaviour change [@mackenbach2015a]; sickness benefit provision [@wel2015a]; repressive coping (avoidance) [@erskine2016a]; access to---especially primary---healthcare [@mastrocola2015a]; nearby--environment [@bambra2015a]; demographics such as gender, age, ethnicity, and education level [@glonti2015a; @reeves2014a]; congruity between individual circumstances and neighbourhood or area circumstances [@albor2014a]; absence of Adverse Childhood Experiences (ACE) [@bellis2014a]; parental and grandparental mental health [@johnston2013a]; budgeting and money management skills [@fenge2012a]; and bespoke resilience scale [@sull2015a].
+Table \@ref(tab:res-charac-measures-table) summarises the sources of resilience.
+
+In reviewing the sources of resilience I have found it useful to categorise these as 'internal' or 'external'.
+I consider internal sources means of resilience that the individual has direct control over, and is typically psychological or emotional in nature.
+I suggest cognitive ability, playing sports, and coping strategies could be considered 'internal' to the individual.
+External sources, on the other hand, are those which the individual does not have direct control over, although they can often exert some influence, such as in the choice of friendships or in choosing where to live.
+I do not suggest these as definitive distinctions, and what is within the locus of control will vary between individuals depending on their resources available.
+Instead I use these as a shorthand to summarise many of the shared characteristics of the disparate measures.
+
+Many of the papers shared similar limitations.
+Papers using secondary data often did not have access to the 'ideal' variable for their chosen measure, and so relied on the measures available in the data set.
+These same papers typically used self--reported data, which is vulnerable to degrees of recall bias and respondent's willingness to share sensitive information.
+My own simulations share these issues, although I have selected my data set---*Understanding Society*---because it has a broad range of applicable variables.
+
+The majority of the papers were not representative of the UK, or even of England, overall because of their sampling method.
+Nevertheless they offer valuable insight into how individuals manage and seek to improve their physical or mental health (or not).
+Most of the papers were also cross--sectional, so were unable to pick apart the causal nature of health and sources of resilience.
+
+It should be said that not all of the included papers found evidence for resilience, and many found only limited evidence.
+This was compounded by the fact that some papers did not find evidence while others did, despite using similar or identical measures.
+For example @poortinga2012a states, "... no support was found for the hypothesis that the different aspects [of social capital] help buffer against the detrimental influences of neighbourhood deprivation" [-@poortinga2012a, p. 286].
+On the other hand, @cairns2013a and @nagi2013a, and @robinson2015a, found evidence that peer support *can* be supportive.
+While Poortinga's [-@poortinga2012a] study is quantitative, the studies by @cairns2013a and @nagi2013a, and @robinson2015a are qualitative in nature.
+It may be that they are able to explore nuances of social capital that are important at the local level that the quantitative instruments used by @poortinga2012a cannot capture.
+Alternatively it may be that qualitative respondents view their own health outcomes favourably, these favourable views are not consistent when compared quantitatively with other respondents.
+
+
+## Discussion
+In this scoping review of relevant, peer--reviewed literature I have identified the breadth of measures used to operationalise health outcomes and sources of resilience.
+From twenty--one papers of data for respondents from the United Kingdom in the period 2012--2017 I have identified over $`r nrow(res_outcome_measures)`$ health outcome measures and a similar number of measures thought to be sources of resilience.
+Many of these are similar or overlap, illustrating the ambiguity surrounding the currently very broadly defined concept of 'health resilience' and the need for more specific and well--defined definitions and measures.
+
+To the best of my knowledge this study is the first to systematically and comprehensively identify the wide range of measures used to operationalise the concept of resilience.
+Similar systematic reviews of health resilience, such as @glonti2015a, have been conducted, but these have tended to focus on demographic explanations for differing outcomes, rather than psychological sources of resilience that explain differences in outcomes *within* demographic groups.
+I hope that, in addition to my own use of these measures in Chapter \@ref(ressim), that researchers may be able to articulate health resilience in empirical and policy literature with greater confidence.
+
+### Limitations
+The nature of a scoping review means that the search strategy used is unlikely to be exhaustive.
+Nevertheless it is comprehensive, providing a broad overview of the range of studies that operationalise resilience in some manner.
+
+Statistical meta--analyses or quantitative combination of results is not possible for this review given the disparate nature of the measures used to operationalise resilience, health outcomes, and deprivation when applicable.
+Instead this review has produced a narrative summary of the included papers.
+Future, more narrowly focused, systematic reviews could potentially include meta--analyses of studies using consistent definitions and measures of health resilience.
+
+The geographical restriction to the UK, and the related restriction to English--language papers, is arguably the most significant limitation of this review.
+While this decision was appropriate for the aims of this particular review, it will limit the generalisability of its findings for other countries with different socio--economic circumstances, cultures, and health and social care systems.
+
+
+## Conclusion
+This scoping systematic review has identified the breadth of measures used by relevant literature to operationalise and study sources of resilience.
+I will use these measures in Chapter \@ref(ressim) to simulate resilient characteristics in my case study area of Doncaster, to investigate if and where health resilience if prevalent at the small--area level.
+I will also explore if these characteristics are associated with small areas that are resilience, as defined by lower than expected prevalence of clinical depression.

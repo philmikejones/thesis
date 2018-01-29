@@ -1,0 +1,1121 @@
+# Health resilience spatial microsimulation {#ressim}
+
+<!-- Notes:
+- Is the error small enough to identify resilient individuals?
+    + Just state assumptions, same as you would any other method.
+    + "Within the limits of this study..." [@cairns2012a, p. 932].
+
+Initial literature review of resilience needs to set out how health resilience
+is used to explain why I use the two approaches.
+- Why do the systematic review?
+- Why clinical depression?
+-->
+
+## Introduction {#ressim-intro}
+After successfully simulating a pilot spatial micro dataset in Chapter \@ref(methods) I moved on to simulate health resilience, which includes clinical depression and measures of deprivation, and indicators of poverty which I use to examine the likely effects of a number of local and national policy proposals in Chapter \@ref(policy).
+This was again a simulation of Doncaster, my case study area, at output area level.
+To perform the simulation I used the same data sources as the pilot simulation, namely *Understanding Society* and the 2011 census tables.
+Where this simulation differed was in the increased number of target variables that I simulated to help identify health resilience, and in the increased number of constraint variables I used to improve the accuracy of the simulation.
+
+For the target variables I compared two approaches to identify resilience.
+One approach was to simulate mental health outcomes, specifically prevalence of clinical depression, at the area level.
+I then combined these results with area--level deprivation measures to identify which area or areas could be considered resilient, if any.
+This is similar to the approach taken by much contemporary social science research into health resilience, such as that by @bartley2006b, @mitchell2009a, or @cairns2013a.
+The other approach was to simulate variables that identify concepts thought to promote resilience, as outlined in Chapter \@ref(sysrev).
+With this approach I was able to specify which areas might be resilient under certain assumptions.
+These two approaches are documented in Section \@ref(ressim-results).
+Finally I simulated various indicators of economic and social status, which I use to examine the possible effects of proposed national and local policy changes in Chapter \@ref(policy).
+
+For the constraints I wanted to test additional variables because more constraints can lead to a more accurate simulation, although some authors suggest the number of possible categories for each constraint is at least as important as the number of constraints themselves:
+
+> ...a model constrained by two variables, each containing 10 categories (20 constraint categories in total), will be better constrained than a model constrained by 5 binary variables such as male/female, young/old etc. [@lovelace2016a, p. 52].
+
+Regardless of the efficacy of using multiple variables or multiple levels, by testing additional constraints I was able to satisfy both requirements, as many of the constraints have several response categories.
+Of course, the constraints are only as good as their ability to predict the target variable, so I empirically tested this relationship in Section \@ref(ressim-test).
+
+
+## Target variables {#ressim-targets}
+
+```{r res-charac-operationalise-prep}
+res_charac_operationalise <- data.frame(
+  paper_13a = c("13",
+                "Neighbourhood cohesion",
+                "scopngbhe; scopngbhg"),
+  paper_13b = c("",
+                "Neighbourhood trust",
+                "nbrcoh3; sctrust (wave a_ only)"),
+  paper_13c = c("",
+                "Neighbourhood belonging",
+                "scopngbha"),
+  paper_13d = c("",
+                "Civic participation",
+                "orga"),
+  paper_13e = c("",
+                "Social cohesion",
+                "nbrcoh4 (reversed)"),
+  paper_13f = c("",
+                "Mutual respect",
+                "No suitable measure"),
+  paper_13g = c("",
+                "Heterogeneous relationships",
+                "siminc"),
+  paper_13h = c("",
+                "",
+                "simrace"),
+  paper_13i = c("",
+                "Political participation",
+                "No suitable measure"),
+  paper_13j = c("",
+                "Political activism",
+                "No suitable measure"),
+  paper_13l = c("",
+                "Political efficacy",
+                "poleff4 (reversed)"),
+  paper_13m = c("",
+                "Political trust",
+                "No suitable measure"),
+  paper_16  = c("16",
+                "Cognitive ability",
+                "No suitable measure"),
+  paper_23  = c("23",
+                "Support/encouragement",
+                "No suitable measure"),
+  paper_32a = c("32",
+                "Place attachment",
+                "As neighbourhood belonging"),
+  paper_32b = c("",
+                "Social capital",
+                "As paper 13"),
+  paper_32c = c("",
+                "Natural environment",
+                "No suitable measure"),
+  paper_37a = c("37",
+                "Employment",
+                "Excluded - constraint"),
+  paper_37b = c("",
+                "Finances/income",
+                "finnow"),
+  paper_37c = c("",
+                "Social isolation",
+                "closenum (>0)"),
+  paper_37d = c("",
+                "Occupational capital",
+                "No suitable measure"),
+  paper_37e = c("",
+                "Social support",
+                "No suitable measure"),
+  paper_46a = c("46",
+                "Place attachment",
+                "As paper 32"),
+  paper_46b = c("",
+                "Social capital",
+                "As paper 32"),
+  paper_46c = c("",
+                "Natural environment",
+                "No suitable measure"),
+  paper_67  = c("67",
+                "Sport involvement in youth",
+                "No suitable measure"),
+  paper_78a = c("78",
+                "Coping strategy",
+                "GHQ"),
+  paper_90a = c("90",
+                "Smoking",
+                "ncigs (0)"),
+  paper_90b = c("",
+                "Alcohol consumption",
+                "xpaltob_g3 (household measure)"),
+  paper_90c = c("",
+                "Diet",
+                "No suitable measure"),
+  paper_90d = c("",
+                "Exercise",
+                "No suitable measure"),
+  paper_96  = c("96",
+                "Sickness benefit provision",
+                "Excluded - not generally applicable"),
+  paper_98  = c("98",
+                "Peer support",
+                "No suitable measure"),
+  paper_173a = c("173",
+                 "Repressive coping",
+                 "No suitable measure"),
+  paper_195  = c("195",
+                 "Access to healthcare",
+                 "Excluded - not generally applicable"),
+  paper_204a = c("204",
+                 "Greater distance to brownfield",
+                 "No suitable measure"),
+  paper_204b = c("",
+                 "Low environmental deprivation",
+                 "No suitable measure"),
+  paper_206  = c("206",
+                 "Resilience Scale (RS-25)",
+                 "Items not provided"),
+  paper_208a = c("208",
+                 "Gender",
+                 "Excluded - constraint"),
+  paper_208b = c("",
+                 "Age",
+                 "Excluded - constraint"),
+  paper_208c = c("",
+                 "Education level",
+                 "Excluded - constraint"),
+  paper_208d = c("",
+                 "Employment",
+                 "Excluded - constraint"),
+  paper_208e = c("",
+                 "Financial problems in last year",
+                 "As paper 37"),
+  paper_208f = c("",
+                 "Area-level deprivation",
+                 "No suitable measure"),
+  paper_241a = c("241",
+                 "Number of 'nodes' within 5 minutes",
+                 "netlv (< 1 mile)"),
+  paper_241b = c("",
+                 "Support from network",
+                 "No suitable measure"),
+  paper_241c = c("",
+                 "Frequent contacts (>1/week)",
+                 "netph (at least weekly)"),
+  paper_241d = c("",
+                 "Number of cohabitants",
+                 "hhsize"),
+  paper_241e = c("",
+                 "Binary: network include spouse/partner",
+                 "Excluded - constraint"),
+  paper_241f = c("",
+                 "Number of different relationship 'types'",
+                 "No suitable measure"),
+  paper_241g = c("",
+                 "Number of network pairs who know each other",
+                 "No suitable measure"),
+  paper_241h = c("",
+                 "Support given to others",
+                 "Unknown types of support"),
+  paper_241i = c("",
+                 "Social resources",
+                 "No suitable measures"),
+  paper_241j = c("",
+                 "Involvement in groups or organisations",
+                 "As paper 13"),
+  paper_241k = c("",
+                 "Binary: network member lost in last 12 months",
+                 "No suitable measure"),
+  paper_241l = c("",
+                 "Total network members lost in 12 months",
+                 "No suitable measure"),
+  paper_242  = c("242",
+                 "Similarity with area status",
+                 "scopngbhg"),
+  paper_250  = c("250",
+                 "Adverse Childhood Experiences (ACEs)",
+                 "No suitable measures"),
+  paper_272  = c("272",
+                 "Parental and grandparental mental health",
+                 "No suitable measures"),
+  paper_307  = c("307",
+                 "Budgeting/money management skills",
+                 "finnow; save"),
+  stringsAsFactors = FALSE
+)
+
+res_charac_operationalise <- t(res_charac_operationalise)
+colnames(res_charac_operationalise) = c("Paper", "Original measure", 
+                                        "Understanding Society Variable")
+```
+
+Each of the two approaches to identify resilience that I described in Section \@ref(ressim-intro) required different target variables.
+The first approach identified areas as resilient if they have low prevalence of clinical depression but high area--level deprivation.
+I chose clinical depression as it is more closely associated with psychological resilience originated in early resilience literature, outlined in Chapter \@ref(reslit-intro).
+
+To calculate this I simulated the prevalence of clinical depression.
+In *Understanding Society* this was asked as 'Has a doctor or other health professional ever told you that you have any of these conditions?' [@understandingsociety2016a].
+Respondents were asked if they had any one or more of 17 conditions, which included clinical depression.
+Self--reported depression has been shown to be adequately correlated with clinical records of depression [@sanchez2008a].
+
+The second approach simulated characteristics thought to relate to higher levels of resilience, as identified by the systematic literature review described in Chapter \@ref(sysrev).
+Table \@ref(tab:res-charac-measures-table) outlines the characteristics identified in each paper thought to affect resilience.
+These included: social capital and social networks; a mentor or someone to provide support; place attachment; natural environment; being in or returning to employment, income, or social class; involvement in sports in childhood and youth; coping mechanisms; cognitive ability in childhood; behaviour change; sickness benefit provision; access to---especially primary---healthcare; demographics such as gender, age, ethnicity, and education level; congruity between individual circumstances and neighbourhood or area circumstances; absence of Adverse Childhood Experiences (ACE); parental and grandparental mental health; budgeting and money management skills; and bespoke resilience scales.
+
+### Social capital {#ressim-social-capital}
+
+@poortinga2012a tested the role of bonding, bridging, and linking social capital in community resilience, and @cairns2013a and @nagi2013a also identify social capital as a source of resilience.
+@poortinga2012a used nine variables from the 2007 and 2009 Citizenship Surveys in England to articulate social capital [@poortinga2012a, pp. 289--290].
+
+The authors tested bonding social capital by asking about: the extent to which people in their respondent's neighbourhood pull together to improve the neighbourhood; how many people in the neighbourhood can be trusted; and how strongly the respondent feels they belong to their neighbourhood.
+In *Understanding Society* there is no exact analogy to the first question, but respondents are asked if they would be 'willing to work together with others on something to improve my neighbourhood' and if 'I think of myself as similar to the people that live in this neighbourhood'.
+I coded respondents who strongly agreed or agreed to both questions as a proxy for neighbourhood cohesion.
+Trust in people in the neighbourhood and feeling of belonging to the neighbourhood have more direct analogies in *Understanding Society*.
+Trust was asked as 'people in this neighbourhood can be trusted' in waves `f_` and `c_`, and as 'generally speaking would you say that most people can be trusted, or that you can’t be too careful in dealing with people?' in wave `_a`.
+I coded neighbourhood trust as either strongly agree or agree to wave `f_` and `c_`, or 'most people can be trusted' to wave `a_`, taking the most recent response if respondents answered more than one wave.
+Belonging was asked as 'I feel like I belong to this neighbourhood'.
+I coded respondents who strongly agreed or agreed with this statement as feeling they belong to their neighbourhood.
+
+Bridging social capital was asked by: if respondents think people from different backgrounds in their neighbourhood get on well together; if residents respect ethnic differences between people; what proportion of the respondent's friends have a similar income to them; and what proportion of the respondent's friends are of the same ethnic group as them.
+*Understanding Society* asks respondents to agree or disagree with the statement, 'People in this neighbourhood generally don't get along with each other'.
+This is reversed from the use in @poortinga2012a, but tests the same concept so I used this as a proxy.
+There is no direct analogy asking about respect for ethnic differences so I could not include this.
+Proportion of friends with a similar income and proportion of friends of the same ethnic group have direct analogies in *Understanding Society*.
+@poortinga2012a suggested hetergeneous friendship groups were conducive to resilience, so I coded 'about half' and 'less than half' as hetergeneous in both cases.
+
+Linking social capital asked: if respondents had contacted a political representative, such as a councillor or Member of Parliament, in the last twelve months; if the respondent had attended a public rally, meeting, demonstration, or protest, or signed a petition in the last twelve months; to what degree the respondent felt they could influence decisions affecting their local area; and how much they trust the local council, the police, and parliament.
+The first two questions ask about activities, except voting, that the respondent has participated in, for which there was no adequate analogy in *Understanding Society*, which forced me to exclude these questions from my analysis.
+The third question asks about the respondent's ability to influence local decisions, for which I used 'People like me don't have any say in what the government does' as a proxy.
+I coded respondents who strongly disagreed or disagreed as having political efficacy.
+Finally, levels of trust in the local council, police, and parliament were not asked so I could not use these.
+
+### Social networks
+
+@reeves2014a reviewed the effectiveness of social networks for patients managing a long--term condition.
+They suggested network member characteristics, social network characteristics, and member change were important for effective social networks.
+They articulated these as: number of network members within five minutes; percentage of network members giving support within five minutes; number of network members in contact at least weekly; number of cohabitants; if the network includes a spouse or partner; number of different relationship 'types'; number of network members who know each other; amount of support given to other network members; score of social resources; extent of involvement in groups or organisations; a binary measure if any network members were lost in the previous twelve months; and number of members of the network lost in the previous twelve months.
+
+In *Understanding Society* respondents are only asked details of up to three 'best friends' or network contacts, so it was not appropriate to use the number of contacts as this was capped.
+Instead, I used a binary yes or no if any one of the respondent's friends met the respective criteria.
+For network members within five minutes I used friends who live less than one mile away as a proxy.
+There was no suitable variable asking if friends provided support, so I was not able to include this.
+Respondents were asked how frequently they were in touch with friends, so I coded respondents as binary yes or no if they were in touch with at least one friend, at least weekly.
+I derived number of cohabitants by subtracting one---the respondent---from household size.
+Marital status was the most appropriate proxy for whether the network included a spouse or partner, but I could not include this because I included it as a constraint (see Section \@ref(ressim-marital-status)).
+
+There were no suitable measures for number of different relationship 'types' or number of network members who know each other, so I could not include these.
+The paper used a count of up to seven types of support given to others by the participant in the last month, but it is not known what these seven types of support were.
+*Understanding Society* asks if the respondent cares for others either inside or outside of the household, but I was not able to use these responses as they might not capture all of the types of support used by @reeves2014a.
+Social resources were assessed using the Resource Generator--UK (RG--UK) instrument [@webber2007a].
+This asked 27 items about the help available to the respondent across four domains, such as if the respondent had a friend who could help with jobs around the home or who had a professional occupation [@webber2007a, p. 486].
+*Understanding Society* did not ask comparable questions about the nature and extent of support provided by friends so I could not include these measures.
+
+Extent of involvement in groups or organisations was asked as the number attended from a list of 14 different types.
+They did not specify what the 14 types are, but in *Understanding Society* respondents are asked if they participate in any of 16 organisations or activities.
+While there is no guarantee the 16 items in *Understanding Society* map to the 14 in @reeves2014a, they do cover a broad range of organisations and groups and respondents are asked if they participate in any other groups not captured.
+I coded respondents as being involved if they participated in at least one group or organisation.
+*Understanding Society* does not ask if any friendships or network 'nodes' have been lost in the preceeding twelve months or about work done by lost 'nodes' in that period.
+I was therefore unable to include these concepts in my analysis.
+
+### Peer support {#ressim-peer-support}
+
+@matthews2012a found that respondents who self--reported that they had "...someone to support, push or encourage them" were more likely to look after their health and seek treatment when necessary [@matthews2012a, p. 404].
+*Understanding Society* asks about social networks, but not if the respondent feels they receive support from members of their network.
+Similarly only respondents completing the youth questionnaire---those aged 16--21---were asked if they feel they receive support from their family.
+For this reason I was not able to include this measure, but other measures of the quality and quantity of the respondent's social network are inlcuded based on measures in Section \@ref(ressim-social-capital).
+
+@robinson2015a identified peer support as a protective factor against poor health in men.
+As discussed above there were no suitable measures in *Understanding Society* for this concept so I was not able to include it.
+
+### Place attachment
+
+@cairns2013a and @nagi2013a are based on the same doctoral research so repeat the same measures.
+They identify self--reported place attachment, social capital, and the quality of the natural environment as potential protective mechanisms.
+Place attachment was defined by the authors as "the emotional attachment acquired by individuals to their environmental surroundings which enables them to develop a strong sense of belonging, which is important for personal identity and emotional well--being" [@nagi2013a, p. 232].
+*Understanding Society* asks if the respondent feels like they belong to their neighbourhood, which I already coded in Section \@ref(ressim-social-capital).
+
+### Natural environment
+
+@cairns2013a and @nagi2013a identify the quality of the natural environment as a potential protective mechanism.
+@bambra2015a hypothesised a reduced or limited proximity to 'brownfield' sites---sites that are categorised as previously developed land (PDL)---and low environmental deprivation are potential sources of health resilience.
+*Understanding Society* does not ask about the local environment so I was not able to include these concepts.
+
+### Employment status and occupational capital {#ressim-employment-status}
+
+@cameron2013a found that self--reported employment status, financial situation, social isolation, 'occupational capital', and social support affected health outcomes.
+Employment status is already used as a constraint so I had to exclude it.
+Respondents in *Understanding Society* are asked about their current subjective financial status, so I included this as a proxy for financial situation.
+I coded respondents who reported they were living comfortably or doing alright as a 'good' financial situation and potential source of resilience.
+The number of close friends (which can also include family members) is asked in *Understanding Society*, so I coded respondents with one or more close friends as not socially isolated.
+Occupational capital is defined by the author as "accessible external opportunities" [@cameron2013a, p. 197], which I take to mean as the availability or number of jobs which the candidate could reasonably perform and be appointed to within a reasonable distance.
+This is only applicable to individuals who are currently seeking work, mostly those who are unemployed, so is not applicable to the general population.
+I could not combine this in any way with employment status, either, as I used this as a constraint (see Section \@ref(ressim-economic-activity))
+For these reasons I excluded this from my analysis.
+I was not able to include social support as I discussed in Section \@ref(ressim-peer-support).
+
+### Sports participation {#ressim-sports-participation}
+
+@haycock2014a determined that sports participation in youth had a strong association with sports participation, and therefore improved health, in adult life.
+In *Understanding Society* sports participation is asked, but only for the youth panel or if there is a child in the home, so it was not possible to include this measure.
+
+### Coping mechanisms
+
+@lai2014a provide a systematic review of coping mechanisms employed to mitigate stress and challenges from caregiving.
+As this is a review of other literature, multiple instruments were identified to measure coping ability and strategy including Coping Health Inventory for Parents (CHIP), Ways of Coping Scale (WCS), and the Multidimensional Coping Inventory (MCI), as well as qualitative and self--reported measures.
+*Understanding Society* does not capture this breadth of information about coping, and likely should not as many of these instruments are not designed to be self--completed.
+It does, however, ask the General Health Questionnaire (GHQ) which includes items on the respondent's ability to overcome difficulties and to face problems.
+I used these as a proxy for 'coping' overall, although these will not articulate the nuances of *how* respondents cope.
+I coded 'not at all' or 'no more than usual' to problems overcoming difficulties and 'more so than usual' or 'same as usual' to ability to face problems as potentially sources of resilience.
+
+@erskine2016a looked at the protection provided by repressive coping in old age.
+I cannot include detailed information about coping styles because these are not asked in *Understanding Society*.
+I have included the GHQ which asks about coping overall, but not about *how* the respondent copes.
+
+### Cognitive ability
+
+@mottus2012a tested the efficacy of cognitive ability, measured with the Moray House Test no. 12 [@mottus2012a, p. 1370], as a protective mechanism for health.
+I had to exclude this because there was no suitable comparable measure in *Understanding Society*.
+
+### Behaviour change {#ressim-behaviour-change}
+
+@mackenbach2015a describe the relationship between education and cause--specific mortality in Europe, from which mortality deviated from the 'expected' level in some circumstances.
+They determined that much of the deviation, particularly for preventable diseases, is due to behaviour change, medical intervention, and injury prevention [@mackenbach2015a, p. 59].
+Medical intervention and injury prevention, although clearly important, are not of interest to this study because they focus on the prevention and treatment of a specific pathology or event, not on psychological or physiological improvement overall.
+Behaviours they identified as protective included not smoking and low alcohol consumption.
+
+Smoking is recorded in *Understanding Society* as the usual number of cigarettes smoked per day, which I coded as either no cigarettes for non--smokers or one or more cigarettes per day for smokers.
+Alcohol consumption is not directly asked in *Understanding Society* but the amount of money the household spent on alcohol in the preceeding four weeks is.
+By dividing this figure by the average unit cost of alcohol [@ias2014a] I estimated the household alcohol consumption in units.
+Dividing this figure by four gave the weekly household alcohol consumption.
+I further divided this by the number of individuals living in the household aged 16 and over to arrive at an estimated consumption of alcohol per person in units.
+Consumption of more than 14 units per week is considered risky [@cmo2016a, p. 4] so I have coded respondents as low or high risk based on this threshold.
+This should be treated as highly indicative only as it is based on a number of assumptions, not least that all individuals within the household drink the same amount of alcohol.
+Parental attitudes and behavious towards alcohol consumption demonstrably influence child alcohol consumption [@nash2005a; @yu2003a] but clearly there will be variation within the household to a greater or lesser degree.
+There are no analogies for diet and exercise in *Understanding Society* so I have had to exclude these.
+
+### Sickness benefit arrangements
+
+@wel2015a compare sickness benefit arrangements across Europe and their effect on health inequalities.
+Sickness benefit is an important safety net, potentially applicable to any and all employed individuals.
+*Understanding Society* asks if the respondent is usually employed but on sick leave in the last week, but does not include details of any amounts paid because of sick leave.
+Further, sickness benefit will only apply to respondents who are employed which accounts for only about $`r format(table(us$econ_act)["eca_emp"] / nrow(us) * 100, digits = 0)`\%$ of the sample.
+Employment status is a constraint, so I was not able to combine this with sickness benefit provision to create a measure for the whole population.
+For these reasons I was not able to include sickness benefit in my analysis of resilience.
+
+### Accessing health care
+
+@mastrocola2015a identified barriers women involved in street--based prostitution face in accessing health care, especially primary care, and suggest that improved access would be a protective factor for these women.
+Respondents in *Understanding Society* are asked if they experienced any difficulties accessing local services, but this is grouped together as one question which includes healthcare, food shops, and learning facilities.
+I was therefore not able to include this measure as there was no way to differentiate between access to health care services and all other services.
+
+### Personal and area demographics
+
+@glonti2015a is a systematic review of health resilience during economic crises across ten countries.
+Extracting just the UK--based papers, the sources of resilience were, variously, gender, age, education level, employment, financial constraints, and low area--level deprivation.
+I could not include gender, age, education level, and employment because they are already included in the simulation as constraints.
+*Understanding Society* asks about subjective financial situation which I used as an indicator for financial constraints, as I coded in Section \@ref(ressim-employment-status).
+Area--based methods of deprivation, such as IMD score, are not recorded in *Understanding Society* but I attached these to the aggregated simulation.
+
+### Neighbourhood congruity
+
+@albor2014a tested to see if sharing a similar socio--economic status to other residents in the neighbourhood---neighbourhood congruity---can be a source of health resilience.
+Individual socio--economic status was derived from household occupational class and educational achievement, and neighbourhood socio--economic status was based on census occupational status and educational status.
+*Understanding Society* asks if respondents agree or disagree that they are similar to others in their neighbourhood, which is what I based neighbourhood congruity on.
+I was not able to include occupational status or educational status as they are both constraints.
+
+### Adverse Childhood Experiences (ACEs)
+
+@bellis2014a explored the association between adverse childhood experiences (ACEs) and health--harming behaviours, specifically if an absence of ACEs can lead to resilience.
+Respondents were asked about ACEs using the Centers for Disease Control and Prevention short ACE tool which covered: physical, verbal, and sexual abuse; parental separation; exposure to domestic violence; or growing up in a household with mental illness, alcohol abuse, drug abuse, or incarceration [@bellis2014a, p. 3].
+I was not able to include ACEs as *Understanding Society* does not ask respondents about household conditions during childhood or adolescence, but I was able to code household alcohol consumption (Section \@ref(ressim-behaviour-change)).
+
+### Familial mental health
+
+@johnston2013a used the 1970 British Cohort Study to test if parental or grandparental mental health affected the mental health of the grandchild.
+Childhood or adolescent household conditions were not asked of respondents in *Understanding Society* so I was therefore unable to include parental or grandparental mental health.
+I was able to include an indicator for the respondent's mental health using the General Health Questionnaire (GHQ).
+
+### Financial and budgeting skills
+
+@fenge2012a used semi--structured interviews to explore older peoples' resilience to the effects of economic recession, specifically if budgeting and money management skills enabled them to maintain their well--being and quality of life.
+*Understanding Society* asks respondents if they save any money, which is a binary response, and about the respondent's subjective financial situation, which I have already coded in Section \@ref(ressim-employment-status).
+
+### Resilience scale (RS--25)
+
+@sull2015a used the Resilience Scale (RS--25) to measure resilience among NHS workers which tests concepts of "a purposeful life, perserverance, equanimity, self--reliance and existential aloneness" [@sull2015a, p. 3].
+The RS--25 is a proprietary measure of resilience marketed as the 'True Resilience Scale' which can be licensed for use from The Resilience Centre [@rs25].
+I contacted The Resilience Centre by email in April 2017 asking to see the items on the RS--25, explaining the nature of this research and that I did not intend to use the resilience scale in a clinical or organisational setting.
+After repeated emails [@wagnild-priv-comm] The Resilience Centre did not provide the items, so I could not include them.
+The RS--25 instrument might be valid but is of limited use for policy or research if it cannot be reviewed by other researchers.
+
+Table \@ref(tab:res-charac-operationalise-table) summarises the concepts and variables I used to operationalise these.
+
+```{r res-charac-operationalise-table}
+knitr::kable(res_charac_operationalise, row.names = FALSE,
+             caption = "Operationalisation of resilience sources")
+```
+
+
+## Constraints {#ressim-constraints}
+In selecting constraints I began with those I used in the pilot simulation (see Section \@ref(methods-constraints)).
+These constraints simulated limiting long--term illness or disability well because they correlated well with this variable, and my aim here was to simulate similar health--related variables.
+The constraints I used were sex, highest qualification, ethnicity, housing tenure, car ownership, and age.
+
+In addition to these I wanted to test an increased number of constraints, now I had a working model; as in the pilot simulation (Chapter \@ref(methods)) I was limited by the variables that are available in both the census and the survey data, which in practice usually means the census was the limiting factor.
+Nevertheless the census contained additional variables that I tested for inclusion in the simulation.
+These were: economic activity; overcrowding (greater than 1.0 person per room, as described by @townsend1988a); marital status; and social class.
+
+### Economic activity {#ressim-economic-activity}
+The first additional variable I tried was economic activity, as this is a powerful predictor of many health outcomes [@wilkinson2003a; @bartley2006a].
+Most levels matched across both the survey and the census data, but a few required recoding or re--aggregating.
+
+Economic activity data in the census covered only individuals aged 16--74 whereas *Understanding Society* covered all individuals aged 16 and above.
+To solve this issue in setting up the census I added all individuals aged 75 and above from the census to the 'retired' category.
+This was the most pragmatic choice as, even though some individuals aged 75 and above may still be working, especially in part--time or informal capacities, the majority will have left the primary employment or career which influenced their social class.
+
+An option for maternity leave was present in the survey data but not in the census data so I needed to choose the most suitable group to combine this with.
+Similarly apprenticeships, government training schemes, and 'unpaid worker in family business' were options in the survey data but not in the census.
+I ultimately decided that because apprenticeships and government training schemes were conceptually similar I would combine these into 'other' in both the census and survey levels.
+
+Combining government training scheme and apprenticeship with unpaid worker in a family business was not ideal as they are conceptually different forms of economic activity.
+However, only a small number of respondents in *Understanding Society* were unpaid workers in a family business ($n = 48$) so the effect was negligible, so the 'other' group could be thought of as mostly comprising individuals on training schemes designed to enhance their skills and improve their careers.
+
+Because of this, it did not seem appropriate to include people on maternity leave in the 'other' group, as women on maternity leave can choose to return to their previous role and economic activity.
+I considered grouping maternity leave and long--term sick and disabled together in the survey, as both groups have 'paused' their previous economic activity.
+However, maternity leave comes with an expectation that the individual returns to their previous economic activity within a defined period, usually twelve months.
+Individuals who are long--term sick or disabled and receiving a personal independence payment (PIP) must have a condition expected to last at least nine months, but in practice there is no maximum length of time people can claim for before returning to their previous economic activity as they are 'regularly reassessed' [@govuk2017a].
+
+I ultimately decided to group individuals on maternity leave with individuals looking after family or home.
+This has the same issue that those on maternity leave are likely to return to their 'previous' economic activity while those looking after the family or home or those who are long--term sick or disabled are more likely to remain so.
+It has the advantage, though, of the two being conceptually similar involving care for family members.
+In addition, *by definition*, people with a long--term illness or disability will necessarily have a health issue, while both those on maternity leave and those looking after family or home may or may not have a health issue: a health issue is not *a priori* known for these individuals.
+Finally, it preserves the distinction between individuals who are fundamentally performing a caring role to those who are receiving formal training.
+
+In the census students are split between those who are economically active and those who are economically inactive, which is usually students who are studying full--time.
+In *Understanding Society* students are not distinguished in this way, so it was necessary to group economically active and economically inactive students in the census.
+Even though economically active students may not be full--time students, or may participate in the labour market in other ways, their primary economic activity is arguably studying to improve their skills so the two are conceptually similar.
+
+The census splits self--employed groups by part--time and full--time, and those with employees and those without employees.
+These had to be aggregated to match the survey, which had a single category for self--employed.
+Similarly full--time and part--time employed individuals in the census were aggregated---to simply 'employed'---to match the survey.
+*Understanding Society* does not explicitly state the 'unemployed' group is the same as 'economically active unemployed' from the census.
+To be 'economically active unemployed' requires the individual to be "actively looking for work" or "waiting to start a new job" [@nomis2013e], while *Understanding Society* instead asks respondents to choose the economic activity that 'best' describes their current circumstances.
+Again, I do not believe this will affect the simulation significantly as they fundamentally measure the same concept; an individual looking to return to some other form of economic activity, be that employment, self--employment, or studying.
+
+The final levels for economic activity in the census and the survey I used are: employed; looking after home or family; long--term sick or disabled; retired; self--employed; student; unemployed; and other.
+These are coded in `data-raw/0-prep-understanding-society.R` in the thesis source code.
+
+### Overcrowding
+The concept of 'overcrowding' is based on the definition used by @townsend1988a [pp. 36--37] in their construction of a deprivation index.
+A private household is considered overcrowded if there is more than one person per room in the household.
+The definition of room excludes bathrooms, toilets, halls or landings, rooms that can only be used for storage, or any rooms shared between different households.
+All other rooms, including kitchens and utility rooms, are included.
+If two rooms have been converted in to one room they are counted as one room [@nomis2014a].
+
+Unfortunately it proved impossible to use overcrowding as a constraint variable.
+The data is available in the census for households or individuals, but crucially only for the whole population: it is not possible to obtain persons per room with an associated age breakdown.
+This makes it impossible to subset the data and remove individuals aged less than 16 from the census tables so there are approximately 50,000 'extra' individuals.
+
+```{r kids-ocrowd-model, cache=TRUE}
+kids_ocrowd <- glm(ocrowd ~ kids, data = us, family = binomial())
+kids_ocrowd <- check_logit(kids_ocrowd)
+```
+
+Arguably I could reweight the overcrowding population using the respective proportions to that of the known population that is 16 and above, as I did for car ownership (Section \@ref(matching-census-populations)).
+The discrepancy for car ownership was approximately $5,000$ individuals, or approximately $2.1\%$, so the reweighting had a much smaller effect on the data than reweighting $50,000$ individuals would.
+This is additionally problematic because children are not randomly distributed among households that are overcrowded and those that are not.
+A hypothesis test using logistic regression with data from *Understanding Society* indicates that the number of children in the household and overcrowding are correlated (Nagelkerke pseudo--$R^2 = `r kids_ocrowd$over$nagelkerke`$, model $\chi^2$ $p$--value $\approx$ $`r kids_ocrowd$over$chisq_prob`$).
+This would not be the case if families with more children had access to larger houses, but clearly something---perhaps income or availability of suitable housing stock---is preventing many families with children from moving into suitably--sized accommodation.
+
+For these reasons I decided recalculating the populations was not appropriate and chose not to include overcrowding, or persons per room, as a constraint.
+This is unlikely to pose an issue for the simulation, however, because other constraints capture different dimensions of reduced material or economic circumstances or deprivation, which overcrowding is associated with.
+
+### Marital status {#ressim-marital-status}
+Evidence suggests marital status is associated with health outcomes [@hosseinpour2012a; @robards2012a], although not conclusively [@sacker2009a], and not always equally across social class [@choi2013a].
+
+For the most part, levels recorded in *Understanding Society* closely matched those in the census.
+There were levels for married, in a civil partnership, single, separated, divorced, or widowed, and these required no additional matching.
+For respondents in *Understanding Society* there were additional levels for separated from a civil partnership, divorced from a civil partnership, or a surviving partner in a civil partnership.
+I simply combined these with separated, divorced, or widowed, respectively and there were relatively small number of respondents in a civil partnership so this did not affect the simulation.
+
+### Social class
+Socio--economic position or social class is another powerful determinant of health.
+Social class is usually measured using the National Statistics Socio--economic Classification (NS--SEC) [@ons2015a].
+
+```{r nssec-cases, cache=TRUE}
+nssec_cases <- us %>%
+  select(pidp,
+         age, sex, eth, marital,
+         qual, econ_act,
+         car, ten) %>%
+  na.omit()
+
+m_nssec <- glm(llid ~ class8, data = us, family = binomial())
+m_nssec <- check_logit(m_nssec)
+```
+
+There were a large number of missing cases for social class in *Understanding Society* (missing $n = `r format(nrow(us[is.na(us$class8), ]), big.mark = ",", trim = FALSE)`$).
+To help in deciding whether to remove or include social class I ran a logistic regression test to see if NS--SEC is useful in predicting limiting long--term illness or disability, as a proxy for a health outcome.
+The model was statistically significant ($p \approx `r m_nssec$over$chisq_prob`$) but the predictive power was negligible (Nagelkerke pseudo--$R^2 \approx `r m_nssec$over$nagelkerke`$), the difference in deviances was small ($`r m_nssec$over$diff_deviance`$), and none of the levels of the variable were statistically significant.
+The poor predictive power of social class and the fact that there were so many missing data points led me to exclude this variable from the simulation.
+I did not consider this a significant problem as I was able to include education in the model which is arguably a more robust measure.
+Because highest level of education is generally 'fixed' there is no problem of 'reverse causality', making it clearer if poor health in old age affects socio--economic position, or if socio--economic position negatively affects health.
+
+### Final constraint choice
+After excluding social class and overcrowding, the final list of constraints I tested were: age; sex; ethnicity; marital status; highest qualification; economic activity; car ownership; and housing tenure.
+
+
+## Empirically test constraints {#ressim-test}
+In this section I tested the constraints to see if they correlated with clinical depression.
+Respondents in *Understanding Society* are asked if they have a broad range of health conditions, including clinical depression, and responses are coded as 'yes' or 'no'.
+Of the $`r format(nrow(us), big.mark = ",", trim = FALSE)`$ respondents in *Understanding Society*, $`r format(nrow(us[us$depress == "depress_yes" & !(is.na(us$depress)), ]), big.mark = ",", trim = FALSE)`$ reported having clinical depression.
+
+As with the pilot microsimulation the dependent variable is binary, so logistic regression is the most appropriate technique to establish correlation between the constraints and depression.
+I set up an initial model using age, sex, ethnicity, marital status, highest qualification, car ownership, housing tenure, economic activity, and limiting long--term illness or disability as independent variables.
+Clinical depression, with 'no clinical depression' coded as the base category, was the dependent variable.
+The overall results of this model are displayed in table \@ref(tab:model-depress-results-over).
+
+```{r model-depress-setup, cache=TRUE}
+dep_df <- us %>%
+  select(depress,
+         age, sex, eth, marital, qual, car, ten, econ_act, llid) %>%
+  rename(
+    mar  = marital,
+    eca  = econ_act
+  ) %>%
+  na.omit()
+```
+
+```{r dep-model-relevel}
+# Relevels factors so output of models is more sensible
+dep_df$depress <- relevel(dep_df$depress, ref = "depress_no")
+
+dep_df$age  <- relevel(dep_df$age,  ref = "age_90_plus")
+dep_df$sex  <- relevel(dep_df$sex,  ref = "sex_female")
+dep_df$eth  <- relevel(dep_df$eth,  ref = "eth_british")
+dep_df$mar  <- relevel(dep_df$mar,  ref = "mar_single")
+dep_df$qual <- relevel(dep_df$qual, ref = "qual_0")
+dep_df$car  <- relevel(dep_df$car,  ref = "car_0")
+dep_df$ten  <- relevel(dep_df$ten,  ref = "ten_rented")
+dep_df$eca  <- relevel(dep_df$eca,  ref = "eca_emp")
+dep_df$llid <- relevel(dep_df$llid, ref = "llid_no")
+```
+
+```{r model-depress, cache=TRUE}
+m_dep <- glm(depress ~ age + sex + eth + mar + qual + car + ten + eca + llid,
+             data = dep_df, family = binomial())
+
+m_dep_aic <- AIC(m_dep)
+m_dep_base_aic <- AIC(glm(depress ~ 1, data = dep_df, family = binomial()))
+
+m_dep <- check_logit(m_dep)
+```
+
+```{r model-depress-results-over}
+knitr::kable(m_dep$over, row.names = FALSE,
+             caption = "Overall results of depression model")
+```
+
+```{r model-depress-test, echo=FALSE, include=FALSE}
+assertthat::assert_that(m_dep_aic < m_dep_base_aic)
+```
+
+The AIC of the model (`r m_dep_aic`) is less than the AIC of the baseline (`r m_dep_base_aic`) so the model overall predicts depression (difference in deviances = `r m_dep$over$diff_deviance`, Nagelkerke pseudo--$R^2 = `r m_dep$over$nagelkerke`$, $p \approx `r m_dep$over$chisq_prob`$).
+The breakdown of individual results are provided in table \@ref(tab:model-depress-results-ind).
+
+```{r model-depress-results-ind}
+m_dep$ind$predictor <-
+  stringr::str_replace(m_dep$ind$predictor,
+                       "^age|^sex|^eth|^mar|^qual|^car|^ten|^eca|^llid",
+                       "")
+
+knitr::kable(m_dep$ind, row.names = FALSE,
+             caption = "Individual results of depression model")
+```
+
+The odds ratios suggest all age groups except age 85--89 are statistically significantly more likely to have clinical depresseion than respondents aged 90 and over.
+The odds of having clinical depression increase from age 16--17 to their peak between ages 25--44, then decline again with age to their lowest at age 85 and above.
+The increase in odds to age 44 might be a result of cumulative exposure to evironments and events that contribute to clinical depression.
+After this age the decreasing likelihood of clinical depression may be a genuine change so that older people 'recover' from or are otherwise resistant to clinical depression.
+It may also be a cohort effect such that older generations are less likely to report or seek diagnoses for mental illness.
+
+Sex is statistically significant, with males less likely than females to have a diagnosis of clinical depression.
+Most levels of ethnicity were statistically significant compared to the reference group of White British; only the Irish ethnic group was not statistically significant.
+White British respondents are the most likely to have clinical depression, with all other ethnic groups having lower odds.
+Black African or Black Caribbean British respondents were less than half as likely to have clinical depression that White British respondents.
+These are consistent with the findings of the limiting long--term illness or disability model in Section \@ref(methods-test-cons).
+
+Respondents who are married were less likely to have clinical depression compared to those who were single and never married.
+Respondents who were divorced or separated were more likely to have clinical depression than those who were single and never married.
+Respondents in a civil partnership and who were widowed were not not statistically significantly different to the reference group (single), suggesting similar levels of clinical depression.
+The confidence intervals for the odds for civil partnership are wide, perhaps because of the small number of respondents in a civil partnership ($n = `r nrow(us[us$marital == "mar_civil_part" & !is.na(us$marital), ])`$).
+
+Interestingly, respondents with any level of qualification were *more* likely to have clinical depression than those with no qualifications.
+This could be because individuals with qualifications may be more likely to know of services available or more willing to obtain an appropriate diagnosis in order to obtain support.
+
+Individuals from households with at least one car were less likely to have clinical depression than the reference group (no car), with decreasing odds ratios for individuals from households with more cars.
+Home owners, either those who owned their home outright or with a mortgage, were less likely to have depression than individuals who rent their homes (the reference group).
+
+These suggest that increased financial means are associated with lower risks of clinical depression.
+This is supported by the fact that employed respondents are least likely to have clinical depression compared to other statistically significant levels of economic activity.
+Respondents looking after the home or family, who are long--term sick, retired, or unemployed are all more likely to have clinical depression than employed respondents.
+Respondents who are self--employed or who are students have similar levels of clinical depression to employed respondents.
+
+```{r llid-depress, cache=TRUE}
+m_dep_llid <- glm(depress ~ llid, data = dep_df, family = binomial())
+m_dep_llid <- check_logit(m_dep_llid)
+```
+
+Limiting long--term illness or disability is also correlated with clinical depression.
+The correlation is not high (pseudo--$R^2 = `r m_dep_llid$over$nagelkerke`$), but it does suggest that: either some people have depression severe enough for them to consider it 'limiting'; or that some people have a different limiting condition with clinical depression as a co--morbidity; or both.
+
+Overall these variables correlated meaningfully with clinical depression, so I was able to use them as constraints for the spatial microsimulation model.
+
+### Constraint order {#sms-constraint-order}
+
+As seen in Section \@ref(methods-test-cons) the order the constraints were entered into the model made negligible differences to the outcome.
+I used the absolute $\beta$ values to guide the order I entered the constraints into the model, although a number of random orders converged on the same result.
+The final order of entry I used was: car ownership, housing tenure, highest qualification, marital status, economic activity, sex, ethnicity, and age.
+
+
+## Weight {#ressim-weight}
+
+```{r depress-don-map, out.width="100%", fig.cap="Simulated clinical depression prevalence in Doncaster", cache=TRUE}
+depress_don <- tmap::tm_shape(don_oa) +
+  tmap::tm_polygons("depress_yes", textNA = "Prison OA",
+                    title = "Depression prevalence") +
+  tmap::tm_layout(frame = FALSE)
+
+depress_don
+```
+
+```{r depress-don-map-export}
+# export as A3 for presentations/printing
+if (!file.exists("figures/cache/depress_don.pdf")) {
+  tmap::save_tmap(depress_don, filename = "figures/cache/depress_don.pdf",
+                  width = 420, height = 297, units = "mm", asp = 1)  
+}
+```
+
+Weighting was performed with the `rakeR` package.
+I ordered the constraints as specified in Section \@ref(sms-constraint-order) in both the census and survey and then checked for compatibility using `rakeR::check_constraint()`.
+I produced the fractional weights using the iterative proportional fitting algorithm (Section \@ref(methods-weighting)), as was the case for the pilot simulation.
+For this I used the `rakeR::weight()` function.
+I then 'extracted' the weights to produce aggregate results for each variable in each zone with `rakeR::extract()`.
+I integerised the weights to use as case studies in Section \@ref(policy-case-studies), but I used the extracted weights in most of my analysis because I do not need cases to use in a subsequent agent--based or dynamic model.
+As demonstrated in Section \@ref(methods-weight-int-comp) the fractional weights are also slightly more accurate than the integerised weights.
+Figure \@ref(fig:depress-don-map) shows the initial results of simulated clinical depression by output area in Doncaster.
+Output areas with significant prison populations have been removed as discussed in Section \@ref(communal-establishment-residents), and are displayed in grey.
+
+
+## Validate {#ressim-validate}
+
+As with the pilot simulation, it is possible to statistically compare the simulated constraints with the actual, known constraints to internally validate the accuracy of the model.
+This will involve an assessment of: correlation; a two--sided, equal variance *t*--test; total absolute error and standardised absolute error of the model overall; and standardised absolute error for each zone.
+
+### Correlation
+
+The simulated population ($`r format(don_pop_sim, big.mark = ",", trim = FALSE)`$) matched the actual population ($`r format(don_pop_act, big.mark = ",", trim = FALSE)`$) exactly, indicating the simulation constrained accurately overall.
+
+This was further confirmed by the correlation statistic, which is a standardised statistic so a value of $1.0$ is ideal.
+The correlation statistic was $`r cor(rowSums(res_con[, grep("sex_", colnames(res_con))]), res_weights_ext[["total"]])`$, indicating the population simulated in each area accurately matched the respective known population.
+
+```{r depress-pop-plot-prep}
+res_con         <- arrange(res_con, code)
+res_weights_ext <- arrange(res_weights_ext, code)
+
+dep_sim_act <- data.frame(
+  code = res_con$code,
+  act  = rowSums(res_con[, grep("sex_", colnames(res_con))]),
+  sim  = res_weights_ext$total,
+  stringsAsFactors = FALSE
+)
+```
+
+```{r depress-pop-plot, fig.width=7, fig.height=7, fig.cap="Actual population against simulated population by output area", cache=TRUE}
+ggplot(data = dep_sim_act) +
+  geom_point(aes(act, sim)) +
+  geom_smooth(aes(act, act), method = "lm") +
+  coord_equal()
+```
+
+Figure \@ref(fig:depress-pop-plot) compares the simulated population against the actual, known population for each output area.
+The simulated populations were a perfect match with their known counterparts, indicating that each individual area simulated accurately.
+
+In addition to the overall plot for each area shown in figure \@ref(fig:depress-pop-plot), I created a plot for each level of each variable for inspection.
+These all demonstrated the same high level of fit as the overall area plot, further indicating the model simulation was accurate.
+These figures are not displayed here to avoid repetition, as they all show essentially the same relationship, but can be found in the `figures/cache/` directory of the thesis source code if required.
+
+```{r depress-var-level-correlation, include=FALSE, message=FALSE, warning=FALSE}
+if (!file.exists("figures/cache/depression_validation_sex_male.pdf")) {
+
+  variables <-
+    colnames(res_weights_ext[, !names(res_weights_ext) %in%
+                           c("code", "total", "depress_no", "depress_yes")])
+  variables <- 
+    variables[str_detect(
+      variables, "^car_|^ten_|^qual_|^mar_|^eca_|^sex_|^eth_|^age_")]
+  
+
+  lapply(as.list(variables), function(x) {
+    ggplot() +
+      geom_point(aes(res_weights_ext[[x]], res_con[[x]])) +
+      geom_smooth(aes(res_con[[x]], res_con[[x]]), method = "lm") +
+      xlab(paste(x, "(actual)")) +
+      ylab(paste(x, "(simulated)")) +
+      coord_equal()
+
+    ggsave(filename = paste0("depression_validation_", x, ".pdf"),
+           path = "figures/cache/")
+
+  })
+
+}
+```
+
+### *t*--test
+
+```{r depress-ttests}
+variables <- colnames(res_con[, 2:ncol(res_con)])  # drop `code`
+
+depress_ttests <- lapply(as.list(variables), function(x) {
+
+    result <- t.test(res_con[[x]], res_weights_ext[[x]],
+                   var.equal = TRUE, alternative = "two.sided")
+
+  result <- data.frame(
+    x,
+    result[["statistic"]],
+    result[["p.value"]],
+    stringsAsFactors = FALSE, row.names = NULL
+  )
+
+  colnames(result) <- c("variable", "statistic", "p_value")
+
+  result
+
+})
+
+depress_ttests <- dplyr::bind_rows(depress_ttests)
+
+knitr::kable(
+  depress_ttests,
+  caption = "Result of t-tests comparing simulated against actual data")
+```
+
+Table \@ref(tab:depress-ttests) shows the results of the equal variance, two--sided *t*--test for each constraint.
+This statistically compares the simulated value with the actual, known value from the census and tests the null hypothesis that the two distributions are not different.
+In all cases the result of the *t*--test was not statistically significant so we accept the null hypothesis that the two distributions are not statistically different.
+This indicates the simulation was a good fit with the census data.
+
+### Total absolute error {#ressim-tae}
+
+```{r depress-tae}
+depress_tae <- calc_tae(res_con_pops, res_weights_ext$total)
+depress_sae <- calc_sae(depress_tae, res_weights_ext$total)
+```
+
+The total absolute error and the standardised absolute error were both overall $\approx `r sum(depress_tae)`$.
+Together, these indicate the model overall simulated very well as the differences between the simulated and the observed data are negligible, and certainly well within the thresholds suggested by @smith2009a [p. 1256] discussed in Section \@ref(smslit-validation).
+
+### External validation {#ressim-ext-val}
+
+<!--
+Liddy: Can always be confusing to start be saying what you can’t do or haven’t done – clearer to start by simply described what you did do (and why). Only then if essential mention why you did not use alternative approach but here I suspect not needed.
+
+TODO: explain in sms lit rev chapter that it's not easy to validate the simulated data (otherwise you wouldn't need to simulate it!) and refer back to this here
+-->
+
+By aggregating the simulated values for clinical depression I was able to determine the total simulated prevalence for the Doncaster local authority area.
+I then compared this aggregated value against a known value to provide reassurance that the simulation was realistic and plausible.
+These values were unlikely to match precisely because of differences in the populations and because I had to exclude output areas whose population was predominantly prisoners.
+
+The population of the simulation was individuals aged 16 and above as this is based on the sample of individuals in *Understanding Society*.
+The measures from Public Health England (PHE) only include those aged 18 and over.
+I also had to exclude three output areas had a population consisting predominantly of prisoners.
+The prison population was $`r format(sum(don_oa@data$prison_pop, na.rm = TRUE), big.mark = ",", trim = TRUE)`$ in 2011, and it is likely a substantial proportion of these individuals will have clinical depression.
+<!-- TODO: reference for prisoners having depression -->
+
+Data from @phe2016a provides the prevalence of depression in the Doncaster clinical commissioning group (CCG) area for patients registered with a GP aged 18 and over, for the years $2011$--$12$ to $2015$--$16$.
+The clinical commissioning group area is coterminous with the local authority boundaries in Doncaster, so the two could be compared directly.
+
+Based on the results of my simulation, the number of people in Doncaster with clinical depression was $`r format(depress_sim, big.mark = ",")`$, or approximately $`r ((depress_sim / don_pop_act) * 100)`\%$ of the overall population aged 16 and above.
+
+The 'known' prevalence of clinical depression was $12.8\%$ in $2011$--$12$ for Doncaster CCG.
+I used the 2011--12 prevalence because the simulation was constrained by census data from this year.
+The population aged 18 and above in Doncaster was $`r format(don_pop_18p, big.mark = ",", trim = FALSE)`$ in 2011, so the prevalence of depression was approximately $`r format(depress_act, big.mark = ",", trim = FALSE)`$ individuals.
+
+On face value this indicated the model only simulated about half the cases of clinical depression.
+A more careful examination of the PHE data suggested the 2011--12 data point was problematic and the simulation was more accurate than initial inspection suggested.
+I believe the 'known' prevalence provided by @phe2016a for 2011--12 is inconsistent with the data from the surrounding time points, suggesting this data point could be spurious.
+
+```{r phe-dep-trend, fig.align="center", fig.cap="Prevalence of clinical depression in Doncaster (blue) and the Yorkshire and The Humber region (black), source: Public Health England (2016)"}
+knitr::include_graphics("figures/phe-depression-trend.png", dpi = 300)
+```
+
+Figure \@ref(fig:phe-dep-trend) depicts the trend in clinical depression prevalence in Doncaster and the Yorkshire and The Humber region between $2009$--$10$ and $2015$--$16$ [@phe2016a].
+This trend data indicates that the prevalence of clinical depression in Doncaster in $2012$--$13$ was only $6.1\%$, less than half that of the $2011$--$12$ figure.
+This figure is more congruous with subsequent years, for which the prevalence of clinical depression increased to $8.2\%$ by $2015$--$16$.
+The $2011$--$12$ prevalence figure therefore seems at odds with later data points.
+
+Data before $2011$--$12$ for Doncaster is not provided, but data for the Yorkshire and The Humber region suggest the prevalence of clinical depression prior to $2011$--$12$ was less than $5.0\%$.
+This is congruous with $2012$--$13$ and later data, further suggesting the $2011$--$12$ figure is anomalous.
+
+One possible explanation for this discrepancy is the Quality and Outcomes Framework (QOF), "...the annual reward and incentive programme detailing GP practice achievement results" [@qof], changed between $2010$--$11$ and $2011$--$12$.
+Indicators for clinical depression---DEP2/DEP4 and DEP3/DEP5---were changed to be worth fewer 'points', potentially affecting the measurement and reporting of this diagnosis [@qof-indicators, p. 3].
+
+For this reason I believe it is likely that the prevalence of clinical depression is closer to $5$--$6\%$ than the chart initially suggests.
+This would be the approximately prevalence if the 2011--12 data point was removed and the trend used instead.
+This places my simulated results in line with the surrounding data, suggesting they are plausible and certainly more likely to be valid than initial comparison to 'known' data suggested.
+
+
+## Results {#ressim-results}
+
+### Resilience {#ressim-results-resilience}
+
+```{r oa-imd-map, fig.width=7, fig.height=7, fig.cap="Doncaster IMD 2015 rank (lower rank is more deprived)", cache=TRUE}
+tmap::tm_shape(don_oa) +
+  tmap::tm_polygons("imd_rank", title = "IMD 2015 rank", palette = "-YlOrBr") +
+  tmap::tm_layout(frame = FALSE)
+```
+
+```{r prep-res-results-table}
+res_vars <- stringr::str_detect(colnames(don_oa@data), "res_")
+
+res_results <- lapply(don_oa@data[, res_vars], function(x) {
+  result <- length(x[!is.na(x) & x == 2])
+
+  result
+
+})
+
+res_results <- data.frame(
+  "measure" = colnames(don_oa@data[, res_vars]),
+  "freq"    = unlist(res_results),
+  stringsAsFactors = FALSE
+)
+```
+
+Having simulated and validated prevalence of clinical depression I compared this with various indicators of area--based socio--economic deprivation.
+These were: unemployment; long--term unemployment; low--grade employment (routine employment, NS--SEC 7); index of multiple deprivation (IMD) score; and output area classification supergroup 'hard--pressed living'.
+
+Deprivation based on unemployment, long--term unemployment, and low--grade employment were calculated by summing the number of individuals in each output area matching these criteria and selecting the areas with the highest number of these individuals.
+
+The 2015 Index of Multiple Deprivation (IMD) is provided for lower layer super output areas (LSOAs), but not output areas directly.
+An official tool to lookup the IMD score for individual postcodes is provided by @postcode-imd, so it is possible to use indices of multiple deprivation scores at geographies smaller than the LSOAs provided.
+For each LSOA I applied the overall LSOA score to each of its constituent output areas, then selected the lowest ranks as the most deprived areas of Doncaster.
+Figure \@ref(fig:oa-imd-map) shows the IMD score for each output area in Doncaster, with lower scores representing higher deprivation.
+
+<!--
+DB: There is a need to provide a bit more detail on this - classified according to what?  Perhaps a paragraph on what these classifications are and how they are derived
+
+TODO: add deprivation OAC to literature and refer back here
+-->
+
+Areas classified as being in the 'hard--pressed living' supergroup are used to identify high deprivation areas using the output area classification system.
+These areas are indicative of higher rates of social renting, lower rates of higher--level qualifications, and unemployment rates above the national average [@ons2015f, p. 19].
+Figure \@ref(fig:comm-oac) shows the output area classification supergroup of Doncaster output areas.
+
+```{r res-results-table}
+res_results <- res_results %>%
+  mutate(threshold = stringr::str_extract(measure, "_[:digit:].*$")) %>%
+  mutate(
+    threshold = stringr::str_replace(threshold, "_", ""),
+    measure   = stringr::str_replace(measure, "^res_", ""),
+    measure   = stringr::str_replace(measure, "_[:digit:].*$", "")
+  ) %>%
+  mutate(
+    measure = stringr::str_replace(measure, "unem", "High unemployment"),
+    measure = stringr::str_replace(measure,
+                                   "ltun", "High long-term unemployment"),
+    measure = stringr::str_replace(measure,
+                                   "rout", "High low-grade employment"),
+    measure = stringr::str_replace(measure, "oac", "\'Hard-pressed living\'"),
+    measure = stringr::str_replace(measure, "imd", "IMD score")
+  ) %>%
+  select(measure, threshold, freq) %>%
+  arrange(threshold) %>%
+  rename(
+    "Area-based deprivation measure" = measure,
+    "Threshold (%)"                  = threshold,
+    "Number of resilient areas"      = freq
+  )
+
+knitr::kable(res_results, row.names = FALSE, caption = "Number of resilient areas by area-based deprivation measure")
+```
+
+I considered output areas as 'resilient' if they had both high deprivation, using the indicators described above, and low prevalence of clinical depression.
+To determine what to classify as 'low' and 'high' I tested a number of thresholds from $20\%$ to $40\%$ of respondents being both clinically depressed and being in the highest deprivation classification.
+Table \@ref(tab:res-results-table) summarises the results of these tests.
+
+Selecting a threshold will always include an element of subjective choice and is arguably more an art than a science.
+There are two properties that I used to help guide my decision in selecting a threshold, however.
+First, resilience is, by definition, an outlying phenomenon so a threshold should mark a relatively small number of areas as resilient.
+Second, I suggest it is desirable if a threshold does not treat too many cases as 'high' deprivation or 'low' health, as it is important for these to remain differentiated from 'background' cases.
+
+After testing, thresholds of $20\%$, $25\%$, and $30\%$ resulted in very few 'resilient' areas, sometimes none at all.
+Conversely, a threshold of $40\%$ arguably resulted in too many resilient areas being identified.
+Using $40\%$ also felt unsatisfactory as this resulted in similar numbers of areas being classified as 'high' deprivation and 'low' clinical depression as not.
+
+A threshold of $\frac{1}{3}$ (specifically $33\%$) resulted in approximately $1\%$ of output areas being classified as resilient.
+I selected this threshold because I believe it offered the most satisfactory balance between identifying suitable resilient areas and maintaining separation of 'high' and 'low' areas.
+Of course, this decision is my own and could be argued to be arbitrary, but I will progress on this basis because any reasonable threshold can be used to provide useful insight, and other thresholds can be selected and tested by subsequent researchers using the code in this repository.
+
+```{r res-map, fig.width=7, fig.height=7, fig.cap="Resilient output areas in Doncaster", cache=TRUE}
+# colorbrewer 6 class YlGn
+res_colours <- c("#78c679", "#31a354", "#006837")
+
+tmap::tm_shape(don_oa) +
+  tmap::tm_borders("light grey") +
+tmap::tm_shape(don_oa[!is.na(don_oa@data$res_total) &
+                        don_oa@data$res_total > 0, ]) +
+  tmap::tm_fill("res_total",
+                labels = c("Resilient in one domain",
+                           "Resilient in two domains",
+                           "Resilient in three domains"),
+                title = "Resilient OAs in Doncaster",
+                palette = res_colours) +
+tmap::tm_layout(frame = FALSE)
+```
+
+<!--
+DB (refering to figure: I think that this is very interesting – it would be worth expanding on this here and have a profile of these areas using your spatial microsimulation output – for instance, have a profile of these areas by providing estimates of average household income, number of children in poverty and other cross-tabulations (making the most of your microsimulated output) and how these compare to the Doncaster average.
+-->
+
+Having selected an appropriate threshold, I plotted the output areas that the various models identified as resilient.
+The simulation identifies $`r nrow(don_oa@data[!is.na(don_oa@data$res_total) & don_oa@data$res_total > 0, ])`$ output areas as resilient in total based on the five deprivation criteria, of which  $`r nrow(don_oa@data[!is.na(don_oa@data$res_total) & don_oa@data$res_total > 1, ])`$ are identified as resilient by two or more measures of area--based deprivation.
+
+One area, to the north east near Thorne, is rural but the majority of resilient areas were in urban or suburban centres.
+These include output areas in: Adwick le Street to the north; Stainforth to the north east; Armthorpe to the east; New Edlington to the south; Conisborough, Mexborough, and Denaby Main to the west; as well as Doncaster town itself.
+
+<!--
+Liddy: You seem to have generated a testable hypotheis here but is there any previous evidence or potential further analysis that could actually test this hypothesis – a very tantalizing way to end the chapter!!
+
+DB: I agree- there is a need to discuss this further here (and/or in the concluding section) even in a speculative manner but ideally with some references to relevant literature (e.g. on social capital regarding the community centres etc)
+-->
+
+<!-- TODO: is it worth plotting the location of GP practices or similar? -->
+
+
+### Resilient characteristics {#ressim-res-charac}
+
+```{r remove-prisons}
+# Variables with resilience characteristics end with _yes, _good, or _low
+# So does 'depress_yes' so we need to remove this
+# 'no_p' is for 'isol_no'
+res_chars <- grepl("no_p$|_yes_p$|_good_p$|_low_p$", colnames(don_oa@data))
+res_chars <- colnames(don_oa@data[, res_chars])
+
+don_oa@data[!is.na(don_oa@data$prison_pop), res_chars] <- NA
+```
+
+```{r prep-res-char-plots, include=FALSE}
+if (length(list.files("figures/cache/", "res_char_")) < 17) {
+
+  lapply(res_chars, function(x) {
+    
+    map <- 
+      tmap::tm_shape(don_oa) +
+        tmap::tm_fill(col = x, palette = "BuGn", textNA = "Prison OA") +
+        tmap::tm_borders(col = "black") +
+      tmap::tm_layout(frame = FALSE)
+    
+    tmap::save_tmap(
+      map, 
+      filename = paste0("figures/cache/res_char_", x, ".pdf"),
+      width = 210, units = "mm")
+  })
+}
+```
+
+In addition to simulating resilient areas based on low clinical depression, I also simulated a comprehensive range of characteristics that I identified in my systematic literature review.
+Chapter \@ref(sysrev) outlines the process I used to conduct the review, while Section \@ref(ressim-targets) and table \@ref(tab:res-charac-operationalise-table) summarise the measures and variables I used to operationalise these characteristics.
+I then simulated individuals with these characteristics into each area and calculated the prevalence of these characteristics at the small--area level.
+
+```{r res-finances, out.width="100%", fig.cap="Areas with good subjective financial situation", cache=TRUE}
+tmap::tm_shape(don_oa) +
+  tmap::tm_fill(
+    col = "fin_good_p", palette = "BuGn", 
+    textNA = "Prison OA",
+    title = "Self-reported 'good'
+financial situation") +
+  tmap::tm_borders(col = "black") +
+  tmap::tm_layout(frame = FALSE)
+```
+
+Figure \@ref(fig:res-finances), for example, shows the proportion of residents in each area who state they have a 'good' financial situation.
+This figure illustrates a pattern that is fairly typical of many of the resilient characteristics, with residents in the central urban area of Doncaster and the urban areas of Conisbrough, Mexborough, Carcroft, Askern, and Thorne reporting more constrained financial means than those in the wealthier rural areas around these urban centres.
+Similar patterns are seen throughout many of the GHQ items, for example, high confidence, good decision making, high ability to face problems, low unhappiness or depressed scores, high feeling useful scores, low feeling worthless scores, low social isolation scores, low 'problems overcoming difficulty' scores, and in areas with high neighbourhood cohesion.
+These figures can be found in the `figures/cache/` directory with filenames beginning `res_char_`.
+
+This suggests many resilient characteristics in the individual are associated with subjective financial circumstances.
+Neighbourhood cohesion also seems tied to subjective financial circumstances of the individual, so that as fewer individuals report having financial pressures the perceived characteristic of the area also improves.
+This is a useful example of how the spatial microsimulation can help to illustrate the relationship between individual--level and area--level characteristics at the small--area level.
+
+```{r res-belong, out.width="100%", fig.cap="Areas with high neighbourhood belonging"}
+tmap::tm_shape(don_oa) +
+  tmap::tm_fill(
+    col = "belong_yes_p", palette = "BuGn", 
+    textNA = "Prison OA",
+    title = "High neighbourhood
+belonging") +
+  tmap::tm_borders(col = "black") +
+  tmap::tm_layout(frame = FALSE)
+```
+
+Areas with high neighbourhood belonging (Figure \@ref(fig:res-belong)), high GHQ concentration scores, low difficulty sleeping scores, low 'constantly under strain' scores, high happiness scores, and high neighbourhood trust show a similar pattern but with key differences in a small number of rural areas.
+The rural areas to the north east, north central, and north west of the map have lower proportions of residents with these characteristics than might be expected given the previous pattern.
+These may indicate differences in both individual and area--level characteristics that are not as strongly associated with subjective financial situation.
+As these are mainly rural areas individuals in these areas may experience additional pressures that are not offset by perceived financial resources.
+
+```{r res-enjoy, out.width="100%", fig.cap="Areas with high 'enjoy day-to-day activity' scores", cache=TRUE}
+tmap::tm_shape(don_oa) +
+  tmap::tm_fill(
+    col = "ghq_enjoy_good_p", palette = "BuGn", 
+    textNA = "Prison OA",
+    title = "Enjoy day-to-day
+activities") +
+  tmap::tm_borders(col = "black") +
+  tmap::tm_layout(frame = FALSE)
+```
+
+Areas with high scores for 'enjoy day--to--day activities' GHQ item again show a similar pattern, but a larger number still of rural areas score lower on this resilient characteristic.
+Larger areas to the north east across to the north west, as well as areas south of Doncaster town centre itself have lower scores on this GHQ item than would perhaps be expected if it were tied to financial circumstances.
+This again suggests that there may be additional pressures on residents of rural areas that are not offset by good perceived financial circumstances.
+This could be because location and proximity, as well as simply financial resources, play an important role in quality of life.
+I explore aspects of this in more detail in Section \@ref(policy-local-area).
+
+```{r res-alcohol, out.width="100%", fig.cap="Areas with low alcohol consumption", cache=TRUE}
+tmap::tm_shape(don_oa) +
+  tmap::tm_fill(
+    col = "alcohol_low_p", palette = "BuGn", 
+    textNA = "Prison OA",
+    title = "Low alcohol
+consumption") +
+  tmap::tm_borders(col = "black") +
+  tmap::tm_layout(frame = FALSE)
+```
+
+Finally, low alcohol consumption seems to show an inverse relationship with perceived financial circumstances with residents in the poorer urban areas reporting consuming less alcohol than their rural and wealthier neighbours (Figure \@ref(fig:res-alcohol)).
+Assuming this is not a reporting inaccuracy [@monk2015a] this suggests that low alcohol consumption is associated with low financial means and could indicate a protective factor against depression for residents in poor financial circumstances.
+
+Comparing these areas with IMD 2015 rank (figure \@ref(fig:oa-imd-map)) suggested that many of the resilient characteristics are associated with affluence, but that this was not always the case, and was indeed the opposite for alcohol consumption.
+
+
+## Conclusion {#ressim-conclusion}
+
+In this chapter I have outlined how I produced the full resilience simulation.
+This simulation built on the pilot simulation outlined in Chapter \@ref(methods) by adding target variables to study resilience and by increasing the number of constraint variables used and target variables simulated.
+
+The principal variables I used to operationalise resilience were clinical depression and measures of deprivation.
+I also simulated a range of characteristics thought to promote resilience which were informed by the systematic literature review I documented in Chapter \@ref(sysrev).
+I operationalised as many of these as possible, using variables available in *Understanding Society*.
+I outlined this process in Section \@ref(ressim-targets) of this chapter.
+
+These characteristics are summarised in table \@ref(tab:res-charac-measures-table), and include social capital, social networks, cognitive ability, peer support, place attachment, the natural environment, employment status and occupational capital, sports participation, coping mechanisms and coping strategy, behavioural change, sickness benefit, accessible health care, personal and area demographics, neighbourhood congruity, adverse childhood experiences, familial mental health, and financial and budgeting skills.
+I was able to include measures of neighbourhood cohesion, neighbourhood trust, confidence, abilities, financial coping, health behaviours, general coping, and general happiness.
+
+Many of these characteristics were associated with perceived and actual financial resources, but this relationship did not always hold, especially for rural areas, and indeed was the opposite for alcohol consumption.
+This suggests there may be strategies that can be employed in less affluent or rural areas to improve resilience.
+
+Alongside these I simulated a range of economic and social status indicators which I use in Chapter \@ref(policy) to explore the likely effects of proposed national and local policy changes.
+These include benefit receipt, proportion of income spent on rent, in--work poverty, and neighbourhood safety.
+
+I expanded the constraints from those used in the pilot study to include marital status and economic activity.
+I was not able to include social class and overcrowding but I do not believe this adversely affected the model because I was able to include other measures of relative social rank---such as education---and deprivation---such as economic activity.
+I included additional constraints, and constraints with more levels, to help ensure the simulation was as accurate as possible (Section \@ref(ressim-constraints)).
+
+I performed the actual simulation using the iterative proportional fitting algorithm, as I did with the pilot simulation (Chapter \@ref(methods)).
+To do this I used the `rakeR` package with data from the 2011 census and *Understanding Society*.
+
+When validating the simulation I found the internal consistency of the model to be excellent (Section \@ref(ressim-validate)).
+The external validation was less clear--cut.
+At face value the simulated aggregated prevalence of clinical depression was about half of the 'known' value from Public Health England.
+Nevertheless the value of the 2011--2012 data point was, at least, problematic, and the overall trend suggested the 2011 value to be closer to the value produced in the simulation.
+I believe the discrepancy between the given point value and the overall trend can be explained by the changes in measurement of clinical depression prevalence around this time.
+In any case the simulated prevalence of clinical depression is very similar to the prevalence given by the overall trend, suggesting the model is a better fit than a cursory inspection of the data would suggest.
+
+With the simulated data I illustrated areas with high deprivation but low clinical depression prevalence.
+These could broadly be thought of as 'resilient' areas.
+I used a variety of measures to operationalise deprivation including: unemployment and long--term unemployment, low--grade employment (routine employment), index of multiple deprivation (IMD) score, and output area classification supergroup 'hard--pressed living'.
+I tested a number of thresholds from 10% to 40%, and opted to use 33% this was optimal for this data.
+
+In the next chapter I return to discuss some of the areas identified by the simulation as resilient, both based on the prevalence of clinical depression and the resilient characteristics.
+I also discuss the likely effects of proposed national and local policy changes to individuals, households, and areas.

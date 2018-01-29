@@ -1,0 +1,420 @@
+# Spatial microsimulation literature {#smslit}
+
+
+## Introduction {#sms-intro}
+
+Spatial microsimulation is the technique that underpins the substantial empirical work in this thesis, and is what permits my analysis of resilience at the small--area level.
+The family of microsimulation, and later spatial microsimulation, techniques have a long history in the social sciences and there are numerous precedents of its use in the analysis of health care and health--related factors, as well as other domains.
+
+Using this technique it is possible to perform spatial analyses that would otherwise be impossible at the small--area level.
+Researchers often have access to small--area aggregated data, such as the census, and to individual--level data available in surveys.
+The small--area data does not contain disaggregated information about individuals in that area, and surveys often use extremely coarse geographies, often region at best.
+Spatial microsimulation is a family of statistical techniques that estimate individuals at a small--area level by combining these two data sources [@ballas2005a; @tanton2013a].
+
+Once simulated, some of the main uses of this data are to assess the likely effect proposed policy changes may have on the population and to perform GIS analyses, for example to assess service provision (see Section \@ref(spatial-microsimulation-of-health) later in this Chapter).
+
+> Spatial microsimulation methods can be used to examine the changes resulting from public policy change in the lives of individuals within households at different geographical levels... [@campbell2013a, p. 285].
+
+In some cases the data set produced by the spatial microsimulation is not comprehensive or ideal for the decision--making purpose.
+Nevertheless it is usually richer than the data available from other sources and so provides additional evidence for the purpose of policy planning that would be missing without the spatial microsimulation.
+For example, the rules surrounding the caps to housing benefit were complex and the data available to @campbell2013a were not sufficient to identify only individuals affected by these caps.
+Nevertheless they did have sufficient data to identify individuals who received housing benefit and to plot the proportion of recipients in each area.
+Even though it was not possible to identify only those affected by the cap, it was still useful to identify households that might be affected.
+
+In this chapter I outline a brief history of microsimulation and spatial microsimulation.
+I outline a number of spatial microsimulation studies that have been developed in the health domain.
+I then move on to discuss some of the specific methods of spatial microsimulation that can be adopted, including the types of models that can be constructed, the reweighting techniques that can be applied, the process of creating a model, and validating the model once constructed.
+Throughout this chapter I outline my own choices for my analysis and my reasoning for choosing these specific methods.
+
+
+## History of microsimulation
+
+Microsimulation is a technique used to estimate data about individuals when this data is not readily available.
+Individuals can be people, organisations, businesses, or any other discrete entity.
+Microsimulation has been used in the social sciences since at least the 1950s [@orcutt1960a; @orcutt1962a], so has a long history of application: "...it can be argued that microsimulation modelling methodologies have long become accepted tools in the evaluation of economic and social policy" [@donoghue2013a, p. 3].
+
+Spatial microsimulation is an extension of the microsimulation technique to include a spatial or geographical dimension.
+The goal of spatial microsimulation is frequently to "...simulate the *distributional* impact of different socio/economic policies or a change in those policies at the micro--level" [@ballas2013a, p. 36, emphasis added].
+
+Spatial microsimulation is a more recent refinement than microsimulation.
+The first uses of this technique can be traced back to the 1960s (see @ballas2013a, p. 39) but the technique gradually became more common during the 1970s and 1980s as computers became more powerful and accessible (see, for example, @birkin1988a).
+Because of this precedent of microsimulation and spatial microsimulation, crucially, "...its behaviour is relatively well known" [@anderson2013a, p. 53].
+
+> There is now a growing body of evidence showing that the technique provides robust estimates of health--related variables in particular [@campbell2016a, p. 4].
+
+
+## Spatial microsimulation of health
+
+Spatial microsimulation lends itself well to the analysis of health outcomes and policy:
+
+> Health is an area which lends itself to spatial microsimulation techniques as there are many surveys but few comprehensive data bases in this field [@ballas2013a, p. 41]
+
+There are numerous examples of spatial microsimulation in the health domain, including a number of recent UK--based (@tomintz2008a, @procter2008a, @edwards2009a, @edwards2010a, @campbell2011a, @campbell2016a) and international (@morrissey2010a, @morrissey2013a) models.
+
+@tomintz2008a present a spatial microsimulation model of smoking prevalence at the small--area level in Leeds, UK.
+After identifying smoking prevalence at the small--area level, they use this information to assess the performance of local stop--smoking services and suggest where to place centres to best meet the needs of local residents by solving the *p*--median problem based on their simulated data [@tomintz2008a, pp. 348--351].
+
+@procter2008a, @edwards2009a, and @edwards2010a describe a spatial microsimulation model of obesity at the small--area level in Leeds, called SimObesity.
+To construct their model they used primary care trust records of routinely collected data for children born since 1995, data from the '*Trends*' study, and data from the '*RADs*' study, combined with data from the 2001 census [@procter2008a, p. 324].
+With their model they examined obesogenic environments in Leeds, identifying factors that were associated with small--areal--level obesity such as expenditure on food, number of household televisions, internet access, school meals, and level of physical activity [@procter2008a, p. 330], social capital and poverty [@edwards2009a].
+Crucially they found that key factors associated with childhood obesity varied across different wards selected for case study, so different interventions to reduce childhood obesity might be required depending on the needs of the local area [@edwards2010a, p. 13].
+They also find that self--reported, or 'subjective', measures of the safety of the neighbourhood and the quality of transport are more strongly associated with obesity than 'objective' measures of actual crime or transport quality.
+This suggests perception is at least as influential in an individual's activity and consumption decisions [@procter2008a, p. 336].
+
+@campbell2011a and @campbell2016a present a spatial microsimulation of model of health behaviours and outcomes in Scotland called SimAlba.
+It was built using data from the Scottish Health Survey 2003 and the 2001 census for Scotland at the output area level.
+Using the model @campbell2011a assess well--being and happiness, smoking, alcohol consumption, and obesity at the small--area level.
+
+@morrissey2010a is a pioneering spatial microsimulation model of depression in Ireland.
+At the time of publication, the authors reported there was no research on the accessibility of mental health services for individuals with depression in Ireland, nor any data on the small--area incidence of depression [-@morrissey2010a, p. 11].
+They developed their model, the Simulation Model of the Irish Local Economy (SMILE), using small--area population statistics and the Living In Ireland (LII) survey.
+Using their model they were able to identify small--area levels of depression, and indicate areas that had high demand but poor access [-@morrissey2010a, p. 23].
+
+@morrissey2013a extended the SMILE model to include long term illness (LTI).
+They compared the spatial distribution of individuals with long term illnesses with the accessibility of acute hospitals.
+They found higher rates of LTI overall in the west of Ireland but that areas with high LTI tended to have lower access scores to acute hospitals [-@morrissey2013a, p. 225--227].
+
+
+## Static and dynamic models
+
+There are two broad categories of spatial microsimulation, static and dynamic [@mertz1991a; @ballas2013a].
+Static spatial microsimulation, as the name suggests, does not update the population after initial simulation.
+Static spatial microsimulation models have been used in the health domain to model many health--related behaviours and outcomes.
+Examples of static models include @tomintz2008a, @procter2008a and @edwards2009a; @morrissey2010a.
+
+It is also possible to 'age' the individuals in the spatial microsimulation.
+@mertz1991a argues that the units in a static model can be 'aged'---'static with aging'---and that this technique can be useful for modeling short--term population changes if the underlying demographics are unlikely to change much [-@mertz1991a, p. 81].
+
+Fully dynamic models incorporate population changes such as fertility, mortality, and migration to project the population into the future, as well as policy changes.
+As such they are useful for exploring 'life--course' impacts of social and environmental policies and change [@ballas2013a, p. 38].
+Both of these techniques can provide an insight into the temporal movement and fluidity of the population.
+
+The advantage of a static (spatial) microsimulation model is that it is less 'expensive' to produce [@mertz1991a, p. 84], while still allowing the researcher to evaluate the effects of policy on individuals and areas.
+"Static model simulations allow the researcher to vary policy rules and produce estimates of gains or losses for an individual or household resulting from the policy change... and to examine the distributional impacts of policy change" [@ballas2013a, p. 37].
+
+I have opted to create a static spatial microsimulation model for Doncaster, as I am interested in distributional effects of policy change on residents as a snapshot.
+Resilience research is still relatively preliminary, and as such I felt it was more important to understand a snapshot of resilience than attempt to model life events and their effects on resilience without a more solid understanding of the basis of resilience.
+
+
+## Deterministic and probabilistic models
+
+There are a number of methods for constructing a static spatial microsimulation model.
+Adjustment can be probabilistic where individuals are sampled from microdata to match aggregated small--area totals.
+Combinatorial optimisation is a probabilistic method which makes use of various algorithms such as hill--climbing, simulated annealing, and genetic algorithms [@williamson1998a].
+One of the few recent examples of a probabilistic spatial microsimulation model in the health domain is @morrissey2010a, which used a simulated annealing (SA) method [-@morrissey2010a, p. 11].
+
+Deterministic reweighting is instead a process in which individuals are reweighted to reflect the aggregate population [@ballas2005b, p. 9].
+Arguably the first study to distinguish between deterministic and probabilistic simulation approaches is @ballas2005a.
+In the simulation of SimBritain---and its pilot, SimYork---the authors used a deterministic reweighting algorithm to produce small--area estimates using 1991 Census Small Area Statistics data and the British Household Panel Survey (BHPS).
+These formed input data to a dynamic model to estimate the population of Britain to 2021 [-@ballas2005a, p. 19].
+
+Because probabilistic approaches make use of random selection and optimisation, these approaches will produce a different outcome each time they are run.
+This makes it more difficult to know if a change to the results is due to a change in initial conditions or just an artefact of the probabilities.
+The advantage of a deterministic approach is that, all things being equal, the same results will be generated each time the simulation is run [@procter2008a, p. 325].
+Error tracking is much more straightforward if it is known in advance that any changes to the model can only be the result of changes to the inputs:
+
+> This determinism meant that variations in input data coding, constraint ordering or small-area table recoding were the only source of variation in the small-area estimates.
+> This proved extremely useful because it allowed the testing of different combinations of constraints and data coding options without the additional uncertainty caused by a probabilistic reweighting method [@anderson2013a, p. 64].
+
+Because of this key advantage I opted to use a deterministic reweighting algorithm over a probabilistic approach.
+Examples of deterministic simulations include: @ballas2005a; @tomintz2008a; @procter2008a, @edwards2009a, and @edwards2010a; and @campbell2011a.
+Deterministic reweighting has been demonstrated to accurately predict health behaviours and outcomes [@smith2011a, p. 623].
+
+## Iterative Proportional Fitting (IPF)
+
+Iterative proportional fitting (IPF) is an example of a deterministic reweighting algorithm [@birkin1988a; @birkin1989a; @johnston1993a], and is the method I use in this simulation.
+IPF reweights each individual from the survey in each zone, using constraints in both the census and the survey to determine the resultant weights.
+The formula used the calculate the resultant weights is given by:
+
+\begin{equation}
+  n_{i} = w_{i}(\frac{c_{ij}}{m_{ij}})
+  (\#eq:ipf)
+\end{equation}
+
+where $n_{i}$ is the new weight to be calculated for individual $i$, $w_{i}$ is the previous weight (initially set to 1), $c_{ij}$ is index $_{ij}$ in the constraint (census) table, and $m_{ij}$ is index $_{ij}$ of the survey microdata table (adapted from @ballas2007a, p. 51--52)).
+
+
+### Initial weights {#smslit-initial-weights}
+
+With deterministic spatial microsimulation, and therefore IPF, it is necessary to set an initial weight from which the algorithm reweights individuals.
+There are two main options for setting these initial weights.
+One is to use, or calculate, a weight for each individual so that the survey is representative, typically at the regional or national level.
+For example, a survey with too few respondents aged under 25 might weight those individuals so that they are used more frequently to make the overall survey representative of the population.
+The other option is to simply set all initial weights to 1 (@ballas2005a).
+
+As IPF weights each individual so that the reweighted data becomes representative of the area it is, by definition, creating representative weights.
+Furthermore it has been proven that the IPF algorithm converges to a single result as long as there are no empty cells [@fienberg1970a], so the initial weight will not affect the final weight provided the reweighting algorithm is reiterated over a sufficient number of times.
+
+
+### IPF: a simple example {#smslit-ipf-example}
+
+```{r ipf-example-prep, include=FALSE}
+cons <- data.frame(
+  "zone"      = letters[1:3],
+  "age_0_49"  = c(8, 2, 7),
+  "age_gt_50" = c(4, 8, 4),
+  "sex_f"     = c(6, 6, 8),
+  "sex_m"     = c(6, 4, 3),
+  stringsAsFactors = FALSE
+)
+
+inds <- data.frame(
+  "id"     = LETTERS[1:5],
+  "age"    = c("age_gt_50", "age_gt_50", "age_0_49", "age_gt_50", "age_0_49"),
+  "sex"    = c("sex_m", "sex_m", "sex_m", "sex_f", "sex_f"),
+  "income" = c(2868, 2474, 2231, 3152, 2473),
+  "initial weight" = c(1L, 1L, 1L, 1L, 1L)
+)
+```
+
+To illustrate the procedure the following is a simple example using two constraints to simulate income, which has been adapted from @lovelace2016a.
+Table \@ref(tab:ipf-example-cons) shows the constraints which shows the total number of individuals in each zone by demographic, while Table \@ref(tab:ipf-example-inds) shows the individual--level data which represents a sample of individuals such as that taken in a survey.
+
+```{r ipf-example-cons}
+knitr::kable(cons, caption = "Example constraints")
+```
+
+```{r ipf-example-inds}
+knitr::kable(inds, caption = "Example individual-level data")
+```
+
+For example, eight individuals live in zone a who are aged 49 and below, and four individuals live in zone a who are aged 50 and above, making a total of twelve individuals living in zone a.
+This can be confirmed by observing that there are six females and six males, again making a total of 12.
+It should be noted at this point we know there are 12 individuals in the population, and we know how these individuals are distributed by age or by sex, but not by both age and sex simultaneously.
+The individual level data contains five individuals for whom we know their age, sex, and income, but not where they live.
+
+Discarding income from the individual--level data set for now, aggregating the individuals produces the marginal totals in Table \@ref(tab:ipf-example-ind-marginals).
+This represents the same data as that in Table \@ref(tab:ipf-example-inds), simply restructured.
+
+```{r ipf-example-ind-marginals-prep, include=FALSE}
+ind_agg <- data.frame(
+  "Age/sex" = c("Under 50", "50 and over", "Total"),
+  "Male"    = c(1L, 2L, 3L),
+  "Female"  = c(1L, 1L, 2L),
+  "Total"   = c(2L, 3L, 5L)
+)
+```
+
+```{r ipf-example-ind-marginals}
+knitr::kable(ind_agg, caption = "Aggregated individual-level data")
+```
+
+For zone a, we know that we have eight individuals aged 49 or less from Table \@ref(tab:ipf-example-cons).
+This is $c_{ij}$ in Equation \@ref(eq:ipf).
+Individuals C and E are aged 49 or less, so the margin total is 2.
+This is $m_{ij}$ in Equation \@ref(eq:ipf).
+Taking $w_{i}$ as 1.0 initially and inserting these values into Equation \@ref(eq:ipf), we thus have a new weight for individuals C and E of $\frac{8}{2}$, or 4.
+Similarly, for individuals aged 50 and above the new weight, $n_{i}$, is $\frac{4}{3}$, or approximately `r format(4/3, digits = 3)`.
+Table \@ref(tab:ipf-example-ind-new-weight) shows the individual--level data with the new weights applied.
+We can confirm that these are correct by summing the weights and observing that this total (12) matches the total population from the census (Table \@ref(tab:ipf-example-cons)).
+
+```{r ipf-example-ind-new-weight-prep, include=FALSE}
+inds_reweighted <- data.frame(
+  "id"     = LETTERS[1:5],
+  "age"    = c("age_gt_50", "age_gt_50", "age_0_49", "age_gt_50", "age_0_49"),
+  "sex"    = c("sex_m", "sex_m", "sex_m", "sex_f", "sex_f"),
+  "new weight" = c(1.33, 1.33, 4, 1.33, 4)
+)
+```
+
+```{r ipf-example-ind-new-weight}
+knitr::kable(inds_reweighted, caption = "Individuals with new weights")
+```
+
+To calculate the next weights based on sex, the individual--level data must first be re--aggregated, taking into account the weights calculated above.
+For example, the weight calculated for males aged 50 or over is $\frac{4}{3}$, taken from Table \@ref(tab:ipf-example-ind-new-weight).
+To re--aggregate, this weight is multiplied by the number of individuals who fit this criteria.
+As there are two individuals who meet this criteria (individuals A and B), this weight is multiplied by 2 to give $\frac{4}{3} \times 2 = \frac{8}{3}$, or approximately 2.67.
+Re--aggregating all margin total produces the values in Table \@ref(tab:ipf-example-ind-marginals-reaggregated), which we can again verify sums to 12.
+
+```{r ipf-example-ind-marginals-reaggregated-prep, include=FALSE}
+ind_reagg <- data.frame(
+  "Age/sex" = c("Under 50", "50 and over", "Total"),
+  "Male"    = c(4L,         2.67,          6.67),
+  "Female"  = c(4L,         1.33,          5.33),
+  "Total"   = c(8L,         4L,            12L)
+)
+```
+
+```{r ipf-example-ind-marginals-reaggregated}
+knitr::kable(
+  ind_reagg,
+  caption = "Individual marginal weights after re-aggregating")
+```
+
+These re--aggregated margin totals can then be used to produce the next iteration of weights using the sex constraint.
+From Table \@ref(tab:ipf-example-cons) we know we have six males and six females in zone a, and these are now the values for $c_{ij}$ in Equation \@ref(eq:ipf).
+$m_{ij}$ is given by the new marginal totals in Table \@ref(tab:ipf-example-ind-marginals-reaggregated), so is 6.67 for males and 5.33 for females.
+These fractions are now multiplied by the weights in Table \@ref(tab:ipf-example-ind-new-weight) (in the previous iteration the fractions were effectively multiplied by 1, the initial weight).
+For individual A in zone a, the new weight is therefore calculated by $1.33 \times \frac{6}{6.67} = 1.2$, while the new weight for individual E is $4 \times \frac{6}{5.33} = 4.5$.
+Table \@ref(tab:ipf-example-ind-weight-3) shows the final weights for all individuals in zone a, which can again be verified by ensuring the sum of the weights matches the initial population of 12.
+
+```{r ipf-example-ind-weight-3-prep, include=FALSE}
+inds_it3 <- data.frame(
+  "id"     = LETTERS[1:5],
+  "age"    = c("age_gt_50", "age_gt_50", "age_0_49", "age_gt_50", "age_0_49"),
+  "sex"    = c("sex_m", "sex_m", "sex_m", "sex_f", "sex_f"),
+  "new weight" = c(1.2, 1.2, 3.6, 1.5, 4.5)
+)
+```
+
+```{r ipf-example-ind-weight-3}
+knitr::kable(
+  inds_it3,
+  caption = "Individuals with weights including sex constraint")
+```
+
+At this point producing the final weights is a matter of iterating sufficient times for the weights to converge, and repeating this procedure for all zones.
+
+```{r ipf-example-tests, include=FALSE}
+vars = c("age", "sex")
+ipf_example_weights = rakeR::weight(cons, inds, vars = vars, iterations = 1)
+assertthat::are_equal(
+  # manually input weights are taken from example above and perfectly match
+  # lovelace and dumont 2016 example
+  as.numeric(ipf_example_weights$a), c(1.2, 1.2, 3.6, 1.5, 4.5)
+)
+```
+
+
+### Integerisation {#smslit-integerisation}
+
+Deterministic reweighting, and hence IPF, produces fractional weights for each area, unlike probabilistic approaches which return randomly selected cases.
+These fractional weights can be used, and are more precise, but some applications require integer cases where fractional weights are problematic, such as for dynamic models (see @williamson1998a).
+Integer weights are also more intuitive to use, as each case represents a (simulated) individual, which is a unit of measurement that most social scientists are familiar with.
+
+There are a number of methods available for integerisation, including simply rounding the weights, using a threshold, using a counter--weight, using proportional probabilities, and the more modern 'truncate, replicate, sample' method [@lovelace2013a, pp. 4--5].
+
+Rounding, using a threshold, or using a counter--weight would not be useful to my simulation.
+These will drop individuals with a weight below a certain threshold (0.5, for example with rounding).
+Because I have a relatively large sample size with *Understanding Society*, the fractional weights that are generated are typically very small, and certainly less than 0.5 in many cases.
+If I were to use one of these approaches many of my cases would be dropped by the integerisation procedure, dramatically reducing the diversity of the model (and negate the point of maximising this diversity).
+
+Proportional probabilities treats the resulting fractional weight as a probability.
+As the method samples with replication, cases with higher weights are more likely to be selected than those with smaller weights, which is the intended behaviour.
+Nevertheless there is a small possibility that cases with smaller weights will be selected more times than those with higher weights, owing to the random nature of the selection process, which is not ideal.
+
+The truncate, replicate, sample method tries to address the problems associated with these other methods, and provide integerised results that are nearly as accurate as the fractional weights.
+It achieves this by using the fractional weight in two ways.
+First, any weights greater than 1 indicate the case should be *replicated*.
+For example, a weight of 9.2 would mean the case should be replicated nine times in the area.
+The remaining fractional weight is separated ('truncated') and used as a more traditional probability for sampling [@lovelace2013a, p. 6].
+By separating these steps @lovelace2013a is able to produce results that fit known data more accurately than the other integerisation techniques [@lovelace2013a, p. 9].
+
+For my simulation I opted to retain fractional weights for the analysis of single simulated variables such as clinical depression (see Chapter \@ref(ressim)), but to integerise when using multiple simulated variables.
+The integerised weights were highly consistent with the fractional weights (see Section \@ref(methods-weight-int-comp)), but are more intuitive to work with given that they reflect the structure of a typical data set arranged with one row per case.
+
+For the integerisation I used the truncate, replicate, sample method given its ability to return integerised weights that are nearly as accurate as the fractional weights.
+In practice, many of the fractional weights returned for this model were less than 1, so there was little difference between this method and the proportional probabilities approach for many cases.
+Nevertheless, I did have cases with a fractional weight greater than 1, so the truncate, replicate, sample method was still likely to be more accurate, without any disadvantages over other methods.
+
+
+## Constraint configuration {#smslit-constraint-config}
+
+To perform either probabilistic or deterministic spatial microsimulation, it is necessary to use constraint variables.
+In the example given in Section \@ref(smslit-ipf-example), age and sex were the constraints.
+The constraints should have a conceptual and statistical relationship to the target variable or variables and should be informed by theory, or an empirical test, or both [@smith2009a; @anderson2013a].
+In the case of health conditions, the constraint variables should help to predict the presence of health conditions using standard regression techniques [@smith2009a, p. 1253; @edwards2009a, p. 1129].
+
+Selecting appropriate constraint variables requires finding a balance between having too many constraints and too few [@tanton2013b, p. 163].
+Too many constraints increases the chance the simulation will not converge, and too few increases the chance the simulation will produce results that are not valid.
+As with regression, a parsimonious selection of constraint variables should be made.
+
+Ultimately the choice of constraints can only be made from variables that are present in both data sources: "...the choice of the constraints, though informed by the literature and other empirical research, must be pragmatic" [@campbell2016a, p. 3].
+
+I made an intital selection of constraints based on a theoretical understanding of the social determinants of health (see Section \@ref(factors-affecting-mental-health)), and tested these empirically using appropriate regression techniques (see Sections \@ref(methods-constraints) and \@ref(ressim-constraints)).
+
+Once selected, some authors argue the order the constraints are input into the model can, in some circumstances, affect the outcome of the simulation:
+
+> "The order of constraints is important as the first variable is reproduced most accurately" [@tomintz2008a, p. 344].
+
+Some suggest the relative contribution of the constraint to the model should determine the order [@smith2009a, p. 1252], with the most 'powerful' constraint entered last:
+
+> ...because the IPF technique iteratively reweights a series of constraints, the last constraint is necessarily fitted perfectly.
+It is therefore important that the constraints are used in an order that represents their increasing predictive power so that the 'best' constraint is fitted last... [@anderson2013a, p. 56].
+
+@lovelace2015a argue that the constraint with the most categories should be entered first, as placing at the end of the process detrimentally affected the model [@lovelace2015a, para. 6.7].
+In Sections \@ref(methods-test-cons) and \@ref(sms-constraint-order) I test the order of constaints, comparing a random order with an order specified by the $\beta$ values.
+
+
+## Validation {#smslit-validation}
+
+Validating the results of a spatial microsimulation can be challenging [@smith2011a], because to comprehensively validate the results would require data that is not available (otherwise it would not be necessary to perform the simulation!).
+Nevertheless a number of approaches are available which can broadly be described as either internal validation or external validation [@ballas2005a; @ballas2005b; @edwards2011a].
+
+Internal validation is used to assess how well the simulated constraint data match the 'real' constraint data.
+This process uses data that is 'internal' to the simulation to provide an indication of how well the reweighting algorithm has matched survey respondents to the aggregate counts in each area.
+This does not provide a direct assessment of the accuracy of the simulated target variable, but it does at least give an indication if the 'right' individuals are being simulated in each area.
+
+Internal validation methods include: correlation of simulated weights against constraints; two--sided, equal variance *t*--test to test if simulated values are statistically from the same distribution as the census values; and total absolute error (`TAE`) and standardised absolute error (`SAE`), both for the whole area simulated and for each zone.
+
+Correlation is used to assess how accurately the simulated population in each zone match the known population for that zone, and as such is a general indicator of model fit.
+
+A two--sided, equal variable *t*--test is used to determine if the simulated variables differ statistically from the constraint variables.
+If the result of the $t$--test is not statistically significant we accept the null hypothesis and determine that the distributions are not different and the simulated variable is the same as the observed variable.
+
+Total absolute error give an indication of the level of deviation between the simulated data and the known data [@williamson1998a].
+It is calculated by:
+
+\begin{equation}
+  \text{TAE} = \sum_{ij}{\left|{U_{ij} - T_{ij}}\right|}
+  (\#eq:tae)
+\end{equation}
+
+where $U_{ij}$ is the observed count of area $i$ in category $j$, and $T_{ij}$ is the simulated count for the same area and category.
+
+While there is no fixed level of acceptable error, @smith2009a advise that "...error thresholds need to be chosen on the basis of the intended usage of the model" [-@smith2009a, p. 1256].
+
+From total absolute error, the standardised absolute error can be calculated, which is arguably the simplest method of internal validation to interpret because it provides one standardised measure to assess that is comparable across models.
+SAE is constructed from the total absolute error (TAE) divided by the population for each area [@smith2009a].
+
+@smith2009a suggest that for estimating the incidence of rare events---as health resilience is---the model should have an SAE of less than 0.1 (10\%) in 90\% of simulated areas for the constraints, and an SAE of less than 0.2 (20\%) in 90\% of simulated areas for unconstrained variables [-@smith2009a, p. 1256].
+
+The internal validation results do not tell us about the fit of the simulation variable to real target data, however.
+Assessing the accuracy of the simulated target data is challenging and relatively few spatial microsimulation models are able to include such validation.
+There are two methods which can provide confidence in the accuracy of the simulation.
+
+One way to test this is to aggregate the simulated target variable up to a larger geography and compare it to comparable external agreggated data.
+For example, if an external data source can be found with the target data provided at a regional geography, this can be compared to the simulated target variable if this is aggregated up to the region.
+@smith2011a take this approach to determine if a simulation of individuals in New Zealand provides reasonable estimates of small--area smoking prevalence.
+
+Similarly, it is possible to compare to a correlated variable [@edwards2013b].
+This is one reason why I simulated limiting long--term illness or disability as a 'pilot'; to provide an indication of how the constraints are simulating with the *Understanding Society* dataset (see Chapter \@ref(methods)).
+
+I use both approaches in this model which is relatively uncommon [@smith2011a, p. 618] in the spatial microsimulation literature, and provides confidence in the accuracy of the model, something that was essential as I was simulating relatively rare events.
+The pilot simulation indicates how well the simulation estimates a correlated target variable (see Section \@ref(methods-validation)).
+I was also able to obtain known data on clinical depression aggregated to Doncaster overall, so I aggregated the results of my simulation and compared this against the known data (see Section \@ref(ressim-ext-val)).
+
+
+## Limitations {#smslit-limitations}
+
+Spatial microsimulation can be very accurate when producing small--area estimations of target variables.
+It is, nevertheless, an approximation and simulated counts can, and do, differ compared to known counts.
+The purpose of validating the model is to minimise these errors and ensure the simulation is accurate enough for its purpose (Section \@ref(smslit-validation)).
+
+The issue of error can be especially important for small areas with 'extreme' population demographics, for example areas that are exceptionally wealthy or exceptionally poor [@smith2009a, p. 1253].
+If an individual or household has a characteristic that is extreme, there may not be any individuals in the survey that can accurately represent them.
+If this is only one or two individuals in an area it might not be a problem depending on the application of the model, but if such extremes are more typical of an area the simulation will not be able to model them from the pool of available individuals in the survey.
+
+Doncaster is diverse in many socio--demographic dimensions, but no area of Doncaster is typified by extremes of characteristics.
+It does, however, have a large prisoner population across four prisons and youth offender institutions which cannot be characterised by respondents in *Understanding Society*.
+I discuss this issue, and how I mitigated it, in Section \@ref(communal-establishment-residents).
+
+
+## Conclusion
+
+Spatial microsimulation is a geographical technique to estimate individual--level data at the small--area level where this information does not exist.
+It is common to have access to small--area aggregated data, such as the census, and disaggregated, individual--level data but without information at the small--area level.
+Spatial microsimulation allows us to combine the two data sets to create a synthetic estimate of this data, typically for policy analysis.
+
+Spatial microsimulation has a history in the social sciences stretching back at least thirty years, so there is a clear precedent of its applicability.
+Spatial microsimulation models of health behaviours and outcomes are no exception, and there are examples of its use in the health domain both domestically and internationally.
+
+In all cases the spatially microsimulated data sets are an estimation of 'real' data, but a number of studies attest to the accuracy of the simulated results, and therefore their real--world utility for policy analysis [@ballas2005b; @tomintz2008a; @procter2008a; @edwards2009a; @morrissey2013a].
+
+There have been a number of methods developed to validate the accuracy of a spatially microsimulated data set, including *t*--tests and absolute error, which I have incorporated into my model.
+
+It is therefore entirely possible to create a robust, accurate spatial microsimulation model of the target variable of interest to the researcher.
+Using the techniques described in this chapter I produce a robust spatial microsimulation model of health resilience in Doncaster in the following chapters.
+In Chapter \@ref(methods) I create a pilot model to develop and test code to produce a spatial microsimulation model, and to externally validate my model against a correlated variable.
+In Chapter \@ref(ressim) I extend this model to simulate health resilience which I validate and test to ensure it is robust, using the techniques outlined in this chapter.

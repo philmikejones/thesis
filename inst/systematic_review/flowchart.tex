@@ -1,0 +1,45 @@
+\documentclass{standalone}
+
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning}
+\begin{document}
+\pagestyle{empty}
+
+% Define block styles
+\tikzstyle{block} = [rectangle, draw, fill=white,
+    text width=5em, text centered, rounded corners,
+    minimum height=4em, node distance=1cm]
+\tikzstyle{line} = [draw, -latex']
+
+\begin{tikzpicture}
+    % Place nodes
+    \node [block] (wos) {190 records identified through Web of Science};
+    \node [block, right=of wos] (proquest) {116 records identified through ProQuest};
+    \node [block, below=of wos, text width=5cm] (total) {306 papers identified};
+    \node [block, right=of total] (duplicates) {50 duplicates removed};
+    \node [block, below=of total] (titles) {256 titles reviewed};
+    \node [block, right=of titles] (titles_removed) {99 titles excluded};
+    \node [block, below=of titles] (abstracts) {157 abstracts obtained};
+    \node [block, right=of abstracts] (abstracts_removed) {89 abstracts excluded};
+    \node [block, below=of abstracts] (fulltext) {68 full text items obtained};
+    \node [block, right=of fulltext] (fulltext_removed) {48 papers removed};
+    \node [block, below=of fulltext] (final) {21 papers included in review};
+    \node [block, left=of final] (manual) {1 paper manually added};
+
+    % Draw edges
+    \path [line] (wos) -- (total);
+    \path [line] (proquest) -- (total);
+    \path [line] (total) -- (duplicates);
+    \path [line] (total) -- (titles);
+    \path [line] (titles) -- (titles_removed);
+    \path [line] (titles) -- (abstracts);
+    \path [line] (abstracts) -- (abstracts_removed);
+    \path [line] (abstracts) -- (fulltext);
+    \path [line] (fulltext) -- (fulltext_removed);
+    \path [line] (fulltext) -- (final);
+    \path [line] (manual) -- (final);
+
+\end{tikzpicture}
+
+\end{document}

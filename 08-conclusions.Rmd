@@ -1,0 +1,136 @@
+# Conclusions
+
+In this thesis I have examined the relationship between socio--economic risk and positive mental health at the small--area level in Doncaster.
+More generally this framing of exposure to a risk and a positive outcome is articulated as resilience.
+I outline these ideas and the emergence of resilience, especially of early psychological resilience, in Chapter \@ref(reslit).
+
+Because of the ambiguity of measures used to operationalise risk and positive outcomes, in Chapter \@ref(sysrev) I conducted a systematic scoping literature review of measures in contemporary resilience literature to inform my analyses.
+For this review I use the PRISMA method of reporting.
+I synthesise the results in a narrative analysis, as it was not necessary or appropriate to carry out a meta--analysis of the range of factors that affect resilience.
+
+Because of the strong association between resilience and the psyche in this literature, I chose clinical depression as the positive mental health outcome to examine at the small--area level.
+This study, to the best of my knowledge, is the only resilience research to use individual clinical depression diagnoses as a health outcome at the small--area level in the United Kingdom.
+Previous studies have been able to include morbidity and mortality data at the small--area level, but these have generally been constrained by information available in the census.
+They have also used area--based measures, such as area--level premature mortality, to examine the resilience of the area.
+This is the first study to be able to use rich individual--level data available through a representative and comprehensive survey, but at the small geographical level.
+
+I achieve this through the use of spatial microsimulation.
+Spatial microsimulation is a technique to statistically estimate the spatial distribution of individual--level data, and has been successfully used for decades in the social sciences for policy analysis.
+I outline the spatial microsimulation method and a number of previous applications of the technique in the health domain in Chapter \@ref(smslit).
+
+For the analyses of Doncaster resilience I created a static, rather than dynamic, model which was most appropriate for this application.
+In the first instance I constructed a pilot model, using limiting long--term illness or disability as a target or dependent variable.
+This allowed me the opportunity to develop and test code for the construction of a spatial microsimulation model, specifically using the iterative proportional fitting (IPF) technique.
+From this code I developed the `rakeR` package for `R`.
+This package vastly simplifies the process of performing IPF spatial microsimulation and is available free--of--charge for use by other researchers wishing to use IPF.
+
+A second advantage of conducting a pilot simulation was that this helped me to externally validate my final model.
+External validation---validation of the model results with known data---is challenging because the data that is necessary to perform the validation is typically the same data that we wish to simulate.
+One approach to external validation is to test how accurately the model simulates a correlated variable.
+Limiting long--term illness and disability is available in the census, so I was able to test the accuracy of the simulation against this known data.
+Using this technique I was able to determine that the model was over--simulating limiting long--term illness or disability, which I was both able to correct and use to inform my assessment of the final simulation model.
+Using this pilot simulation I also compare the accuracy of the resulting data at different geographical output levels, and compare the accuracy of fractional weights and integerised weights from the simulation output.
+I describe this process in Chapter \@ref(methods).
+
+In Chapter \@ref(ressim) I extended the pilot model to simulate health resilience.
+I made use of the `rakeR` package I developed in the previous chapter to perform the simulation process.
+This model incorporated additional constraints to further improve the model fit and used clinical depression as the target variable.
+With the additional constraints the model still converged, so a more precise fit may have been achieved leading to a more nuanced fit of individuals at the small--area level.
+Internal validation of the simulation was excellent, with negligible absolute errors and non--significant *t*--tests suggesting the simulated data matched the known constraints very well.
+To externally validate the model I aggregated clinical depression prevalence to the Doncaster local authority overall and compared this with known data from Public Health England.
+The published point data for 2011 was higher than the simulated prevalence of depression, but this point data did not fit with the surrounding trend data and may have been an anomaly in the data collection process.
+As a result it is not unambiguous that the simulated prevalence of clinical depression matched known values, but the simulated value is in line with the trend data for this period so I argue the simulation is a reasonable estimate.
+
+At this stage I also simulated a range of resilient characteristics that I identified in the systematic scoping literature review in Chapter \@ref(sysrev).
+These allowed me to explore some of the characteristics that may form protective factors for resilient individuals, and complemented my analysis of clinical depression.
+These showed a number of distinct geographical distributions and indicated differences between urban and rural areas, suggesting key differences between the two.
+High alcohol consumption seemed to be related to affluence, but high alcohol consumption was based on a number of assumptions so this would need to be explored further.
+
+After running the simulation, I identified a number of small areas in Doncaster that had low clinical depression prevalence but high socio--economic risk (Figure \@ref(fig:res-map)).
+These risks included unemployment and low--grade employment (NS--SEC 7).
+A number of output areas were resilient for both measures of socio--economic risk, suggesting the model is identifying genuinely resilient areas.
+
+Many of these resilient areas---which therefore had high deprivation but low clinical depression prevalence---exhibited a number of resilient characteristics.
+These included both neighbourhood characteristics, such as high neighbourhood cohesion and social capital, as well as individual characteristics such as positive GHQ scores.
+
+Having identified resilient areas of Doncaster under these assumptions, it was possible to analyse a number of factors that may be conducive to resilience.
+Using geocoded locations of GP surgeries, leisure centres, and green space, I was able to determine that the resilient areas were consistently closer to these amenities than non--resilient areas.
+This suggests that proximity to amenities such as these could confer protective benefits to individuals that allows them to maintain positive health outcomes in spite of exposure to socio--economic risk that cause others to succumb to depression.
+
+The case studies I illustrated in Chapter \@ref(policy) provide rich details about a selection of individuals who live in four resilient areas.
+I chose the four areas to demonstrate a cross--section of resilient areas in Doncaster that I identified with my simulation.
+The (simulated) individuals were selected from the most common characteristics of the area.
+The vast majority did not have clinical depression, in keeping with the resilient nature of the selected area.
+This was despite many of the individuals living below or near the poverty line.
+
+Many of the individuals had positive individual mental health characteristics, reported through responses to the General Health Questionnaire instrument, which is itself identified as a useful instrument to articulate resilience through the systematic literature review chapter.
+Responses to area--level questions were more mixed, but still primarily suggested that residents of these areas enjoyed neighbourhood cohesion, trust, and a sense of belonging.
+As such, area--level characteristics may support or enhance individual resilient characteristics.
+
+One of the most powerful uses of spatially simulated micro--data is the ability to estimate the spatial effects of policy change at the small--area level.
+Doncaster Metropolitan Borough Council (DMBC) have proposed four policies to provide focus to its activities to 2021, as well as being subject to national policy change.
+I examined the likely effect of these policies on individuals and areas by including additional economic and social status variables in the simulation.
+
+Local policy---Doncaster Learning, Doncaster Working, Doncaster Caring, and Doncaster Living---are designed to help people obtain the best education they can, move into better quality work, receive the care they need in their community, and access high quality housing and leisure opportunities.
+
+By filtering the spatially microsimulated data set I was able to identify areas that DMBC could focus on to maximise the benefit of their policy initiatives.
+Children and young people in low income households, for example, stand to lose most if they cannot access education so any policy implemented should consider these individuals.
+
+Similarly with the spatially microsimulated data it was possible to highlight areas of 'in--work poverty' where people are working but still do not have a sufficient income, often because of precarious, low paid, or low skilled employment.
+DMBC has a real opportunity to help these people out of poverty by supporting the creation of training and education opportunities and of higher skilled jobs in the longer--term.
+In the short--term it is at least possible to help mitigate as many of the effects of poverty in these areas.
+I was also able to identify areas where people spend a high proportion of their income on housing.
+DMBC can again use this information to support such individuals, for example in the short--term with discretionary housing payments (DHPs) or in the long--term by identifying sites for development or redevelopment of affordable housing.
+
+Based on the results of the simulation, there are areas of Doncaster with high levels of social isolation, which demonstrably have negative effects on physical and mental health.
+By identifying these areas with higher numbers of individuals experiencing social isolation DMBC have the opporunity to mitigate this.
+
+One of the main changes in contemporary welfare policy is the transition to Universal Credit.
+Universal Credit is highly controversial and can affect claimants in a number of ways.
+For example, when transitioning to Universal Credit from benefits that are being phased out, claimants can experience delays of several weeks.
+This can cause these individuals to drop into poverty, which can take a significant period of time to recover from.
+Having identified areas with high numbers of people who are likely to transition to Universal Credit, DMBC could use this information to intervene at this crucial period and provide short--term support to individuals at risk of entering poverty due to delays in payments.
+This short--term, low--level, intervention could stop people at risk dropping into poverty and could have long--term benefits if they do not spend a long time recovering.
+
+Universal Credit is also not always sufficient to support claimants out of poverty.
+Individuals can earn a certain amount---their work allowance---before their payment of Universal Credit is gradually reduced---the taper amount.
+These are too low for people who earn just enough to have their Universal Credit payments reduced completely.
+Using the simulation I identified individuals who earned an income high enough so that they were no longer eligible for Universal Credit, but who still did not earn enough to move them out of relative poverty.
+For these individuals moving out of poverty will be difficult, as they cannot claim social welfare payments to top--up their income to above poverty levels, and cannot easily move out of low--paid employment.
+In the absence of national government policy to increase the provision of Universal Credit, DMBC could consider supporting such individuals in the short--term as well as plan for the transition to higher quality employment outlined in the 'Doncaster Working' policy.
+
+These analyses represent a unique aspect of this research that would not be possible with traditional data sources separately, so provide valuable evidence about the likely spatial characteristics of individuals in small areas in Doncaster.
+
+
+## Opportunities for further study
+
+A longitudinal understanding of resilience could allow for the construction of a dynamic spatial microsimulation model.
+A dynamic model could be used to evaluate the effect of life events on resilience and health outcomes for individuals and their friends and family members.
+
+The accuracy of the spatial microsimulation model could be improved further by using a *k*--means clustering technique [@smith2009a, p. 1259].
+Rather than using one configuration of constraints for every output area, cluster analysis could identify statistical groups of output areas that would perform better using adjusted constraint configurations, thus improving the model fit further.
+This approach could be tested to see if it could improve the accuracy of this model further.
+However, the accuracy of the model is already well within conventional tolerances and further attempts at improvements have diminishing returns in accuracy.
+Further, *Understanding Society* has a far greater sample size than many surveys so has greater diversity from which to sample individuals in each small area.
+
+The analysis of straight--line distance between resilient areas and health amenities has the advantage of being simple and quick to set up and obtain results from, and as such the technique is fairly common [@smith2006a, p. 913].
+The accuracy of this model could be further enhanced by using network analysis [@morrissey2010a, p. 17] or a spatial interaction model [@smith2006a, p. 914; @morrissey2010a, pp. 14--15].
+These have the advantage of being able to include additional parameters that might affect the level of access to the amenity, such as the availability of public transport or the road network more generally, as well as behavioural factors such as the 'attractiveness' of the facility to service users.
+
+
+## Final reflections on resilience
+
+> We would not wish a resilience perspective to become an excuse for blaming those who succumb to the effects of poverty or adversity of any kind just because it may be possible to identify some people and places who do, to an extent, 'beat the odds' [@mitchell2009a, p. 22].
+
+For a social scientist interested in mitigating health and social inequalities, health resilience is a problematic topic of study.
+On the one hand, in an ideal world resilience would be unnecessary if policies and interventions were taken to mitigate and reduce the inequalities in health.
+On the other hand austerity, dramatic reductions in public spending, and poverty are a reality for millions of people in the UK and Europe.
+In the absence of the ideal, health resilience could be an important way local authorities protect the health of their residents as much as possible by creating an environment that supports positive health and mental health outcomes.
+With this research I have identified a number of characteristics that could create healthly environments and areas where practical interventions could make the most of diminishing resources.
+
+These are not replacements for proper investment in public services, a universal health care system, and an adequate welfare state.
+
+> ...we may once have hoped that increasing resilience was a way of saving money by proofing people against the difficulties they face, there is little reason to think that health benefits bought this way are any cheaper than those which would come from reducing the underlying disadvantage itself [@wilkinson2006b].
+
+Health inequalities may be mitigated by resilience, but this is akin to treating the symptoms of a disease.
+Health resilience may mitigate some of the worst symptoms but it is, by definition, only necessary if the health inequalities remain that it is trying to eliminate.

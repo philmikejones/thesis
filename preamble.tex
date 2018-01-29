@@ -1,0 +1,20 @@
+\usepackage{etoolbox}
+
+\AtBeginEnvironment{tabular}{\tiny}
+
+\linespread{1.3}  % 1.3 is 1.5 spacing
+
+\pagestyle{plain}
+
+% dedication environment
+\newenvironment{dedication}
+  {%\clearpage           % we want a new page          %% I commented this
+   \thispagestyle{empty}% no header and footer
+   \vspace*{\stretch{1}}% some space at the top
+   \itshape             % the text is in italics
+   \raggedleft          % flush to the right margin
+  }
+  {\par % end the paragraph
+   \vspace{\stretch{3}} % space at bottom is three times that at the top
+   \clearpage           % finish off the page
+  }

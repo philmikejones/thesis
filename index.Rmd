@@ -1,0 +1,138 @@
+---
+title: "A Spatial Microsimulation Analysis of Health Inequalities and Health Resilience"
+author: "Phil Mike Jones"
+date: "September 2017"
+output:
+  bookdown::pdf_book:
+    fig_caption: yes
+    fig_height: 7
+    fig_width: 7
+    pandoc_args: --top-level-division=chapter
+    includes:
+      in_header: preamble.tex
+      before_body: [abstract.tex, dedication.tex, acknowledgements.tex]
+# bookdown::word_document2:
+#   fig_caption: yes
+#   fig_height: 7
+#   fig_width: 7
+classoption: a4paper
+documentclass: book
+fontsize: 12pt
+geometry: margin=40mm
+github-repo: philmikejones/hrsim
+header-includes:
+- \usepackage{setspace}
+- \linespread{1.3}
+link-citations: yes
+csl: sage-harvard.csl
+site: bookdown::bookdown_site
+bibliography:
+- bibliography.bib
+- packages.bib
+lof: TRUE
+lot: TRUE
+# abstract: |
+#   This is an abstract
+#   
+#   This abstract is set using the YAML
+#   
+#   It has the disadvantage of not appearing in the TOC
+---
+
+```{r knitr-setup, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo    = FALSE,
+                      warning = FALSE,
+                      message = FALSE,
+                      cache   = FALSE)
+```
+
+```{r display-options}
+options("digits" = 2)
+options("scipen" = 9)
+```
+
+```{r seed}
+set.seed(42)
+```
+
+```{r directories}
+dir.create("figures/", showWarnings = FALSE)
+dir.create("figures/cache/", showWarnings = FALSE)
+```
+
+```{r global-vars}
+latest_wave <- "f_"
+```
+
+```{r load-packages}
+source("R/packages.R")
+```
+
+```{r functions}
+source("R/logit_functions.R")
+source("R/validation_funcs.R")
+source("R/population_funcs.R")
+source("R/geocode.R")
+```
+
+```{r prep-data}
+source("data-raw/0-prep-understanding-society.R")
+source("data-raw/1-construct-shapefiles.R")
+source("data-raw/2-simulate-pilot.R")
+source("data-raw/3-simulate-resilience.R")
+```
+
+```{r load-datasets}
+load("data/hawaii.RData")
+load("data/kauai.RData")
+
+load("data/bem.RData")
+load("data/care_homes.RData")
+load("data/doctors.RData")
+load("data/leisure_centres.RData")
+load("data/gs.RData")
+load("data/don_comm.RData")
+load("data/don_oa.RData")
+load("data/don_oa_cent.RData")
+load("data/don_lsoa.RData")
+load("data/don_msoa.RData")
+load("data/don_outline.RData")
+load("data/don_context.RData")
+load("data/gb_outline.RData")
+load("data/lads.RData")
+load("data/sy_county.RData")
+load("data/yh_region.RData")
+
+load("data/us.RData")
+
+load("data/pilot_con.RData")
+load("data/pilot_ind.RData")
+load("data/pilot_oa_ext.RData")
+load("data/pilot_oa_int.RData")
+load("data/pilot_con_lsoa.RData")
+load("data/pilot_lsoa_ext.RData")
+load("data/pilot_con_msoa.RData")
+load("data/pilot_msoa_ext.RData")
+
+load("data/res_con.RData")
+load("data/res_ind.RData")
+load("data/res_weights_ext.RData")
+load("data/res_weights_int.RData")
+```
+
+```{r calcs-multiple-data-sources}
+source("data-raw/4-calcs-mult-datasets.R")
+```
+
+```{r figures}
+source("data-raw/5-figures.R")
+```
+
+```{r packages}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(),
+  'bookdown', 'knitr', 'rmarkdown',
+  'readr', 'testthat', 'tidyr'),
+  'packages.bib')
+```

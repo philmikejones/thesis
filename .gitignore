@@ -1,0 +1,92 @@
+# API keys
+data-raw/google-geocode-api.txt
+data-raw/google-places-api.txt
+
+# Restricted files
+*restricted_*
+
+# Backups
+*.*~
+*.bak
+
+# Lock files
+*.~lock*.*#
+
+# inst/ (many, many large files!)
+inst/extdata/
+inst/systematic_review/papers/
+
+# Raw weights
+data/weights_oa.RData
+data/weights_lsoa.RData
+data/weights_msoa.RData
+data/res_weights.RData
+data/int_base_r.RData
+
+# RStudio settings
+.Rproj.user
+.Rprofile
+.Rhistory
+.Rapp.history
+
+# Shapefiles
+inst/extdata/shapefiles/
+*.dbf
+*.prj
+*.shp
+*.shx
+
+# Binary files
+*.zip
+*.xlsx
+*.xls
+*.doc
+*.docx
+*.rtf
+*.ods
+
+# Cache files
+*_cache
+*.DS_Store
+
+# bookdown build files
+_book/
+_bookdown_files/
+_main.Rmd
+_main.rds
+_main.pdf
+thesis.pdf
+thesis.Rmd
+packages.bib
+^*.md
+*.utf8.md
+render*.rds
+
+# LaTeX build files
+*.glo
+*.glsdefs
+*.bbl
+*.blg
+*.fdb_latexmk
+*.dvi
+*.fls
+*.synctex.gz
+*.aux
+*.toc
+*.acn
+*.acr
+*.alg
+*.glg
+*.gls
+*.log
+
+# Fonts
+*.ttf
+
+# Compiled figures
+figures/cache/*
+!figures/phe-depression-trend.png
+!figures/1_wheatley.jpeg
+!figures/2_north_armthorpe.jpeg
+!figures/3_five_streets.jpeg
+!figures/4_denaby_main.jpeg
